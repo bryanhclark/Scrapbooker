@@ -9,11 +9,11 @@ Immediately prior to end of day make applicable PRs, review each other’s code 
 • Only solid code to Master  
 • All working branches off of Development  
 • Create targeted branches  
-• Messages: start -m with sub-topic you're working on + : (ie. "design: nav bar css")  
-• ALWAYS pull from currend Dev branch and correct issues before submitting pull requests.
+• Messages: start -m with sub-topic you're working on + ":" (ie. "design: nav bar css")  
+• ALWAYS pull from current Dev branch and correct issues before submitting pull requests.
 
 ## Team expectations
-• While we're all expected to give 100%, we each reserve the right to our nights and weekends, and we have all been straightforward about when and how we can commit to working on the project  
+• While we're all expected to give 100%, we each reserve the right to our nights and weekends, and we will be straightforward about when and how we can commit to working on the project. Essentially, only commit to what you can deliver.  
 • If you have a blocking issue, slack before interrupting another’s train of coding-thought  
 • We will assign tasks vertically (instead of horizontally) - the slice structure of develpment  
 • None of us will specialize in terms of front-end and back-end code

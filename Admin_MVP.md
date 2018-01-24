@@ -5,9 +5,7 @@ Gathr.io (working title) is progressive web app that helps people share photos/t
 
 ### As an Event Organizer ...
 • ... I should be able to create an account, login, and logoff.
-
 • ... create an event with a name, start time and end time.
-
 • ... add participants to an event and save their phone numbers to facilitate participation during and after the event.
 
 ### As an Event Participant ... 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { Route, Switch, Router } from 'react-router-dom'
-import { Mosaic, Home, Login, Signup } from './index'
+import { Mosaic, Home, Login, Signup, Upload } from './index'
 import { logout } from '../store'
 
 /**
@@ -20,6 +20,7 @@ const Main = (props) => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/mosaic" component={Mosaic} />
+        <Route exact path="/upload" component={Upload} />
       </Switch>
     </div>
   )

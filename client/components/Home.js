@@ -16,6 +16,7 @@ class Home extends Component {
             <div className='homeContainer'>
                 <h3>Home Component</h3>
                 <NavLink to='/mosaic'>Mosaic</NavLink>
+                <NavLink to='/upload'>Upload Photo</NavLink>
             </div>
         )
     }

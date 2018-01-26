@@ -6,4 +6,5 @@
 export { default as Main } from './main'
 export { default as Home } from './Home'
 export { default as Mosaic } from './Mosaic'
+export { default as Upload } from './Upload'
 export { Login, Signup } from './auth-form'

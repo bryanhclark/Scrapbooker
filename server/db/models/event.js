@@ -39,7 +39,7 @@ const Event = db.define('event', {
         allowNull: false
     },
     salt: {
-        type: Sequelize.String
+        type: Sequelize.STRING
     }
 })
 

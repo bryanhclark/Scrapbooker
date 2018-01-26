@@ -13,10 +13,6 @@ class Upload extends Component {
         }
     }
 
-
-
-
-
     render() {
         return (
             <div className='uploadContainer'>

@@ -9,7 +9,7 @@ import {me} from './store'
 /**
  * COMPONENT
  */
-class Routes extends Component {
+class App extends Component {
   componentDidMount () {
     this.props.loadInitialData()
   }
@@ -59,12 +59,12 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Routes)
+export default connect(mapState, mapDispatch)(App)
 
 /**
  * PROP TYPES
  */
-Routes.propTypes = {
+App.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }

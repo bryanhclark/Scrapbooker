@@ -11,8 +11,9 @@ router.get('/', (req, res, next) => {
 })
 
 
-router.post('/', (req, res, next) => {
+router.post('/image', (req, res, next) => {
     Content.create({
+        type: 'image',
         downloadURL: req.body.imageURL,
         eventId: 1
     })

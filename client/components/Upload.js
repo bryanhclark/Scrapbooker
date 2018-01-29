@@ -18,6 +18,7 @@ class Upload extends Component {
         let image = e.target.files[0]
         let eventId = eventId || 1
         const name = image.name
+        console.log(image)
         const imageRef = firebase.storage().ref(`images/${eventId}`).child(name).put(image)
             .then((response) => {
                 this.props.handleUpload(response.downloadURL)

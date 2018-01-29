@@ -41,7 +41,7 @@ class Mosaic extends Component {
 							case 'image':
 								return (<img key={item.src} src={item.src} className="grid-item type_image" />)
 							case 'text':
-								return (<div key={item.value} className="grid-item type_text"><span className="quote_start">&ldquo;</span><p>{item.value}</p><span className="quote_end">&rdquo;</span></div>)
+								return (<div key={item.value} className="grid-item type_text"><span className="quote_start">&ldquo;</span>{item.value}<span className="quote_end">&rdquo;</span></div>)
 						}
 					})}
 				</div>

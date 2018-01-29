@@ -44,29 +44,45 @@ form div {
   color: #fff;
 }
 
-.type_text p {
-  display: inline-block;
-  padding: 0 20px;
+.type_text {
+  padding: 20px 22px;
   margin: 0;
-  font-size: 20px;
+  font-size: 18px;
+  line-height: 24px;
   font-family: Georgia, serif;
 }
 
 .quote_start {
-  float: left;
-  position: relative;
-  display: block;
-  top: 12px;
-  left: 8px;
-  font-size: 36px;
-  line-height: 23px;
+  font-size: 24px;
+  line-height: 24px;
 }
 
 .quote_end {
-  float: right;
-  display: block;
-  position: relative;
-  right: 8px;
-  font-size: 36px;
-  line-height: 23px;
+  font-size: 24px;
+  line-height: 24px;
 }
+
+/*================================= Tablet ====================================*/
+@media only screen and (max-width:980px){
+
+  .type_text {
+    padding: 20px 22px;
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .quote_start {
+    line-height: 22px;
+  }
+  
+  .quote_end {
+    font-size: 22px;
+    line-height: 22px;
+  }
+
+} 
+
+/*================================= Mobile ====================================*/
+@media only screen and (max-width:600px){
+
+}   

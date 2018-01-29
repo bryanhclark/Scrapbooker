@@ -1,15 +1,21 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import user from './user'
-import firebase from './firebase'
+import pictures from './firebase'
 
-const reducer = combineReducers({ user, firebase })
+import config from '../../secrets'
+
+
+const reducer = combineReducers({ user, pictures })
+
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
   createLogger({ collapsed: true })
 ))
+
+
 const store = createStore(reducer, middleware)
 
 export default store

@@ -7,36 +7,36 @@ const Event = db.define('event', {
     secret: {
         type: Sequelize.STRING,
         unique: true,
-        allowNull: false
+        allowNull: true
     },
     name: {
         type: Sequelize.STRING,
         unique: true,
-        allowNull: false
+        allowNull: true
     },
     street: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     city: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     state: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     zip: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     startTime: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: true
     },
     endTime: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: true
     },
     salt: {
         type: Sequelize.STRING

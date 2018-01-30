@@ -8,7 +8,7 @@ const GET_CURRENT_EVENTS = 'GET_CURRENT_EVENTS'
 
 const getCurrentEvents = (event) => {
     let action = {
-        type: ADD_EVENT,
+        type: GET_CURRENT_EVENTS,
         event
     }
     return action
@@ -19,7 +19,7 @@ const getCurrentEvents = (event) => {
 
 export default (state = [], action) => {
     switch (action.type) {
-        case ADD_EVENT:
+        case GET_CURRENT_EVENTS:
             return [...state, action.currentEvents]
         default:
             return state

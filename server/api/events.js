@@ -4,6 +4,7 @@ const Events = require('../db/models/event')
 //Create an event
 //Passes in an object that is identical to the db model
 //Make sure the front end obj === db model obj
+
 router.post('/', (req, res, next) => {
   Events.create({
     name: req.body.name,
@@ -15,7 +16,7 @@ router.post('/', (req, res, next) => {
     startTime: req.body.startTime,
     organizerId: req.body.organizerId
   })
-    .then(newEvent => res.json(newEvent) )
+    .then(newEvent => res.json(newEvent))
     .catch(next);
 })
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { DashboardModal, CreateEventForm } from './index'
+import { DashboardModal, CreateEventForm, EventList } from './index'
+import { fetchCurrentEvents } from '../store/currentEvents'
 
 
 class Dashboard extends Component {
@@ -10,6 +11,10 @@ class Dashboard extends Component {
             isEventCreationModalOpen: false
         }
         this.toggleEventCreationModal = this.toggleEventCreationModal.bind(this)
+    }
+
+    componentDidMount() {
+        this.props.loadCurrentEvents(this.props.user.id)
     }
 
     toggleEventCreationModal = () => {
@@ -32,20 +37,27 @@ class Dashboard extends Component {
                         </div>
                     </div>
                 </ul>
+                <div className='dashboard-EventList-Container'>
+                    <EventList events={this.props.currentEvents} />
+                </div>
             </div>
         )
     }
 }
 
-const mapDispatch = (dispatch) => {
+const mapState = (state) => {
     return {
-
+        user: state.user,
+        currentEvents: state.currentEvents,
+        events: state.events
     }
 }
 
-const mapState = (state) => {
+const mapDispatch = (dispatch) => {
     return {
-        user: state.user
+        loadCurrentEvents(organizerId) {
+            dispatch(fetchCurrentEvents(organizerId))
+        }
     }
 }
 

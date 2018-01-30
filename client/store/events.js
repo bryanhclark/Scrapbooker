@@ -14,13 +14,13 @@ const addEvent = (event) => {
 }
 
 // //THUNKS
-export const createEvent = (eventObj) => {
-  return dispatch => {
-    axios.post('/api/events', eventObj)
-      .then(res => console.log(res.data))
-      .catch(console.error)
-  }
-}
+// export const createEvent = (eventObj) => {
+//   return dispatch => {
+//     axios.post('/api/events', eventObj)
+//       .then(res => console.log(res.data))
+//       .catch(console.error)
+//   }
+// }
 
 // //REDUCER
 

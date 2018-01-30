@@ -10,6 +10,18 @@ router.get('/', (req, res, next) => {
         .catch(next)
 })
 
+router.get('/:eventId', (req, res, next) => {
+    Content.findAll({
+        where: {
+          eventId: Number(req.params.eventId)
+        }
+      })
+        .then(content => {
+            res.json(content)
+        })
+        .catch(next)
+})
+
 
 router.post('/image', (req, res, next) => {
     Content.create({

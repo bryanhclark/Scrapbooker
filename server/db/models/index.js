@@ -1,6 +1,10 @@
 const User = require('./user')
 const Event = require('./event')
 const Content = require('./content')
+
+Content.belongsTo(User)
+Content.belongsTo(Event)
+Event.belongsTo(User)
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:

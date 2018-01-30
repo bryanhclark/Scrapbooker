@@ -11,6 +11,7 @@ const sessionStore = new SequelizeStore({ db })
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
+require('babel-polyfill')
 module.exports = app
 
 /**
@@ -54,6 +55,7 @@ const createApp = () => {
   // auth and api routes
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
+
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))

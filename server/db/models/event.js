@@ -3,39 +3,43 @@ const db = require('../db')
 const crypto = require('crypto')
 
 
-const Event = db.define('event', {
+//AFTER TESTING CHANGE START & END TIME BACK TO DATES
+// temporarily using strings to test
+//also uncomment salt and secrets
+
+const Events = db.define('events', {
     secret: {
         type: Sequelize.STRING,
         unique: true,
-        allowNull: false
+        allowNull: true
     },
     name: {
         type: Sequelize.STRING,
         unique: true,
-        allowNull: false
+        allowNull: true
     },
     street: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     city: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     state: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     zip: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     startTime: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
         allowNull: false
     },
     endTime: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
         allowNull: false
     },
     salt: {
@@ -44,33 +48,33 @@ const Event = db.define('event', {
 })
 
 
-module.exports = Event;
+module.exports = Events;
 
 //instance methods
-Event.prototype.correctSecret = (possibleSecret) => {
-    return Event.encryptSecret(possibleSecret, this.salt) === this.secret
-}
+// Events.prototype.correctSecret = (possibleSecret) => {
+//     return Events.encryptSecret(possibleSecret, this.salt) === this.secret
+// }
 
-//Class Methods
+// //Class Methods
 
-Event.generateSalt = () => {
-    return crypto.randomBytes(16).toString('base64')
-}
+// Events.generateSalt = () => {
+//     return crypto.randomBytes(16).toString('base64')
+// }
 
-Event.encryptSecret = (name, salt) => {
-    return crypto
-        .createHash('RSA-SHA256')
-        .update(name)
-        .update(salt)
-        .digest('hex')
-}
+// Events.encryptSecret = (name, salt) => {
+//     return crypto
+//         .createHash('RSA-SHA256')
+//         .update(name)
+//         .update(salt)
+//         .digest('hex')
+// }
 
-//hooks 
+// //hooks
 
-const setSaltandSecret = event => {
-    event.salt = Event.generateSalt()
-    event.secret = Event.encryptSecret(event.name, event.salt)
-}
+// const setSaltandSecret = event => {
+//     event.salt = Events.generateSalt()
+//     event.secret = Events.encryptSecret(event.name, event.salt)
+// }
 
 
-Event.beforeCreate(setSaltandSecret)
+// Events.beforeCreate(setSaltandSecret)

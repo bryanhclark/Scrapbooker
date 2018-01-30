@@ -1,9 +1,11 @@
 html, body{
   margin: 0;
+  box-sizing: border-box;
 }
 
 body {
   font-family: sans-serif;
+  margin: 0;
 }
 
 a {
@@ -77,3 +79,65 @@ a:hover{
   background-color: rgba(0,0,0,0.3);
   padding: 50px;
 }
+
+.grid {
+  width: 100%;
+}
+
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.grid-sizer, .grid-item {
+  width: 20%;
+}
+
+.type_text {
+  background-color: red;
+  color: #fff;
+}
+
+.type_text {
+  padding: 20px 22px;
+  margin: 0;
+  font-size: 18px;
+  line-height: 24px;
+  font-family: Georgia, serif;
+}
+
+.quote_start {
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.quote_end {
+  font-size: 24px;
+  line-height: 24px;
+}
+
+/*================================= Tablet ====================================*/
+@media only screen and (max-width:980px){
+
+  .type_text {
+    padding: 20px 22px;
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .quote_start {
+    line-height: 22px;
+  }
+  
+  .quote_end {
+    font-size: 22px;
+    line-height: 22px;
+  }
+
+} 
+
+/*================================= Mobile ====================================*/
+@media only screen and (max-width:600px){
+
+}   

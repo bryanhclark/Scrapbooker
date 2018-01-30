@@ -9,8 +9,9 @@ import pictures from './firebase'
 import content from './content'
 import config from '../../secrets'
 import events from './events'
+import currentEvents from './currentEvents'
 
-const reducer = combineReducers({ user, pictures, content, events })
+const reducer = combineReducers({ user, pictures, content, events, currentEvents })
 
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,

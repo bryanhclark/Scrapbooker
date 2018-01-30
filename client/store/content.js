@@ -17,6 +17,7 @@ export function fetchContent (eventId) {
     return axios.get(`/api/content/${eventId}`)
     .then(res => res.data)
     .then(content => {
+			console.log("content is", content)
       const action = getContent(content)
       return dispatch(action)
     })

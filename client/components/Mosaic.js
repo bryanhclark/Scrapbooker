@@ -9,7 +9,7 @@ class Mosaic extends Component {
   }
 
   componentDidMount(){
-   this.props.loadContent(1)
+   this.props.loadContent(2)
   }
 
   render() {
@@ -21,11 +21,12 @@ class Mosaic extends Component {
           <div className="grid-sizer"></div>
           {
             this.props.content.map(item => {
+              console.log("this content is", item)
             switch (item.type) {
               case 'image':
-                return (<img key={item.id} src={item.downloadURL} className="grid-item type_image" />)
+                return (<img key={item.id} src={item.value} className="grid-item type_image" />)
               case 'text':
-                return (<div key={item.id} className="grid-item type_text"><span className="quote_start">&ldquo;</span>{item.downloadURL}<span className="quote_end">&rdquo;</span></div>)
+                return (<div key={item.id} className="grid-item type_text"><span className="quote_start">&ldquo;</span>{item.value}<span className="quote_end">&rdquo;</span></div>)
             }})
           }
         </div>

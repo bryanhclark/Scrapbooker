@@ -4,7 +4,8 @@ const db = require('../server/db')
 const { Event, Content, User } = require('../server/db/models');
 
 //Type in how many fake people to make
-const numberImgs = 20;
+const numberImgs = 20
+const numberEvts = 3
 
 function fillMurray() {
   let num1 = Math.floor(Math.random() * 123) + 300
@@ -18,7 +19,8 @@ function randImage() {
   let type = "image"
   return {
     value: downloadURL,
-    type: type
+    type: type,
+    //contents_eventId_fkey: Math.floor(Math.random() * numberEvts) + 1
   }
 }
 
@@ -46,18 +48,18 @@ function createImgs () {
 const events = [
   Event.create({name: 'Friends and Family Night', startTime: 1517332794, endTime: 1517347194}),
   Event.create({name: 'Wedding of Sally', startTime: 1517332794, endTime: 1517347194}),
-  Event.create({name: 'Pre-Packaged Box', startTime: 1517332794, endTime: 1517347194}),
+  Event.create({name: 'Demo Day', startTime: 1517332794, endTime: 1517347194})
 ]
 
 // USERS
 const users = [
   User.create({firstName: 'Jeff', lastName: 'Jeffington', email: 'jeff@jeffington.com', password: '123'}),
   User.create({firstName: 'Sally', lastName: 'Sallington', email: 'sally@sallington.com', password: '123'}),
-  User.create({firstName: 'Mark', lastName: 'Markington', email: 'mark@markington.com', password: '123'}),
+  User.create({firstName: 'Mark', lastName: 'Markington', email: 'mark@markington.com', password: '123'})
 ]
 
 function seed () {
-  return Promise.all( [createImgs(), users, events] )
+  return Promise.all( [createImgs(), users, events ] )
 }
 
 console.log('Syncing database');

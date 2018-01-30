@@ -1,51 +1,64 @@
-/**
- * Welcome to the seed file! This seed file uses a newer language feature called...
- *
- *                  -=-= ASYNC...AWAIT -=-=
- *
- * Async-await is a joy to use! Read more about it in the MDN docs:
- *
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
- *
- * Now that you've got the main idea, check it out in practice below!
- */
+const faker = require('faker');
+const Promise = require('bluebird');
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const { Events, Content } = require('../server/db/models');
 
-async function seed () {
-  await db.sync({force: true})
-  console.log('db synced!')
-  // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
-  // executed until that promise resolves!
+//Type in how many fake people to make
+const howManyToMake = 12;
 
-  const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
-  ])
-  // Wowzers! We can even `await` on the right-hand side of the assignment operator
-  // and store the result that the promise resolves to in a variable! This is nice!
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
+function fillMurray() {
+  let num1 = Math.floor(Math.random() * 100) + 100
+  let num2 = Math.floor(Math.random() * 100) + 300
+  return `https://www.fillmurray.com/${num1}/${num2}`
 }
 
-// Execute the `seed` function
-// `Async` functions always return a promise, so we can use `catch` to handle any errors
-// that might occur inside of `seed`
-seed()
-  .catch(err => {
-    console.error(err.message)
-    console.error(err.stack)
-    process.exitCode = 1
-  })
-  .then(() => {
-    console.log('closing db connection')
-    db.close()
-    console.log('db connection closed')
-  })
+//Edit their fake info
+function randImage() {
+  let downloadURL = fillMurray()
+  let type = "image"
+  return {
+    downloadURL: downloadURL,
+    type: type
+  }
+}
 
-/*
- * note: everything outside of the async function is totally synchronous
- * The console.log below will occur before any of the logs that occur inside
- * of the async function
- */
-console.log('seeding...')
+//MAKING AN ARRAY OF FAKE PEOPLE OBJECTS
+function makeThisMany (number, callback) {
+  const results = [];
+  while (number--) {
+    results.push(callback());
+  }
+  return results;
+}
+
+//GENERATE RANDOM PEOPLE
+function generate () {
+  const images = makeThisMany(howManyToMake, randImage);
+  return images;
+}
+
+//SAVE CREATED STUFF
+function create () {
+  return Promise.map(generate(), image => Content.create(image))
+}
+
+function seed () {
+  return Promise.all( [create()] )
+}
+
+console.log('Syncing database');
+
+db.sync({force: true})
+  .then(() => {
+    console.log('Seeding database');
+    return seed();
+  })
+  .then(() => console.log('Seeding successful'))
+  .catch(err => {
+    console.error('Error while seeding');
+    console.error(err.stack);
+  })
+  .finally(() => {
+    db.close();
+    return null;
+  })

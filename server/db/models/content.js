@@ -12,10 +12,10 @@ const Content = db.define('content', {
         type: Sequelize.ENUM('image', 'text'),
         allowNull: true
     },
-    timeCreated: {
-        type: Sequelize.DATE,
-        allowNull: true
-    }
+    // timeCreated: {
+    //     type: Sequelize.DATE,
+    //     allowNull: true
+    // }
 })
 
 module.exports = Content;

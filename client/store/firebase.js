@@ -17,19 +17,16 @@ const getPictures = (pictures) => {
 
 
 // //THUNKS
-//async await 
+//async await
 export const uploadImageToFireBaseThunk = (image) => {
     return (dispatch) => {
-        axios.post('/api/content', { imageURL: image })
+        axios.post('/api/content/image', { imageURL: image})
             .then((response) => {
                 console.log(response.data.downloadURL)
                 dispatch(getPictures(response.data.downloadURL))
             })
     }
 }
-
-
-
 
 // //REDUCER
 

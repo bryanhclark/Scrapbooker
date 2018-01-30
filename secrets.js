@@ -10,6 +10,10 @@ const config = {
     messagingSenderId: "807072044786"
 };
 
+process.env.GOOGLE_CLIENT_ID = '592209444628-h9bmno2aqadih7s17dmjn945t3net2ir.apps.googleusercontent.com'
+process.env.GOOGLE_CLIENT_SECRET = '3mXC9jQmIAqy5PeyN5XPCXw5'
+process.env.GOOGLE_CALLBACK = '/auth/google/callback'
+
 
 const firebaseInitialize = firebase.initializeApp(config)
 

@@ -4,33 +4,35 @@ const crypto = require('crypto')
 
 
 //AFTER TESTING CHANGE START & END TIME BACK TO DATES
+// temporarily using strings to test
+//also uncomment salt and secrets
 
 const Events = db.define('events', {
     secret: {
         type: Sequelize.STRING,
         unique: true,
-        allowNull: false
+        allowNull: true
     },
     name: {
         type: Sequelize.STRING,
         unique: true,
-        allowNull: false
+        allowNull: true
     },
     street: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     city: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     state: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     zip: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     startTime: {
         type: Sequelize.STRING,

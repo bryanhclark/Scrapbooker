@@ -5,6 +5,8 @@ import { withRouter, Link } from 'react-router-dom'
 import { Route, Switch, Router } from 'react-router-dom'
 import { Mosaic, Home, Login, Signup, Upload, NewEvent } from './index'
 import { logout } from '../store'
+import Navbar from './Navbar'
+import Footer from './Footer'
 
 /**
  * COMPONENT
@@ -16,7 +18,9 @@ const Main = (props) => {
   const { children, handleClick, isLoggedIn } = props
 
   return (
+
     <div>
+      <Navbar />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/mosaic" component={Mosaic} />

@@ -2,7 +2,7 @@ import axios from 'axios'
 import history from '../history'
 import * as firebase from 'firebase'
 import { config } from '../../secrets'
-import "babel-polyfill"
+
 
 
 // //ACTION TYPEs
@@ -20,7 +20,7 @@ const getPictures = (pictures) => {
 //async await
 export const uploadImageToFireBaseThunk = (image) => {
     return (dispatch) => {
-        axios.post('/api/content/image', { imageURL: image})
+        axios.post('/api/content/image', { imageURL: image })
             .then((response) => {
                 console.log(response.data.downloadURL)
                 dispatch(getPictures(response.data.downloadURL))

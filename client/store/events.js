@@ -14,26 +14,22 @@ const addEvent = (event) => {
 }
 
 // //THUNKS
-export function postEvent (event) {
-  return function thunk(dispatch) {
-    console.log(typeof event[startTime])
-    // return axios.post('/api/events/createEvent', event)
-    // .then(res => res.data)
-    // .then(newEvent => {
-    //   const action = addEvent(newEvent)
-    //   return dispatch(action);
-    // })
+export const createEvent = (eventObj) => {
+  return dispatch => {
+    axios.post('/api/events', eventObj)
+      .then(res => console.log(res.data))
+      .catch(console.error)
   }
 }
 
 // //REDUCER
 
 export default (state = [], action) => {
-    switch (action.type) {
-        case ADD_EVENT:
-            return [...state, action.event]
-        default:
-            return state
-    }
+  switch (action.type) {
+    case ADD_EVENT:
+      return [...state, action.event]
+    default:
+      return state
+  }
 }
 

@@ -19,6 +19,3 @@
     - feat: added login button for home component
     - fix: fixed XYZ error on the login button on the home page
     - style: Added style for navbar component
-
-
-    Test for development push

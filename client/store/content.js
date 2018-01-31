@@ -11,13 +11,15 @@ const getContent = (content) => {
 }
 
 // //THUNKS
-export function fetchContent () {
+export function fetchContent (eventId) {
   return function thunk(dispatch) {
-    return axios.get('/api/content')
+      console.log("eventId in Thunk is:", eventId)
+    return axios.get(`/api/content/${eventId}`)
     .then(res => res.data)
     .then(content => {
+			console.log("content is", content)
       const action = getContent(content)
-      return dispatch(action);
+      return dispatch(action)
     })
   }
 }

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { withRouter, Link, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { uploadImageToFireBaseThunk } from '../store/firebase'
 import * as firebase from 'firebase'
 import { config } from '../../secrets'
 import {uploadImageSocket} from '../socket'
+import EXIF from 'exif-js'
 
 class Upload extends Component {
     constructor(props) {
@@ -12,23 +12,13 @@ class Upload extends Component {
         this.state = {
             img: ''
         }
-        this.handleUploadImageToFirebase = this.handleUploadImageToFirebase.bind(this)
     }
-    handleUploadImageToFirebase(e) {
-        let image = e.target.files[0]
-        let eventId = eventId || 1
-        const name = image.name
-        console.log(image)
-        const imageRef = firebase.storage().ref(`images/${eventId}`).child(name).put(image)
-            .then((response) => {
-                this.props.handleUpload(response.downloadURL)
-            })
-    }
+
     render() {
         return (
             <div className='uploadContainer'>
                 <h3>Upload Photo</h3>
-                <input type='file' accept='image/*' onChange={this.handleUploadImageToFirebase} />
+                <input type='file' accept='image/*' onChange={this.props.handleUpload} />
                 <div className='uploadImgContainer'>
                     <img id='uploadImgPreview' src={this.props.pictures[0]} alt='picture' height='400px' width='200px' />
                 </div>
@@ -46,11 +36,37 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
     return {
-        handleUpload(image) {
-            dispatch(uploadImageToFireBaseThunk(image));
-            uploadImageSocket(image);
+        handleUpload(event) {
+            let image = event.target.files[0]
+            firebaseUpload(image)
+            .then(response => {
+               return imageEXIFPacker(image, response)
+            })
+            .then(imgObj => {
+              console.log(imgObj)
+            })
         }
     }
 }
 
+function imageEXIFPacker(image, url) {
+  let imgObj = {};
+  EXIF.getData(image, function() {
+      imgObj.timeCreated = image.lastModifiedDate.toString()
+      imgObj.orientation = EXIF.getTag(this, "Orientation")
+      imgObj.width = EXIF.getTag(this, "PixelXDimension")
+      imgObj.height = EXIF.getTag(this, "PixelYDimension")
+      imgObj.src = url
+  })
+  return imgObj
+}
+
 export default connect(mapState, mapDispatch)(Upload)
+
+function firebaseUpload(image) {
+  const downloadURL = firebase.storage().ref(`images`).child(image.name).put(image)
+  .then((response) => {
+      return response.downloadURL
+  })
+  return downloadURL
+}

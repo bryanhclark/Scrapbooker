@@ -8,10 +8,11 @@ import user from './user'
 import pictures from './firebase'
 import content from './content'
 import config from '../../secrets'
-import events from './events'
 import currentEvents from './currentEvents'
+import contacts from './contacts'
+import singleEvent from './singleEvent'
 
-const reducer = combineReducers({ user, pictures, content, events, currentEvents })
+const reducer = combineReducers({ user, pictures, content, currentEvents, contacts, singleEvent })
 
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
@@ -25,6 +26,5 @@ export default store
 
 //Export all files here
 export * from './user'
-export * from './events'
 export * from './content'
 

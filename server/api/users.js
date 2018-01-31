@@ -1,16 +1,9 @@
 const router = require('express').Router()
-const { User, Event } = require('../db/models')
+const { User } = require('../db/models')
 module.exports = router
 
 
-router.get('/:organizerId/events', (req, res, next) => {
-  Event.findAll({
-    where: {
-      organizerId: req.params.organizerId
-    }
-  })
-    .then(events => res.json(events))
-})
+
 
 
 router.get('/', (req, res, next) => {

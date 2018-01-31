@@ -5,6 +5,21 @@ const Events = require('../db/models/event')
 //Passes in an object that is identical to the db model
 //Make sure the front end obj === db model obj
 
+router.get('/', (req, res, next) => {
+  //stringify req.query
+  Events.findAll({
+    where: req.query
+  })
+    .then(events => res.json(events))
+})
+
+router.get('/:eventId', (req, res, next) => {
+  Events.findById(req.params.eventId)
+    .then(event => res.json(event))
+    .catch(next)
+})
+
+
 router.post('/', (req, res, next) => {
   Events.create({
     name: req.body.name,

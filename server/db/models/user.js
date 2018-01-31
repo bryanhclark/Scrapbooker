@@ -5,12 +5,10 @@ const db = require('../db')
 const User = db.define('user', {
   firstName: {
     type: Sequelize.STRING,
-    unique: true,
     allowNull: true
   },
   lastName: {
     type: Sequelize.STRING,
-    unique: true,
     allowNull: true
   },
   email: {
@@ -27,7 +25,13 @@ const User = db.define('user', {
   googleId: {
     type: Sequelize.STRING
   }
-})
+}, {
+    getterMethods: {
+      fullName() {
+        return this.firstName + ' ' + this.lastName
+      }
+    }
+  })
 
 module.exports = User
 
@@ -37,6 +41,8 @@ module.exports = User
 User.prototype.correctPassword = function (candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt) === this.password
 }
+
+
 
 /**
  * classMethods

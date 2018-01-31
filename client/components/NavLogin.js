@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
-import NavModal from './NavModal'
+import { NavModal, SignUpForm, LoginForm } from './index'
 
 class NavLogin extends Component {
     constructor(props) {
@@ -35,14 +35,14 @@ class NavLogin extends Component {
                         <li className='navbarButton'><a onClick={this.toggleLoginModal}>Login</a></li>
                         <NavModal show={this.state.isLoginModalOpen}
                             onClose={this.toggleLoginModal}>
-                            This should be login
+                            <LoginForm />
                         </NavModal>
                     </div>
                     <div className='signUpModalContainer'>
                         <li className='navbarButton'><a onClick={this.toggleSignUpModal}>Sign Up</a></li>
                         <NavModal show={this.state.isSignupModalOpen}
                             onClose={this.toggleSignUpModal}>
-                            Sign Up
+                            <SignUpForm />
                         </NavModal>
                     </div>
                     <a href='/auth/google'><li className='navbarButton'>Google+</li></a>

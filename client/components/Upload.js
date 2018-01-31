@@ -5,7 +5,6 @@ import { uploadImageToFireBaseThunk } from '../store/firebase'
 import * as firebase from 'firebase'
 import { config } from '../../secrets'
 
-
 class Upload extends Component {
     constructor(props) {
         super(props)

@@ -14,6 +14,7 @@ export { default as CreateEventForm } from './CreateEventForm'
 export { default as LoginForm } from './LogInForm'
 export { default as NavModal } from './NavModal'
 export { default as EventList } from './EventList'
+export { default as ContactList } from './ContactList'
 export { default as DashboardModal } from './DashboardModal'
 
 export { Login, Signup } from './auth-form'

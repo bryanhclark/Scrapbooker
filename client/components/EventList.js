@@ -3,7 +3,6 @@ import React from 'react'
 
 
 const EventList = (props) => {
-    console.log('event list props', props)
     return (
         <div className='event-List-Container'>
             <h3>Event List Container</h3>

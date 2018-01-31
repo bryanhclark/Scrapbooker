@@ -1,6 +1,7 @@
 const User = require('./user')
 const Event = require('./event')
 const Content = require('./content')
+const Contact = require('./contacts')
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
@@ -9,6 +10,7 @@ const Content = require('./content')
  */
 
 Event.belongsTo(User, { as: 'organizer' })
+Contact.belongsTo(User, { as: 'organizer' })
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -19,5 +21,6 @@ Event.belongsTo(User, { as: 'organizer' })
 module.exports = {
   User,
   Event,
-  Content
+  Content,
+  Contact
 }

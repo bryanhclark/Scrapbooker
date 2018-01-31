@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { DashboardModal, CreateEventForm, EventList } from './index'
+import { DashboardModal, CreateEventForm, EventList, ContactList } from './index'
 import { fetchCurrentEvents } from '../store/currentEvents'
 
 
@@ -39,6 +39,9 @@ class Dashboard extends Component {
                 </ul>
                 <div className='dashboard-EventList-Container'>
                     <EventList events={this.props.currentEvents} />
+                </div>
+                <div className='dashboard-ContactList-Container'>
+                    <ContactList contacts={this.props.currentEvents} />
                 </div>
             </div>
         )

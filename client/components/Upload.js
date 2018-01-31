@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { uploadImageToFireBaseThunk } from '../store/firebase'
 import * as firebase from 'firebase'
 import { config } from '../../secrets'
+import {uploadImageSocket} from '../socket'
 
 class Upload extends Component {
     constructor(props) {
@@ -47,6 +48,7 @@ const mapDispatch = (dispatch) => {
     return {
         handleUpload(image) {
             dispatch(uploadImageToFireBaseThunk(image));
+            uploadImageSocket(image);
         }
     }
 }

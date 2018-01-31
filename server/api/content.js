@@ -22,12 +22,12 @@ router.get('/:eventId', (req, res, next) => {
         .catch(next)
 })
 
-
 router.post('/image', (req, res, next) => {
+
     Content.create({
         type: 'image',
-        downloadURL: req.body.imageURL,
-        eventId: 1
+        src: req.body.imageURL,
+        eventId: 2
     })
         .then(content => res.json(content))
         .catch(next);

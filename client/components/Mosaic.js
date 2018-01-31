@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { fetchContent } from '../store/content'
+import { render } from 'react-dom';
+import Gallery from 'react-grid-gallery';
 
 class Mosaic extends Component {
   constructor(props) {
@@ -18,10 +20,8 @@ class Mosaic extends Component {
         <h3>This is the mosaic component</h3>
         <NavLink to='/'>Home</NavLink>
         <div className="grid" data-packery='{ "itemSelector": ".grid-item", "gutter": 0 }'>
-          <div className="grid-sizer"></div>
           {
             this.props.content.map(item => {
-              console.log("this content is", item)
             switch (item.type) {
               case 'image':
                 return (<img key={item.id} src={item.value} className="grid-item type_image" />)

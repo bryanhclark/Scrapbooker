@@ -3,24 +3,45 @@ import axios from 'axios'
 
 // //ACTION TYPES
 const GET_CURRENT_EVENTS = 'GET_CURRENT_EVENTS'
+const ADD_CURRENT_EVENTS = 'GET_CURADD_CURRENT_EVENTSRENT_EVENTS'
 
 // //ACTION CREATORS
 
-const getCurrentEvents = (event) => {
-    let action = {
-        type: GET_CURRENT_EVENTS,
-        event
+const getCurrentEvents = (currentEvents) => {
+    return {
+        type: GET_CURRENT_EVENTS, currentEvents
     }
-    return action
+}
+
+const addCurrentEvents = (newEvent) => {
+    return {
+        type: ADD_CURRENT_EVENTS, newEvent
+    }
 }
 
 
+export const fetchCurrentEvents = organizerId => {
+    return dispatch => {
+        axios.get(`/api/users/${organizerId}/events`)
+            .then(res => dispatch(getCurrentEvents(res.data)))
+    }
+}
+
+export const createEvent = (eventObj) => {
+    return dispatch => {
+        axios.post('/api/events', eventObj)
+            .then(res => dispatch(addCurrentEvents(res.data)))
+            .catch(console.error)
+    }
+}
 
 
 export default (state = [], action) => {
     switch (action.type) {
         case GET_CURRENT_EVENTS:
-            return [...state, action.currentEvents]
+            return state, action.currentEvents
+        case ADD_CURRENT_EVENTS:
+            return [...state, action.newEvent]
         default:
             return state
     }

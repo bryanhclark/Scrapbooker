@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { auth } from '../store/user'
-import { createEvent } from '../store/events'
+import { createEvent } from '../store/currentEvents'
 
 class CreateEventForm extends Component {
     constructor(props) {

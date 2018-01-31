@@ -1,6 +1,17 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const { User, Event } = require('../db/models')
 module.exports = router
+
+
+router.get('/:organizerId/events', (req, res, next) => {
+  Event.findAll({
+    where: {
+      organizerId: req.params.organizerId
+    }
+  })
+    .then(events => res.json(events))
+})
+
 
 router.get('/', (req, res, next) => {
   User.findAll({
@@ -12,3 +23,6 @@ router.get('/', (req, res, next) => {
     .then(users => res.json(users))
     .catch(next)
 })
+
+
+

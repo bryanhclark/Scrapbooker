@@ -14,7 +14,9 @@ Event.belongsTo(User, { as: 'organizer' })
 Contact.belongsTo(User, { as: 'organizer' })
 Contact.belongsToMany(Event, { through: ContactsEvents })
 Event.belongsToMany(Contact, { through: ContactsEvents })
-
+Content.belongsTo(User)
+Content.belongsTo(Event)
+Event.belongsTo(User)
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,

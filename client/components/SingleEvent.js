@@ -32,15 +32,13 @@ class SingleEvent extends Component {
           <div className='single-Event-Header'>
             <h2>Event: <span className="title">{this.props.singleEvent.name}</span></h2>
           </div>
-          <ul className='single-Event-Button-List'>
-            <div className='single-Event-Button-Container'>
-              <li className='single-Event-Button'><a onClick={() => this.toggleModal('addContacts')} className="btn">Add Contact to Event</a></li>
-              <DashboardModal show={this.state.isAddContactModelOpen} onClose={() => this.toggleModal('addContacts')}>
-                <AddContactsToEventForm />
-              </DashboardModal>
-            </div>
-          </ul>
-          <div className='single-Event-Contacts-List-Container'>
+          <div id="event_add_contact_to_event">
+            <a onClick={() => this.toggleModal('addContacts')} className="btn" id="btn_addParticipantEvent">Add Contact to Event</a>
+            <DashboardModal show={this.state.isAddContactModelOpen} onClose={() => this.toggleModal('addContacts')}>
+              <AddContactsToEventForm />
+            </DashboardModal>
+          </div>
+          <div id='event_participants_list'>
             <div className='single-Event-Contacts-List-Header'>
               <h2>Participants:</h2>
             </div>

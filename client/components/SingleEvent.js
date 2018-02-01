@@ -26,6 +26,7 @@ class SingleEvent extends Component {
 
 
   render() {
+    console.log('in single event', this.props.participants)
     return (
       <div className='single-Event-Container' >
         <div className='single-Event-Header'>
@@ -33,10 +34,12 @@ class SingleEvent extends Component {
         </div>
         <ul className='single-Event-Button-List'>
           <div className='single-Event-Button-Container'>
-            <li className='single-Event-Button'><a onClick={() => this.toggleModal('addContacts')}>Add Contact to Event</a></li>
+            <li className='single-Event-Add-Contact-Button'><a onClick={() => this.toggleModal('addContacts')}>Add Contact to Event</a></li>
             <DashboardModal show={this.state.isAddContactModelOpen} onClose={() => this.toggleModal('addContacts')}>
               <AddContactsToEventForm />
             </DashboardModal>
+            <li className='single-Event-View-Mosaic-Button'><a href={`/events/${this.props.singleEvent.id}/mosaic`}>View Mosaic</a></li>
+            <li className='single-Event-View-Uplad-Button'><a href={`/events/${this.props.singleEvent.id}/upload`}>Upload Content</a></li>
           </div>
         </ul>
         <div className='single-Event-Contacts-List-Container'>

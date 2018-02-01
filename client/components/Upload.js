@@ -16,13 +16,14 @@ class Upload extends Component {
 		}
 	}
 
+
+
 	render() {
 		return (
 			<div className='uploadContainer'>
 				<h3>Upload Photo</h3>
 				<input type='file' accept='image/*' onChange={this.props.handleImgUpload} />
 				<div className='uploadImgContainer'>
-					<img id='uploadImgPreview' src={this.props.pictures[0]} alt='picture' height='400px' width='200px' />
 				</div>
 			</div>
 		)
@@ -31,43 +32,30 @@ class Upload extends Component {
 
 const mapState = (state) => {
 	return {
-		pictures: state.pictures || ''
+		singleEvent: state.singleEvent
 	}
 }
 
 
-const mapDispatch = (dispatch) => {
-
+const mapDispatch = (dispatch, ownProps) => {
 	return {
-		handleImgUpload(event) {
+		handleImgUpload(event, eventId) {
 			let image = event.target.files[0]
 			firebaseUpload(image)
 				.then(response => {
-					return imageEXIFPacker(image, response, (error, imageObj) => {
+					return imageEXIFPacker(image, response, ownProps.match.params.eventId, (error, imageObj) => {
 						if (error) console.error(error)
 						else {
-              dispatch(postContent(imageObj))
-              uploadImageSocket(imageObj)
-            }
+							dispatch(postContent(imageObj))
+							uploadImageSocket(imageObj)
+						}
 					})
 				})
-
 		}
 	}
 }
 
-function imageEXIFPacker(image, url, cb) {
-	let imgObj = {}
-	EXIF.getData(image, function () {
-		imgObj.src = url
-		imgObj.width = EXIF.getTag(this, "PixelXDimension")
-		imgObj.height = EXIF.getTag(this, "PixelYDimension")
-		imgObj.orientation = EXIF.getTag(this, "Orientation")
-		imgObj.timeCreated = image.lastModifiedDate.toString()
-		cb(null, imgObj)
-	})
 
-}
 
 
 
@@ -80,4 +68,17 @@ function firebaseUpload(image) {
 			return response.downloadURL
 		})
 	return downloadURL
+}
+
+const imageEXIFPacker = (image, url, eventId, cb) => {
+	let imgObj = {}
+	EXIF.getData(image, function () {
+		imgObj.src = url
+		imgObj.width = EXIF.getTag(this, "PixelXDimension")
+		imgObj.height = EXIF.getTag(this, "PixelYDimension")
+		imgObj.orientation = EXIF.getTag(this, "Orientation")
+		imgObj.timeCreated = image.lastModifiedDate.toString()
+		imgObj.eventId = eventId
+		cb(null, imgObj)
+	})
 }

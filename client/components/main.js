@@ -24,9 +24,9 @@ const Main = (props) => {
       <Navbar />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/mosaic" component={Mosaic} />
-        <Route exact path="/upload" component={Upload} />
         <Route path="/dashboard/:userId" component={Dashboard} />
+        <Route path="/events/:eventId/upload" component={Upload} />
+        <Route path="/events/:eventId/mosaic" component={Mosaic} />
         <Route path="/events/:eventId" component={SingleEvent} />
       </Switch>
     </div>

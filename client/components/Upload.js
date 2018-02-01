@@ -14,41 +14,38 @@ class Upload extends Component {
 		this.state = {
 			img: ''
 		}
+		this.fileInput = {}
 	}
 
 
-
 	render() {
+
 		return (
 			<div className='uploadContainer'>
 				<h3>Upload Photo</h3>
-				<input type='file' accept='image/*' onChange={this.props.handleImgUpload} />
+				<input type='file' accept='image/*;capture=camera' id='imageToUpload' onChange={(e) => this.fileInput = e.target.files[0]} />
+				<button onClick={() => this.props.handleImgUpload(this.fileInput, this.props.match.params.eventId)}>Upload Image</button>
 				<div className='uploadImgContainer'>
-<<<<<<< HEAD
-					<img id='uploadImgPreview' src={this.props.content[0]} alt='picture' height='400px' width='200px' />
-=======
->>>>>>> development
 				</div>
 			</div>
 		)
+
+		image.addEventListener('change', console.log('image uploaded'))
 	}
 }
 
 const mapState = (state) => {
 	return {
-<<<<<<< HEAD
-		content: state.content
-=======
 		singleEvent: state.singleEvent
->>>>>>> development
 	}
 }
 
 
 const mapDispatch = (dispatch, ownProps) => {
 	return {
-		handleImgUpload(event, eventId) {
-			let image = event.target.files[0]
+		handleImgUpload(image, eventId) {
+			console.log('in handleIMageUpload')
+			console.log(image)
 			firebaseUpload(image)
 				.then(response => {
 					return imageEXIFPacker(image, response, ownProps.match.params.eventId, (error, imageObj) => {
@@ -63,20 +60,6 @@ const mapDispatch = (dispatch, ownProps) => {
 	}
 }
 
-<<<<<<< HEAD
-function imageEXIFPacker(image, url, cb) {
-	let imgObj = {}
-	EXIF.getData(image, function () {
-		imgObj.src = url
-		imgObj.width = EXIF.getTag(this, "PixelXDimension")
-		imgObj.height = EXIF.getTag(this, "PixelYDimension")
-		imgObj.orientation = EXIF.getTag(this, "Orientation")
-		imgObj.timeCreated = image.lastModifiedDate.toString()
-		imgObj.eventId = 1
-		cb(null, imgObj)
-	})
-=======
->>>>>>> development
 
 
 
@@ -96,10 +79,11 @@ const imageEXIFPacker = (image, url, eventId, cb) => {
 	let imgObj = {}
 	EXIF.getData(image, function () {
 		imgObj.src = url
-		imgObj.width = EXIF.getTag(this, "PixelXDimension")
-		imgObj.height = EXIF.getTag(this, "PixelYDimension")
+		// imgObj.width = EXIF.getTag(this, "PixelXDimension")
+		imgObj.width = '100px'
+		// imgObj.height = EXIF.getTag(this, "PixelYDimension")
+		imgObj.height = '100px'
 		imgObj.orientation = EXIF.getTag(this, "Orientation")
-		imgObj.timeCreated = image.lastModifiedDate.toString()
 		imgObj.eventId = eventId
 		cb(null, imgObj)
 	})

@@ -38,6 +38,7 @@ const mapState = (state) => {
 
 
 const mapDispatch = (dispatch) => {
+
 	return {
 		handleImgUpload(event) {
 			let image = event.target.files[0]
@@ -45,7 +46,10 @@ const mapDispatch = (dispatch) => {
 				.then(response => {
 					return imageEXIFPacker(image, response, (error, imageObj) => {
 						if (error) console.error(error)
-						else dispatch(postContent(imageObj))
+						else {
+              dispatch(postContent(imageObj))
+              uploadImageSocket(imageObj)
+            }
 					})
 				})
 

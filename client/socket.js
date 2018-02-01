@@ -1,4 +1,5 @@
 import io from 'socket.io-client'
+import {socketStoreUpdate} from '../client/store'
 
 const socket = io(window.location.origin)
 
@@ -12,5 +13,9 @@ function uploadImageSocket(image) {
   socket.emit("image_upload", image)
 }
 
-socket.on("got_it", obj => {console.log(obj)})
+socket.on("update_store", imageObj => {
+  console.log("back from server", imageObj)
+  return socketStoreUpdate(imageObj)
+})
+
 export {socket, uploadImageSocket}

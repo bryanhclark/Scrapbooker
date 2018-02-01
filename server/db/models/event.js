@@ -50,31 +50,31 @@ const Event = db.define('events', {
 
 module.exports = Event;
 
-//instance methods
-// Events.prototype.correctSecret = (possibleSecret) => {
-//     return Events.encryptSecret(possibleSecret, this.salt) === this.secret
-// }
+// instance methods
+Event.prototype.correctSecret = (possibleSecret) => {
+    return Event.encryptSecret(possibleSecret, this.salt) === this.secret
+}
 
-// //Class Methods
+//Class Methods
 
-// Events.generateSalt = () => {
-//     return crypto.randomBytes(16).toString('base64')
-// }
+Event.generateSalt = () => {
+    return crypto.randomBytes(16).toString('base64')
+}
 
-// Events.encryptSecret = (name, salt) => {
-//     return crypto
-//         .createHash('RSA-SHA256')
-//         .update(name)
-//         .update(salt)
-//         .digest('hex')
-// }
+Event.encryptSecret = (name, salt) => {
+    return crypto
+        .createHash('RSA-SHA256')
+        .update(name)
+        .update(salt)
+        .digest('hex')
+}
 
-// //hooks
+//hooks
 
-// const setSaltandSecret = event => {
-//     event.salt = Events.generateSalt()
-//     event.secret = Events.encryptSecret(event.name, event.salt)
-// }
+const setSaltandSecret = event => {
+    event.salt = Event.generateSalt()
+    event.secret = Event.encryptSecret(event.name, event.salt)
+}
 
 
-// Events.beforeCreate(setSaltandSecret)
+Event.beforeCreate(setSaltandSecret)

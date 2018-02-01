@@ -22,7 +22,6 @@ class NavLogin extends Component {
         return (
             <div className='navBarLoginButtonContainer' >
                 <ul className='navBarButtonList'>
-                    <NavLink to='/'><li className='navbarButton'>Home</li></NavLink>
                     <div className='loginModalContainer'>
                         <li className='navbarButton'><a onClick={() => this.toggleModal('login')}>Login</a></li>
                         <NavModal show={this.state.isLoginModalOpen}

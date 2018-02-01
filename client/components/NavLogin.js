@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
-import NavModal from './NavModal'
+import { NavModal, SignUpForm, LoginForm } from './index'
 
 class NavLogin extends Component {
     constructor(props) {
@@ -9,21 +9,13 @@ class NavLogin extends Component {
             isLoginModalOpen: false,
             isSignupModalOpen: false
         }
-        this.toggleLoginModal = this.toggleLoginModal.bind(this)
-        this.toggleSignUpModal = this.toggleSignUpModal.bind(this)
+        this.toggleModal = this.toggleModal.bind(this)
     }
 
-    toggleLoginModal = () => {
-        this.setState({
-            isLoginModalOpen: !this.state.isLoginModalOpen
-        })
 
-    }
-    toggleSignUpModal = () => {
-        this.setState({
-            isSignupModalOpen: !this.state.isSignupModalOpen
-        })
-
+    toggleModal = (name) => {
+        if (name === 'login') this.setState({ isLoginModalOpen: !this.state.isLoginModalOpen })
+        else if (name === 'signup') this.setState({ isSignupModalOpen: !this.state.isSignupModalOpen })
     }
 
     render() {
@@ -32,21 +24,20 @@ class NavLogin extends Component {
                 <ul className='navBarButtonList'>
                     <NavLink to='/'><li className='navbarButton'>Home</li></NavLink>
                     <div className='loginModalContainer'>
-                        <li className='navbarButton'><a onClick={this.toggleLoginModal}>Login</a></li>
+                        <li className='navbarButton'><a onClick={() => this.toggleModal('login')}>Login</a></li>
                         <NavModal show={this.state.isLoginModalOpen}
-                            onClose={this.toggleLoginModal}>
-                            This should be login
+                            onClose={() => this.toggleModal('login')}>
+                            <LoginForm />
                         </NavModal>
                     </div>
                     <div className='signUpModalContainer'>
-                        <li className='navbarButton'><a onClick={this.toggleSignUpModal}>Sign Up</a></li>
+                        <li className='navbarButton'><a onClick={() => this.toggleModal('signup')}>Sign Up</a></li>
                         <NavModal show={this.state.isSignupModalOpen}
-                            onClose={this.toggleSignUpModal}>
-                            Sign Up
+                            onClose={() => this.toggleModal('signup')}>
+                            <SignUpForm />
                         </NavModal>
                     </div>
                     <a href='/auth/google'><li className='navbarButton'>Google+</li></a>
-
                 </ul>
             </div>
         )

@@ -1,24 +1,23 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {Route, Switch, Router} from 'react-router-dom'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Route, Switch, Router } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 
 //Import all components
-import {Main, Login, Signup, UserHome} from './components'
+import { Main, Login, Signup, UserHome } from './components'
 //Import all thunks
-import {me, fetchContent} from './store'
+import { me } from './store'
 
 /**
  * COMPONENT
  */
 class App extends Component {
-  componentDidMount () {
+  componentDidMount() {
     this.props.loadInitialData()
   }
-
-  render () {
-    const {isLoggedIn} = this.props
+  render() {
+    const { isLoggedIn } = this.props
 
     return (
       <Router history={history}>
@@ -29,10 +28,10 @@ class App extends Component {
             <Route path="/signup" component={Signup} />
             {
               isLoggedIn &&
-                <Switch>
-                  {/* Routes placed here are only available after logging in */}
-                  <Route path="/home" component={UserHome} />
-                </Switch>
+              <Switch>
+                {/* Routes placed here are only available after logging in */}
+
+              </Switch>
             }
             {/* Displays our Login component as a fallback */}
             <Route component={Login} />
@@ -56,9 +55,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    loadInitialData () {
+    loadInitialData() {
       dispatch(me())
-      dispatch(fetchContent())
     }
   }
 }

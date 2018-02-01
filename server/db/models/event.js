@@ -7,7 +7,7 @@ const crypto = require('crypto')
 // temporarily using strings to test
 //also uncomment salt and secrets
 
-const Events = db.define('events', {
+const Event = db.define('events', {
     secret: {
         type: Sequelize.STRING,
         unique: true,
@@ -36,11 +36,11 @@ const Events = db.define('events', {
     },
     startTime: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     endTime: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     salt: {
         type: Sequelize.STRING
@@ -48,7 +48,7 @@ const Events = db.define('events', {
 })
 
 
-module.exports = Events;
+module.exports = Event;
 
 //instance methods
 // Events.prototype.correctSecret = (possibleSecret) => {

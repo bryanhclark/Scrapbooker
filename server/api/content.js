@@ -10,12 +10,27 @@ router.get('/', (req, res, next) => {
         .catch(next)
 })
 
+router.get('/:eventId', (req, res, next) => {
+    Content.findAll({
+        where: {
+            eventId: Number(req.params.eventId)
+        }
+    })
+        .then(content => {
+            res.json(content)
+        })
+        .catch(next)
+})
 
 router.post('/image', (req, res, next) => {
+    req.body = req.body.contentObj
     Content.create({
         type: 'image',
-        downloadURL: req.body.imageURL,
-        eventId: 1
+        src: req.body.src,
+        width: req.body.width,
+        height: req.body.height,
+        orientation: req.body.orientation,
+        timeCreated: req.body.timeCreated
     })
         .then(content => res.json(content))
         .catch(next);

@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { Route, Switch, Router } from 'react-router-dom'
-import { Mosaic, Home, Login, Signup, Upload, NewEvent } from './index'
+import { Mosaic, Home, Login, Signup, Upload, NewEvent, Dashboard, SingleEvent } from './index'
 import { logout } from '../store'
 import Navbar from './Navbar'
+
 import Footer from './Footer'
 
 /**
@@ -25,7 +26,8 @@ const Main = (props) => {
         <Route exact path="/" component={Home} />
         <Route exact path="/mosaic" component={Mosaic} />
         <Route exact path="/upload" component={Upload} />
-        <Route exact path="/newEvent" component={NewEvent} />
+        <Route path="/dashboard/:userId" component={Dashboard} />
+        <Route path="/events/:eventId" component={SingleEvent} />
       </Switch>
     </div>
   )

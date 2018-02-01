@@ -4,8 +4,8 @@ module.exports = (io) => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
 
     socket.on('image_upload', (imgObj) => {
-      console.log("HERE => ", imgObj[src])
-      socket.broadcast.emit('got_it', {obj: "it's"});
+      console.log("HERE => ", imgObj)
+      socket.broadcast.emit('update_store', imgObj);
     })
 
     socket.on('disconnect', () => {

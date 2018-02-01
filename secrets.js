@@ -1,5 +1,5 @@
+//Firebase Config
 const firebase = require('firebase')
-
 
 const config = {
     apiKey: "AIzaSyCgYLyDM38JZEvWOn19tmmrcXM9FtbUwY0",
@@ -18,4 +18,13 @@ process.env.GOOGLE_CALLBACK = '/auth/google/callback'
 const firebaseInitialize = firebase.initializeApp(config)
 
 
-module.exports = { config, firebaseInitialize };
+//Twillio Config
+
+let TwilioConfig = {
+  accountSid: 'ACa6c533cd30c263d75a4ede58e45e69ed',
+  authToken: 'b961a4b4a936485e703bcfbf799959ba'
+}
+
+let TWILLIONUMBER = '+13478756349'
+
+module.exports = { config, firebaseInitialize, TwilioConfig, TWILLIONUMBER };

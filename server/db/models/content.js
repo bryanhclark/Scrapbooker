@@ -5,17 +5,28 @@ const Content = db.define('content', {
 	type: {
 			type: Sequelize.STRING,
 			allowNull: false,
-			isIn: [['image', 'text']],
+			defaultValue: "image"
 	},
-	value: {
-			type: Sequelize.STRING,
+	src: {
+			type: Sequelize.TEXT,
 			allowNull: false
+	},
+	timeCreated: {
+			type: Sequelize.DATE,
+			allowNull: false
+	},
+	width: {
+		type: Sequelize.INTEGER,
+		allowNull: false
+	},
+	height: {
+		type: Sequelize.INTEGER,
+		allowNull: false
+	},
+	orientation: {
+		type: Sequelize.INTEGER,
+		allowNull: false
 	}
-
-	// timeCreated: {
-	// 		type: Sequelize.DATE,
-	// 		allowNull: true
-	// }
 })
 
 module.exports = Content;

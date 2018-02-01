@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchSingleEvent } from '../store/singleEvent'
+import { fetchPartipants } from '../store/participants'
 import { DashboardModal, ContactList, AddContactsToEventForm } from './index'
 
 
@@ -40,7 +41,17 @@ class SingleEvent extends Component {
         </ul>
         <div className='single-Event-Contacts-List-Container'>
           <div className='single-Event-Contacts-List-Header'>
+            <h3>Participants in {this.props.singleEvent.name}:</h3>
           </div>
+          <ul>
+            <div className='single-Event-Participants-List-Container'>
+              {
+                this.props.participants.map(participant => (
+                  <li key={participant.contact.id}>{participant.contact.name}</li>
+                ))
+              }
+            </div>
+          </ul>
         </div>
       </div>
     )
@@ -50,6 +61,7 @@ class SingleEvent extends Component {
 const mapState = (state) => {
   return {
     singleEvent: state.singleEvent,
+    participants: state.participants
   }
 }
 
@@ -57,6 +69,8 @@ const mapDispatch = (dispatch) => {
   return {
     loadEvent(eventId) {
       dispatch(fetchSingleEvent(eventId))
+      dispatch(fetchPartipants(eventId))
+
     }
   }
 }

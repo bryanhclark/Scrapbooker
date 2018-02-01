@@ -23,7 +23,7 @@ class Upload extends Component {
 				<h3>Upload Photo</h3>
 				<input type='file' accept='image/*' onChange={this.props.handleImgUpload} />
 				<div className='uploadImgContainer'>
-					<img id='uploadImgPreview' src={this.props.pictures[0]} alt='picture' height='400px' width='200px' />
+					<img id='uploadImgPreview' src={this.props.content[0]} alt='picture' height='400px' width='200px' />
 				</div>
 			</div>
 		)
@@ -32,7 +32,7 @@ class Upload extends Component {
 
 const mapState = (state) => {
 	return {
-		pictures: state.pictures || ''
+		content: state.content
 	}
 }
 
@@ -47,9 +47,9 @@ const mapDispatch = (dispatch) => {
 					return imageEXIFPacker(image, response, (error, imageObj) => {
 						if (error) console.error(error)
 						else {
-              dispatch(postContent(imageObj))
-              uploadImageSocket(imageObj)
-            }
+							dispatch(postContent(imageObj))
+							uploadImageSocket(imageObj)
+						}
 					})
 				})
 
@@ -65,6 +65,7 @@ function imageEXIFPacker(image, url, cb) {
 		imgObj.height = EXIF.getTag(this, "PixelYDimension")
 		imgObj.orientation = EXIF.getTag(this, "Orientation")
 		imgObj.timeCreated = image.lastModifiedDate.toString()
+		imgObj.eventId = 1
 		cb(null, imgObj)
 	})
 

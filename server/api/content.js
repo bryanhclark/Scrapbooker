@@ -30,7 +30,8 @@ router.post('/image', (req, res, next) => {
         width: req.body.width,
         height: req.body.height,
         orientation: req.body.orientation,
-        timeCreated: req.body.timeCreated
+        timeCreated: req.body.timeCreated,
+        eventId: req.body.eventId
     })
         .then(content => res.json(content))
         .catch(next);

@@ -11,11 +11,19 @@ class Mosaic extends Component {
   }
 
   componentDidMount() {
+<<<<<<< HEAD
     this.props.loadContent(1)
   }
 
   render() {
     console.log('this.props.content', this.props.content)
+=======
+    this.props.loadContent(this.props.match.params.eventId)
+  }
+
+  render() {
+    console.log(this.props.content);
+>>>>>>> development
     return (
       <div className='mosaicContainer'>
         <h3>This is the mosaic component</h3>

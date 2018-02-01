@@ -31,9 +31,9 @@ export const addParticipantsToEvent = (participantsArray, eventId) => {
       axios.post('/api/participants', { contactId: participant.id, eventId })
         .then(res => dispatch(addParticipants(res.data)))
     }))
-
   }
 }
+
 
 
 //REDUCER

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import participants, { addParticipantsToEvent, addParticipants } from '../store/participants'
 
 
 class AddContactsToEventForm extends Component {
@@ -10,6 +11,7 @@ class AddContactsToEventForm extends Component {
     }
     this.addContactToEvent = this.addContactToEvent.bind(this)
     this.removeContactFromEvent = this.removeContactFromEvent.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   addContactToEvent(newContact) {
@@ -28,9 +30,14 @@ class AddContactsToEventForm extends Component {
     this.setState({ contactsToAdd: filteredContactList })
   }
 
+  handleSubmit(e) {
+    e.preventDefault()
+    this.props.addContactsToEvent(this.state.contactsToAdd, this.props.singleEvent.id)
+  }
+
+
 
   render() {
-    console.log(this.state.contactsToAdd)
     return (
       <div className='add-Contacts-To-Event-Form-Container' >
         <h4>Add Contacts To Event: {this.props.singleEvent.name}</h4>
@@ -42,6 +49,7 @@ class AddContactsToEventForm extends Component {
               </div>
             ))
           }
+          <button onClick={this.handleSubmit}>Submit</button>
         </div>
         <ul className='contacts-To-Be-Added-List'>
           <div className='current-Contact-List-To-Add-Container'>
@@ -69,8 +77,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    addContactsToEvent(contactsArray) {
-
+    addContactsToEvent(contactsArray, eventId) {
+      dispatch(addParticipantsToEvent(contactsArray, eventId))
     }
   }
 }

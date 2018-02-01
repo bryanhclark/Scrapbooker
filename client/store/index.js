@@ -5,7 +5,6 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 //Import all store functions
 import user from './user'
-import pictures from './firebase'
 import content from './content'
 import config from '../../secrets'
 import currentEvents from './currentEvents'

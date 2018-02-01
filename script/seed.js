@@ -4,23 +4,26 @@ const db = require('../server/db')
 const { Event, Content, User } = require('../server/db/models');
 
 //Type in how many fake people to make
-const numberImgs = 20
+const numberImgs = 6
 const numberEvts = 3
 
 function fillMurray() {
   let num1 = Math.floor(Math.random() * 123) + 300
   let num2 = Math.floor(Math.random() * 136) + 150
-  return `https://www.fillmurray.com/${num1}/${num2}`
+  return {src: `https://www.fillmurray.com/${num1}/${num2}`, width: num1, height: num2}
 }
 
 //Edit their fake info
 function randImage() {
-  let downloadURL = fillMurray()
+  let imgObj = fillMurray()
   let type = "image"
   return {
-    value: downloadURL,
+    src: imgObj.src,
     type: type,
-    //contents_eventId_fkey: Math.floor(Math.random() * numberEvts) + 1
+    width: imgObj.width,
+    height: imgObj.height,
+    timeCreated: "Mon Jan 29 2018 16:14:27 GMT-0500 (EST)",
+    orientation: 1
   }
 }
 

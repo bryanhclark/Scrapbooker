@@ -5,6 +5,8 @@ import * as firebase from 'firebase'
 import { config } from '../../secrets'
 import {uploadImageSocket} from '../socket'
 import EXIF from 'exif-js'
+import { postContent } from '../store/content'
+
 
 class Upload extends Component {
     constructor(props) {
@@ -18,7 +20,7 @@ class Upload extends Component {
         return (
             <div className='uploadContainer'>
                 <h3>Upload Photo</h3>
-                <input type='file' accept='image/*' onChange={this.props.handleUpload} />
+                <input type='file' accept='image/*' onChange={this.props.handleImgUpload} />
                 <div className='uploadImgContainer'>
                     <img id='uploadImgPreview' src={this.props.pictures[0]} alt='picture' height='400px' width='200px' />
                 </div>
@@ -36,28 +38,26 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
     return {
-        handleUpload(event) {
+        handleImgUpload(event) {
             let image = event.target.files[0]
             firebaseUpload(image)
             .then(response => {
-               return imageEXIFPacker(image, response)
-            })
-            .then(imgObj => {
-              console.log(imgObj)
-            })
+							// dispatch(postContent(imageEXIFPacker(image, response)))
+							console.log(imageEXIFPacker(image, response))
+            })   
         }
     }
 }
 
 function imageEXIFPacker(image, url) {
-  let imgObj = {};
-  EXIF.getData(image, function() {
-      imgObj.timeCreated = image.lastModifiedDate.toString()
-      imgObj.orientation = EXIF.getTag(this, "Orientation")
-      imgObj.width = EXIF.getTag(this, "PixelXDimension")
-      imgObj.height = EXIF.getTag(this, "PixelYDimension")
-      imgObj.src = url
-  })
+	let imgObj = {}
+	EXIF.getData(image, function() {
+		imgObj.src = url
+    imgObj.width = EXIF.getTag(this, "PixelXDimension")
+		imgObj.height = EXIF.getTag(this, "PixelYDimension")
+    imgObj.orientation = EXIF.getTag(this, "Orientation")
+		imgObj.timeCreated = image.lastModifiedDate.toString()
+	})
   return imgObj
 }
 

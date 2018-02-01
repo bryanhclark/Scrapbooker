@@ -3,11 +3,17 @@ import axios from 'axios'
 // //ACTION TYPEs
 
 const GET_CONTENT = 'GET_CONTENT'
+const NEW_CONTENT = 'NEW_CONTENT'
 
 // //ACTION CREATORS
 
 const getContent = (content) => {
 	return { type: GET_CONTENT, content }
+}
+
+const getNewContent = (newContent) => {
+  console.log("got to getNewContent")
+  return {type: NEW_CONTENT, newContent }
 }
 
 // //THUNKS
@@ -33,12 +39,23 @@ export const postContent = (contentObj) => {
 	}
 }
 
+export const socketStoreUpdate = (imageObj) => {
+    console.log("outside thunk")
+    return function thunk(dispatch) {
+      console.log("inside thunk")
+      return dispatch(getNewContent(imageObj))
+    }
+}
+
 // //REDUCER
 
 export default (state = [], action) => {
 	switch (action.type) {
 		case GET_CONTENT:
-			return action.content
+      return action.content
+    case NEW_CONTENT:
+      console.log("got to store", action.newContent)
+      return [...state, action.newContent]
 		default:
 			return state
 	}

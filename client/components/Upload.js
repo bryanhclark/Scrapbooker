@@ -40,33 +40,50 @@ const mapDispatch = (dispatch) => {
     return {
         handleImgUpload(event) {
             let image = event.target.files[0]
-            firebaseUpload(image)
-            .then(response => {
-							// dispatch(postContent(imageEXIFPacker(image, response)))
-							console.log(imageEXIFPacker(image, response))
-            })   
+            let tempObj = {
+              type: "image",
+              src: randomMurray(),
+              timeCreated: "now",
+              width: 300,
+              height: 450,
+              orientation: 1,
+              eventId: 2
+            }
+            uploadImageSocket(tempObj)
+
+            // firebaseUpload(image)
+            // .then(response => {
+						// 	// dispatch(postContent(imageEXIFPacker(image, response)))
+						// 	console.log(imageEXIFPacker(image, response))
+            // })
         }
     }
 }
 
-function imageEXIFPacker(image, url) {
-	let imgObj = {}
-	EXIF.getData(image, function() {
-		imgObj.src = url
-    imgObj.width = EXIF.getTag(this, "PixelXDimension")
-		imgObj.height = EXIF.getTag(this, "PixelYDimension")
-    imgObj.orientation = EXIF.getTag(this, "Orientation")
-		imgObj.timeCreated = image.lastModifiedDate.toString()
-	})
-  return imgObj
+function randomMurray() {
+  let num1 = Math.floor(Math.random() * 100 + 100)
+  let num2 = Math.floor(Math.random() * 100 + 300)
+  return `https://www.fillmurray.com/${num1}/${num2}`
 }
+
+// function imageEXIFPacker(image, url) {
+// 	let imgObj = {}
+// 	EXIF.getData(image, function() {
+// 		imgObj.src = url
+//     imgObj.width = EXIF.getTag(this, "PixelXDimension")
+// 		imgObj.height = EXIF.getTag(this, "PixelYDimension")
+//     imgObj.orientation = EXIF.getTag(this, "Orientation")
+// 		imgObj.timeCreated = image.lastModifiedDate.toString()
+// 	})
+//   return imgObj
+// }
 
 export default connect(mapState, mapDispatch)(Upload)
 
-function firebaseUpload(image) {
-  const downloadURL = firebase.storage().ref(`images`).child(image.name).put(image)
-  .then((response) => {
-      return response.downloadURL
-  })
-  return downloadURL
-}
+// function firebaseUpload(image) {
+//   const downloadURL = firebase.storage().ref(`images`).child(image.name).put(image)
+//   .then((response) => {
+//       return response.downloadURL
+//   })
+//   return downloadURL
+// }

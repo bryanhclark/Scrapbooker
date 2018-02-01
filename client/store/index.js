@@ -12,7 +12,7 @@ import contacts from './contacts'
 import singleEvent from './singleEvent'
 import participants from './participants'
 
-const reducer = combineReducers({ user, pictures, content, currentEvents, contacts, singleEvent, participants })
+const reducer = combineReducers({ user, content, currentEvents, contacts, singleEvent, participants })
 
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,

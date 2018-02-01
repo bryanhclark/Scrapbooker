@@ -3,87 +3,82 @@ import { withRouter, Link, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import * as firebase from 'firebase'
 import { config } from '../../secrets'
-import {uploadImageSocket} from '../socket'
+import { uploadImageSocket } from '../socket'
 import EXIF from 'exif-js'
 import { postContent } from '../store/content'
+import 'babel-polyfill'
 
 
 class Upload extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            img: ''
-        }
-    }
+	constructor(props) {
+		super(props)
+		this.state = {
+			img: ''
+		}
+	}
 
-    render() {
-        return (
-            <div className='uploadContainer'>
-                <h3>Upload Photo</h3>
-                <input type='file' accept='image/*' onChange={this.props.handleImgUpload} />
-                <div className='uploadImgContainer'>
-                    <img id='uploadImgPreview' src={this.props.pictures[0]} alt='picture' height='400px' width='200px' />
-                </div>
-            </div>
-        )
-    }
+	render() {
+		return (
+			<div className='uploadContainer'>
+				<h3>Upload Photo</h3>
+				<input type='file' accept='image/*' onChange={this.props.handleImgUpload} />
+				<div className='uploadImgContainer'>
+					<img id='uploadImgPreview' src={this.props.pictures[0]} alt='picture' height='400px' width='200px' />
+				</div>
+			</div>
+		)
+	}
 }
 
 const mapState = (state) => {
-    return {
-        pictures: state.pictures || ''
-    }
+	return {
+		pictures: state.pictures || ''
+	}
 }
 
 
 const mapDispatch = (dispatch) => {
-    return {
-        handleImgUpload(event) {
-            let image = event.target.files[0]
-            let tempObj = {
-              type: "image",
-              src: randomMurray(),
-              timeCreated: "now",
-              width: 300,
-              height: 450,
-              orientation: 1,
-              eventId: 2
+
+	return {
+		handleImgUpload(event) {
+			let image = event.target.files[0]
+			firebaseUpload(image)
+				.then(response => {
+					return imageEXIFPacker(image, response, (error, imageObj) => {
+						if (error) console.error(error)
+						else {
+              dispatch(postContent(imageObj))
+              uploadImageSocket(imageObj)
             }
-            uploadImageSocket(tempObj)
+					})
+				})
 
-            // firebaseUpload(image)
-            // .then(response => {
-						// 	// dispatch(postContent(imageEXIFPacker(image, response)))
-						// 	console.log(imageEXIFPacker(image, response))
-            // })
-        }
-    }
+		}
+	}
 }
 
-function randomMurray() {
-  let num1 = Math.floor(Math.random() * 100 + 100)
-  let num2 = Math.floor(Math.random() * 100 + 300)
-  return `https://www.fillmurray.com/${num1}/${num2}`
+function imageEXIFPacker(image, url, cb) {
+	let imgObj = {}
+	EXIF.getData(image, function () {
+		imgObj.src = url
+		imgObj.width = EXIF.getTag(this, "PixelXDimension")
+		imgObj.height = EXIF.getTag(this, "PixelYDimension")
+		imgObj.orientation = EXIF.getTag(this, "Orientation")
+		imgObj.timeCreated = image.lastModifiedDate.toString()
+		cb(null, imgObj)
+	})
+
 }
 
-// function imageEXIFPacker(image, url) {
-// 	let imgObj = {}
-// 	EXIF.getData(image, function() {
-// 		imgObj.src = url
-//     imgObj.width = EXIF.getTag(this, "PixelXDimension")
-// 		imgObj.height = EXIF.getTag(this, "PixelYDimension")
-//     imgObj.orientation = EXIF.getTag(this, "Orientation")
-// 		imgObj.timeCreated = image.lastModifiedDate.toString()
-// 	})
-//   return imgObj
-// }
+
+
 
 export default connect(mapState, mapDispatch)(Upload)
 
-// function firebaseUpload(image) {
-//   const downloadURL = firebase.storage().ref(`images`).child(image.name).put(image)
-//   .then((response) => {
-//       return response.downloadURL
-//   })
-//   return downloadURL
-// }
+function firebaseUpload(image) {
+	const downloadURL = firebase.storage().ref(`images`).child(image.name).put(image)
+		.then((response) => {
+			return response.downloadURL
+		})
+	return downloadURL
+}

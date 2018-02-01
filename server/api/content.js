@@ -13,9 +13,9 @@ router.get('/', (req, res, next) => {
 router.get('/:eventId', (req, res, next) => {
     Content.findAll({
         where: {
-          eventId: Number(req.params.eventId)
+            eventId: Number(req.params.eventId)
         }
-      })
+    })
         .then(content => {
             res.json(content)
         })
@@ -23,18 +23,17 @@ router.get('/:eventId', (req, res, next) => {
 })
 
 router.post('/image', (req, res, next) => {
-    console.log("req.body is", req.body)
-
-    // Content.create({
-    //     type: 'image',
-    //     src: req.body.src,
-    //     width: req.body.width,
-    //     height: req.body.height,
-    //     orientation: req.body.orientation,
-    //     timeCreated: req.body.timeCreated
-    // })
-    //     .then(content => res.json(content))
-    //     .catch(next);
+    req.body = req.body.contentObj
+    Content.create({
+        type: 'image',
+        src: req.body.src,
+        width: req.body.width,
+        height: req.body.height,
+        orientation: req.body.orientation,
+        timeCreated: req.body.timeCreated
+    })
+        .then(content => res.json(content))
+        .catch(next);
 })
 
 module.exports = router

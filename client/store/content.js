@@ -31,7 +31,7 @@ export function fetchContent(eventId) {
 export const postContent = (contentObj) => {
 	console.log("contentObj before Axios", contentObj)
 	return function thunk(dispatch) {
-		axios.post('/api/content/image', {contentObj})
+		axios.post('/api/content/image', { contentObj })
 			.then(response => {
 				console.log('response data is', response.data)
 				// dispatch(getImages(response.data.images))

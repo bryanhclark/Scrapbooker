@@ -30,4 +30,4 @@ DashboardModal.propTypes = {
     children: PropTypes.node
 };
 
-export default DashboardModal;
+export default DashboardModal; 

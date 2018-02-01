@@ -10,34 +10,31 @@ class Mosaic extends Component {
     super(props)
   }
 
-  componentDidMount(){
-   this.props.loadContent(2)
+  componentDidMount() {
+    this.props.loadContent(this.props.match.params.eventId)
   }
 
   render() {
+    console.log(this.props.content);
     return (
       <div className='mosaicContainer'>
         <h3>This is the mosaic component</h3>
         <NavLink to='/'>Home</NavLink>
         <div className="grid" data-packery='{ "itemSelector": ".grid-item", "gutter": 0 }'>
           {
-            this.props.content.map(item => {
-            switch (item.type) {
-              case 'image':
-                return (<img key={item.id} src={item.value} className="grid-item type_image" />)
-              case 'text':
-                return (<div key={item.id} className="grid-item type_text"><span className="quote_start">&ldquo;</span>{item.value}<span className="quote_end">&rdquo;</span></div>)
-            }})
+            this.props.content.map(item => (
+              <img key={item.id} src={item.src} className="grid-item type_image" />
+            ))
           }
         </div>
       </div>
     )
-  } 
+  }
 }
 
 const mapState = (state) => {
   return {
-      content: state.content
+    content: state.content
   }
 }
 

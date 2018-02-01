@@ -6,7 +6,6 @@ import { config } from '../../secrets'
 import { uploadImageSocket } from '../socket'
 import EXIF from 'exif-js'
 import { postContent } from '../store/content'
-import 'babel-polyfill'
 
 
 class Upload extends Component {

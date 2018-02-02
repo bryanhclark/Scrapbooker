@@ -18,12 +18,23 @@ class Upload extends Component {
 	}
 
 	render() {
+		console.log(this.props.singleEvent)
 		return (
 			<div className='uploadContainer'>
-				<h3>Upload Photo</h3>
-				<input type='file' accept='image/*' onChange={this.props.handleImgUpload} />
-				<div className='uploadImgContainer'>
-					<img id='uploadImgPreview' src={this.props.pictures[0]} alt='picture' height='400px' width='200px' />
+				<div className="mobile_toggle">
+						<div className="mobile_toggle_disabled">Upload</div>
+						<NavLink to={`/events/${this.props.singleEvent.id}/mosaic`}className="mobile_toggle_active">Mosaic</NavLink>
+				</div>
+				<div className="wrapper">
+					<h3>Upload Photo</h3>
+					<label className="btn" for="imageToUpload">Choose photo</label>
+					<input type='file' accept='image/*;capture=camera' id='imageToUpload' onChange={
+						(e) => {this.fileInput = e.target.files[0];
+							console.log("this.fileInput", this.fileInput)
+						 this.setState({img: e.target.files[0]})}} />
+					<p>{this.state.img.name}</p>
+					<button className="btn" onClick={() => this.props.handleImgUpload(this.fileInput, this.props.match.params.eventId)}>Upload Image</button>
+					
 				</div>
 			</div>
 		)
@@ -39,8 +50,12 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
 	return {
+<<<<<<< HEAD
+		handleImgUpload(image, eventId) {
+=======
 		handleImgUpload(event) {
 			let image = event.target.files[0]
+>>>>>>> 91839252d357c1699f975438e9488d52701aba65
 			firebaseUpload(image)
 				.then(response => {
 					return imageEXIFPacker(image, response, (error, imageObj) => {
@@ -69,9 +84,11 @@ function imageEXIFPacker(image, url, cb) {
 
 }
 
-export default connect(mapState, mapDispatch)(Upload)
+const uploadContainer = connect(mapState, mapDispatch)(Upload)
+export default uploadContainer
 
-function firebaseUpload(image) {
+
+const  firebaseUpload = (image)=>  {
 	const downloadURL = firebase.storage().ref(`images`).child(image.name).put(image)
 		.then((response) => {
 			return response.downloadURL

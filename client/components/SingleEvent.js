@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { fetchSingleEvent } from '../store/singleEvent'
 import { fetchPartipants } from '../store/participants'
 import { DashboardModal, ContactList, AddContactsToEventForm } from './index'
+import { NavLink } from 'react-router-dom'
 import {broadcastTextMessage} from '../store/twilio'
 
 
@@ -39,8 +40,8 @@ class SingleEvent extends Component {
             <DashboardModal show={this.state.isAddContactModelOpen} onClose={() => this.toggleModal('addContacts')}>
               <AddContactsToEventForm participants={this.props.participants} />
             </DashboardModal>
-            <li className='single-Event-View-Mosaic-Button'><a href={`/events/${this.props.singleEvent.id}/mosaic`}>View Mosaic</a></li>
-            <li className='single-Event-View-Uplad-Button'><a href={`/events/${this.props.singleEvent.id}/upload`}>Upload Content</a></li>
+            <li className='single-Event-View-Mosaic-Button'><NavLink to={`/events/${this.props.singleEvent.id}/mosaic`}>View Mosaic</NavLink></li>
+            <li className='single-Event-View-Uplad-Button'><NavLink to={`/events/${this.props.singleEvent.id}/upload`}>Upload Content</NavLink></li>
           </div>
           <div id='event_participants_list'>
             <div className='single-Event-Contacts-List-Header'>

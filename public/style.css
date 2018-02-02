@@ -9,7 +9,7 @@ a:hover {text-decoration: underline;}
 
   /* Globals */
 .wrapper {margin: 0 auto; width: 80%;}
-  
+
 /* Nav */
 #logo {font-family: 'Rammetto One', cursive; font-size: 2em;line-height: 1.2em;padding: 0 0 0 10px;}
 #logo_link:hover {text-decoration: none; color: #ddd;}
@@ -43,6 +43,7 @@ margin-left: 10px;}
 .section_header {margin: 50px 0 10px 0;display:flex}
 
 /* Modals */
+#sign_up_header {color: black; text-align: center;}
 
 /* Events */
 #event_add_contact_to_event {display:flex;}
@@ -71,4 +72,3 @@ margin-left: 10px;}
 
 
 }
- 

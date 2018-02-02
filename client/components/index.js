@@ -19,4 +19,4 @@ export { default as SingleEvent } from './SingleEvent'
 export { default as AddContactsToEventForm } from './AddContactsToEventForm'
 export { default as DashboardModal } from './DashboardModal'
 
-export { Login, Signup } from './auth-form'
+

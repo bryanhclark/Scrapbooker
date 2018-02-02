@@ -14,60 +14,53 @@ class Upload extends Component {
 		this.state = {
 			img: ''
 		}
+		this.fileInput = {}
 	}
 
+
 	render() {
+
 		return (
 			<div className='uploadContainer'>
 				<h3>Upload Photo</h3>
-				<input type='file' accept='image/*' onChange={this.props.handleImgUpload} />
+				<input type='file' accept='image/*;capture=camera' id='imageToUpload' onChange={(e) => this.fileInput = e.target.files[0]} />
+				<button onClick={() => this.props.handleImgUpload(this.fileInput, this.props.match.params.eventId)}>Upload Image</button>
 				<div className='uploadImgContainer'>
-					<img id='uploadImgPreview' src={this.props.pictures[0]} alt='picture' height='400px' width='200px' />
 				</div>
 			</div>
 		)
+
+		image.addEventListener('change', console.log('image uploaded'))
 	}
 }
 
 const mapState = (state) => {
 	return {
-		pictures: state.pictures || ''
+		singleEvent: state.singleEvent
 	}
 }
 
 
-const mapDispatch = (dispatch) => {
-
+const mapDispatch = (dispatch, ownProps) => {
 	return {
-		handleImgUpload(event) {
-			let image = event.target.files[0]
+		handleImgUpload(image, eventId) {
+			console.log('in handleIMageUpload')
+			console.log(image)
 			firebaseUpload(image)
 				.then(response => {
-					return imageEXIFPacker(image, response, (error, imageObj) => {
+					return imageEXIFPacker(image, response, ownProps.match.params.eventId, (error, imageObj) => {
 						if (error) console.error(error)
 						else {
-              dispatch(postContent(imageObj))
-              uploadImageSocket(imageObj)
-            }
+							dispatch(postContent(imageObj))
+							uploadImageSocket(imageObj)
+						}
 					})
 				})
-
 		}
 	}
 }
 
-function imageEXIFPacker(image, url, cb) {
-	let imgObj = {}
-	EXIF.getData(image, function () {
-		imgObj.src = url
-		imgObj.width = EXIF.getTag(this, "PixelXDimension")
-		imgObj.height = EXIF.getTag(this, "PixelYDimension")
-		imgObj.orientation = EXIF.getTag(this, "Orientation")
-		imgObj.timeCreated = image.lastModifiedDate.toString()
-		cb(null, imgObj)
-	})
 
-}
 
 
 
@@ -80,4 +73,18 @@ function firebaseUpload(image) {
 			return response.downloadURL
 		})
 	return downloadURL
+}
+
+const imageEXIFPacker = (image, url, eventId, cb) => {
+	let imgObj = {}
+	EXIF.getData(image, function () {
+		imgObj.src = url
+		// imgObj.width = EXIF.getTag(this, "PixelXDimension")
+		imgObj.width = '100px'
+		// imgObj.height = EXIF.getTag(this, "PixelYDimension")
+		imgObj.height = '100px'
+		imgObj.orientation = EXIF.getTag(this, "Orientation")
+		imgObj.eventId = eventId
+		cb(null, imgObj)
+	})
 }

@@ -26,32 +26,39 @@ class SingleEvent extends Component {
 
 
   render() {
+    console.log('in single event', this.props.participants)
     return (
       <div className='single-Event-Container' >
-        <div className='single-Event-Header'>
-          <h3>{this.props.singleEvent.name}</h3>
-        </div>
-        <ul className='single-Event-Button-List'>
-          <div className='single-Event-Button-Container'>
-            <li className='single-Event-Button'><a onClick={() => this.toggleModal('addContacts')}>Add Contact to Event</a></li>
+
+        <div className="wrapper">
+          <div className='single-Event-Header'>
+            <h2>Event: <span className="title">{this.props.singleEvent.name}</span></h2>
+          </div>
+          <div id="event_add_contact_to_event">
+            <a onClick={() => this.toggleModal('addContacts')} className="btn" id="btn_addParticipantEvent">Add Contact to Event</a>
+
             <DashboardModal show={this.state.isAddContactModelOpen} onClose={() => this.toggleModal('addContacts')}>
               <AddContactsToEventForm />
             </DashboardModal>
+            <li className='single-Event-View-Mosaic-Button'><a href={`/events/${this.props.singleEvent.id}/mosaic`}>View Mosaic</a></li>
+            <li className='single-Event-View-Uplad-Button'><a href={`/events/${this.props.singleEvent.id}/upload`}>Upload Content</a></li>
           </div>
-        </ul>
-        <div className='single-Event-Contacts-List-Container'>
-          <div className='single-Event-Contacts-List-Header'>
-            <h3>Participants in {this.props.singleEvent.name}:</h3>
-          </div>
-          <ul>
-            <div className='single-Event-Participants-List-Container'>
-              {
-                this.props.participants.map(participant => (
-                  <li key={participant.contact.id}>{participant.contact.name}</li>
-                ))
-              }
+          <div id='event_participants_list'>
+            <div className='single-Event-Contacts-List-Header'>
+              <h2>Participants:</h2>
             </div>
-          </ul>
+            <table>
+              <tbody>
+                {
+                  this.props.participants.map(participant => (
+                    <tr key={participant.contact.id}>
+                      <td>{participant.contact.name}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     )

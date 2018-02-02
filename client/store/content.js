@@ -19,7 +19,7 @@ const getNewContent = (newContent) => {
 
 // //THUNKS
 export function fetchContent(eventId) {
-	return dispacth => {
+	return dispatch => {
 		return axios.get(`/api/content/${eventId}`)
 			.then(res => dispatch(getContent(res.data)))
 			.catch(console.error)

@@ -4,28 +4,28 @@ const db = require('../db')
 const Content = db.define('content', {
 	type: {
 		type: Sequelize.STRING,
-		allowNull: false,
+		allowNull: true,
 		defaultValue: "image"
 	},
 	src: {
 		type: Sequelize.TEXT,
-		allowNull: false
+		allowNull: true
 	},
 	timeCreated: {
-		type: Sequelize.DATE,
-		allowNull: false
+		type: Sequelize.STRING,
+		allowNull: true
 	},
 	width: {
 		type: Sequelize.INTEGER,
-		allowNull: false
+		allowNull: true
 	},
 	height: {
 		type: Sequelize.INTEGER,
-		allowNull: false
+		allowNull: true
 	},
 	orientation: {
 		type: Sequelize.INTEGER,
-		allowNull: false
+		allowNull: true
 	}
 })
 

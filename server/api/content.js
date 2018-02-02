@@ -24,6 +24,7 @@ router.get('/:eventId', (req, res, next) => {
 
 router.post('/image', (req, res, next) => {
 	req.body = req.body.contentObj
+	console.log('req.body', req.body)
 	Content.create({
 		type: 'image',
 		src: req.body.src,

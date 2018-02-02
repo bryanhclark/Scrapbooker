@@ -6,6 +6,7 @@ import { config } from '../../secrets'
 import { uploadImageSocket } from '../socket'
 import EXIF from 'exif-js'
 import { postContent } from '../store/content'
+import { fetchSingleEvent } from '../store/singleEvent'
 import 'babel-polyfill'
 
 
@@ -15,6 +16,10 @@ class Upload extends Component {
 		this.state = {
 			img: ''
 		}
+	}
+
+	componentDidMount() {
+		this.props.loadSingleEvent(this.props.match.params.eventId)
 	}
 
 	render() {
@@ -29,6 +34,7 @@ class Upload extends Component {
 					<label className="btn" for="imageToUpload">Choose photo</label>
 					<input type='file' accept='image/*;capture=camera' id='imageToUpload' onChange={
 						(e) => {
+							e.preventDefault()
 							this.fileInput = e.target.files[0];
 							console.log("this.fileInput", this.fileInput)
 							this.setState({ img: e.target.files[0] })
@@ -54,7 +60,8 @@ const mapDispatch = (dispatch) => {
 		handleImgUpload(image, eventId) {
 			firebaseUpload(image)
 				.then(response => {
-					return imageEXIFPacker(image, response, (error, imageObj) => {
+					console.log(response)
+					return imageEXIFPacker(image, response, eventId, (error, imageObj) => {
 						if (error) console.error(error)
 						else {
 							dispatch(postContent(imageObj))
@@ -62,19 +69,22 @@ const mapDispatch = (dispatch) => {
 						}
 					})
 				})
-
+		},
+		loadSingleEvent(eventId) {
+			dispatch(fetchSingleEvent(eventId))
 		}
 	}
 }
 
-function imageEXIFPacker(image, url, cb) {
+function imageEXIFPacker(image, url, eventId, cb) {
 	let imgObj = {}
 	EXIF.getData(image, function () {
 		imgObj.src = url
-		imgObj.width = EXIF.getTag(this, "PixelXDimension")
-		imgObj.height = EXIF.getTag(this, "PixelYDimension")
-		imgObj.orientation = EXIF.getTag(this, "Orientation")
-		imgObj.timeCreated = image.lastModifiedDate.toString()
+		imgObj.width = Number(EXIF.getTag(this, "PixelXDimension"))
+		imgObj.height = Number(EXIF.getTag(this, "PixelYDimension"))
+		imgObj.orientation = Number(EXIF.getTag(this, "Orientation"))
+		imgObj.timeCreated = image.lastModified.toString()
+		imgObj.eventId = eventId
 		cb(null, imgObj)
 	})
 

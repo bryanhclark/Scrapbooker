@@ -13,35 +13,28 @@ const getContent = (content) => {
 }
 
 const getNewContent = (newContent) => {
-	console.log("got to getNewContent")
 	let action = { type: NEW_CONTENT, newContent }
 	store.dispatch(action)
 }
 
 // //THUNKS
 export function fetchContent(eventId) {
-	return function thunk(dispatch) {
+	return dispacth => {
 		return axios.get(`/api/content/${eventId}`)
-			.then(res => res.data)
-			.then(content => {
-				const action = getContent(content)
-				return dispatch(action)
-			})
+			.then(res => dispatch(getContent(res.data)))
+			.catch(console.error)
 	}
 }
 
 export const postContent = (contentObj) => {
-	console.log("contentObj before Axios", contentObj)
-	return function thunk(dispatch) {
+	return dispacth => {
 		axios.post('/api/content/image', { contentObj })
-			.then(response => {
-				// dispatch(getImages(response.data.images))
-			})
+			.then(response => dispatch(getImages(response.data.images)))
+			.catch(console.error)
 	}
 }
 
 export const socketStoreUpdate = (imageObj) => {
-	console.log('in socket store update', imageObj)
 	getNewContent(imageObj)
 }
 
@@ -52,7 +45,6 @@ export default (state = [], action) => {
 		case GET_CONTENT:
 			return action.content
 		case NEW_CONTENT:
-			console.log("got to store", action.newContent)
 			return [...state, action.newContent]
 		default:
 			return state

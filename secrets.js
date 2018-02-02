@@ -21,10 +21,10 @@ const firebaseInitialize = firebase.initializeApp(config)
 //Twillio Config
 
 let TwilioConfig = {
-  accountSid: 'ACa6c533cd30c263d75a4ede58e45e69ed',
-  authToken: 'b961a4b4a936485e703bcfbf799959ba'
+  accountSid: 'ACd7416b567633dffcd6ed3e68cd094f6c',
+  authToken: '40a13fe3f179fa9cf78e27895bb9bb73'
 }
 
-let TWILLIONUMBER = '+13478756349'
+let TWILLIONUMBER = '+12016131005'
 
 module.exports = { config, firebaseInitialize, TwilioConfig, TWILLIONUMBER };

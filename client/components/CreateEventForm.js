@@ -77,8 +77,8 @@ class CreateEventForm extends Component {
               <input type='text' value={this.state.endTime} name='endTime' onChange={this.handleChange} />
 						</label>
 					</div>
-					<div className='create-Event-Submit-Button-Div'>
-						<input type='submit' value='submit' />
+					<div className='btn_area'>
+						<input className="btn" type='submit' value='submit' />
 					</div>
 				</form>
 			</div>

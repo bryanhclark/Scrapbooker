@@ -35,26 +35,26 @@ class SignUpForm extends Component {
           <h2 id="sign_up_header">Sign Up Page</h2>
           <div className='signup-firstName--Button-Div'>
             <label>
-                <input type='text' placeholder="First Name" value={this.state.firstName} name='firstName' onChange={this.handleChange} />
+              <input type='text' placeholder="First Name" value={this.state.firstName} name='firstName' onChange={this.handleChange} />
             </label>
           </div>
           <div className='signup-lastNamr-submit-Button-Div'>
             <label>
-                <input type='text' placeholder="Last Name" value={this.state.lastName} name='lastName' onChange={this.handleChange} />
+              <input type='text' placeholder="Last Name" value={this.state.lastName} name='lastName' onChange={this.handleChange} />
             </label>
           </div>
           <div className='signup-email-submit-Button-Div'>
             <label>
-                <input type='text' placeholder="Email" value={this.state.email} name='email' onChange={this.handleChange} />
+              <input type='text' placeholder="Email" value={this.state.email} name='email' onChange={this.handleChange} />
             </label>
           </div>
           <div className='signup-password-submit-Button-Div'>
             <label>
-                <input type='text' placeholder="Password" value={this.state.password} name='password' onChange={this.handleChange} />
+              <input type='text' placeholder="Password" value={this.state.password} name='password' onChange={this.handleChange} />
             </label>
           </div>
-          <div className='signup-submit-Button-Div'>
-            <input type='submit' value='Submit' />
+          <div className='btn_area'>
+            <input className="btn" type='submit' value='submit' />
           </div>
         </form>
       </div>

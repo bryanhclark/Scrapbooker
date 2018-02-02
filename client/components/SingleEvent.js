@@ -52,7 +52,8 @@ class SingleEvent extends Component {
                     this.props.participants.map(participant => (
                       <tr key={participant.contact.id}>
                         <td>{participant.contact.name}</td>
-                      </tr>
+                        <td>{participant.contact.phone}</td>
+                        </tr>
                     ))
                   }
                 </tbody>

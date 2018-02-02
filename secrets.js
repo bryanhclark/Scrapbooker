@@ -27,4 +27,7 @@ let TwilioConfig = {
 
 let TWILLIONUMBER = '+12016131005'
 
-module.exports = { config, firebaseInitialize, TwilioConfig, TWILLIONUMBER };
+//Bitly Config
+let BITLYCONFIG = '7735debd667cbbf1d31c9f9691251369e5592531'
+
+module.exports = { config, firebaseInitialize, TwilioConfig, TWILLIONUMBER, BITLYCONFIG };

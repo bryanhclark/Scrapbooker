@@ -43,6 +43,11 @@ margin-left: 10px;}
 .section_header {margin: 50px 0 10px 0;display:flex}
 
 /* Modals */
+.dashboard-Modal {position: relative;}
+.btn_close {border: none;
+  background: transparent !important; position:absolute; right:6px;top:6px;}
+.btn_close:before {content: "X"; display: relative; top:0; right:0;font-size: 20px; color: gray; outline:none;}
+.btn_area {display:flex}
 
 /* Events */
 #event_add_contact_to_event {display:flex;}

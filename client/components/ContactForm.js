@@ -49,8 +49,8 @@ class ContactForm extends Component {
 						<input type='text' value={this.state.phone} name='phone' onChange={this.handleChange} />
 						</label>
 					</div>
-					<div className='create-Contact-submit-Button-Div'>
-						<input type='submit' value='submit' />
+					<div className='btn_area'>
+						<input className="btn" type='submit' value='submit' />
 					</div>
 				</form>
 			</div>

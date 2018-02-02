@@ -53,7 +53,9 @@ class AddContactsToEventForm extends Component {
               </div>
             ))
           }
-          <button onClick={this.handleSubmit}>Submit</button>
+          <div className="btn_area">
+            <button className="btn" onClick={this.handleSubmit}>Submit</button>
+          </div>
         </div>
         <ul className='contacts-To-Be-Added-List'>
           <div className='current-Contact-List-To-Add-Container'>

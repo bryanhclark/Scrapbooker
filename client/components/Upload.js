@@ -6,6 +6,7 @@ import { config } from '../../secrets'
 import { uploadImageSocket } from '../socket'
 import EXIF from 'exif-js'
 import { postContent } from '../store/content'
+import 'babel-polyfill'
 
 
 class Upload extends Component {
@@ -14,9 +15,7 @@ class Upload extends Component {
 		this.state = {
 			img: ''
 		}
-		this.fileInput = {}
 	}
-
 
 	render() {
 		console.log(this.props.singleEvent)
@@ -44,32 +43,46 @@ class Upload extends Component {
 
 const mapState = (state) => {
 	return {
-		singleEvent: state.singleEvent
+		pictures: state.pictures || ''
 	}
 }
 
 
-const mapDispatch = (dispatch, ownProps) => {
+const mapDispatch = (dispatch) => {
 	return {
+<<<<<<< HEAD
 		handleImgUpload(image, eventId) {
+=======
+		handleImgUpload(event) {
+			let image = event.target.files[0]
+>>>>>>> 91839252d357c1699f975438e9488d52701aba65
 			firebaseUpload(image)
 				.then(response => {
-					return imageEXIFPacker(image, response, ownProps.match.params.eventId, (error, imageObj) => {
+					return imageEXIFPacker(image, response, (error, imageObj) => {
 						if (error) console.error(error)
 						else {
-							dispatch(postContent(imageObj))
-							uploadImageSocket(imageObj)
-						}
+              dispatch(postContent(imageObj))
+              uploadImageSocket(imageObj)
+            }
 					})
 				})
+
 		}
 	}
 }
 
+function imageEXIFPacker(image, url, cb) {
+	let imgObj = {}
+	EXIF.getData(image, function () {
+		imgObj.src = url
+		imgObj.width = EXIF.getTag(this, "PixelXDimension")
+		imgObj.height = EXIF.getTag(this, "PixelYDimension")
+		imgObj.orientation = EXIF.getTag(this, "Orientation")
+		imgObj.timeCreated = image.lastModifiedDate.toString()
+		cb(null, imgObj)
+	})
 
-
-
-
+}
 
 const uploadContainer = connect(mapState, mapDispatch)(Upload)
 export default uploadContainer
@@ -81,18 +94,4 @@ const  firebaseUpload = (image)=>  {
 			return response.downloadURL
 		})
 	return downloadURL
-}
-
-const imageEXIFPacker = (image, url, eventId, cb) => {
-	let imgObj = {}
-	EXIF.getData(image, function () {
-		imgObj.src = url
-		// imgObj.width = EXIF.getTag(this, "PixelXDimension")
-		imgObj.width = '100px'
-		// imgObj.height = EXIF.getTag(this, "PixelYDimension")
-		imgObj.height = '100px'
-		imgObj.orientation = EXIF.getTag(this, "Orientation")
-		imgObj.eventId = eventId
-		cb(null, imgObj)
-	})
 }

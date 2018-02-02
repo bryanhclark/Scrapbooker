@@ -61,8 +61,8 @@ a:hover {text-decoration: underline;}
 /*================================= Mobile ====================================*/
 @media only screen and (max-width:600px) {
   .mobile_toggle {display:block;display:flex;}
-  .mobile_toggle_active {flex-grow:1;background-color:orangered;text-align: center;padding:20px}
-  .mobile_toggle_disabled {flex-grow:1;background-color:gray;text-align: center;padding:20px}
+  .mobile_toggle_active {flex-grow:1;background-color:gray;text-align: center;padding:20px;}
+  .mobile_toggle_disabled {flex-grow:1;background-color:orangered; text-align:center;padding:20px}
 
 
 }

@@ -17,8 +17,10 @@ class Mosaic extends Component {
   render() {
     return (
       <div className='mosaicContainer'>
-        <h3>This is the mosaic component</h3>
-        <NavLink to='/'>Home</NavLink>
+        <div className="mobile_toggle">
+          <NavLink to={`/events/${this.props.singleEvent.id}/upload`} className="mobile_toggle_active">Upload</NavLink>
+					<div className="mobile_toggle_disabled">Mosaic</div>
+				</div>
         <div className="grid" data-packery='{ "itemSelector": ".grid-item", "gutter": 0 }'>
           {
             this.props.content.map(item => (
@@ -33,7 +35,8 @@ class Mosaic extends Component {
 
 const mapState = (state) => {
   return {
-    content: state.content
+    content: state.content,
+    singleEvent: state.singleEvent
   }
 }
 

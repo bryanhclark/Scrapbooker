@@ -19,18 +19,26 @@ class Upload extends Component {
 
 
 	render() {
-
+		console.log(this.props.singleEvent)
 		return (
 			<div className='uploadContainer'>
-				<h3>Upload Photo</h3>
-				<input type='file' accept='image/*;capture=camera' id='imageToUpload' onChange={(e) => this.fileInput = e.target.files[0]} />
-				<button onClick={() => this.props.handleImgUpload(this.fileInput, this.props.match.params.eventId)}>Upload Image</button>
-				<div className='uploadImgContainer'>
+				<div className="mobile_toggle">
+						<div className="mobile_toggle_disabled">Upload</div>
+						<NavLink to={`/events/${this.props.singleEvent.id}/mosaic`}className="mobile_toggle_active">Mosaic</NavLink>
+				</div>
+				<div className="wrapper">
+					<h3>Upload Photo</h3>
+					<label className="btn" for="imageToUpload">Choose photo</label>
+					<input type='file' accept='image/*;capture=camera' id='imageToUpload' onChange={
+						(e) => {this.fileInput = e.target.files[0];
+							console.log("this.fileInput", this.fileInput)
+						 this.setState({img: e.target.files[0]})}} />
+					<p>{this.state.img.name}</p>
+					<button className="btn" onClick={() => this.props.handleImgUpload(this.fileInput, this.props.match.params.eventId)}>Upload Image</button>
+					
 				</div>
 			</div>
 		)
-
-		image.addEventListener('change', console.log('image uploaded'))
 	}
 }
 
@@ -44,8 +52,6 @@ const mapState = (state) => {
 const mapDispatch = (dispatch, ownProps) => {
 	return {
 		handleImgUpload(image, eventId) {
-			console.log('in handleIMageUpload')
-			console.log(image)
 			firebaseUpload(image)
 				.then(response => {
 					return imageEXIFPacker(image, response, ownProps.match.params.eventId, (error, imageObj) => {
@@ -65,9 +71,11 @@ const mapDispatch = (dispatch, ownProps) => {
 
 
 
-export default connect(mapState, mapDispatch)(Upload)
+const uploadContainer = connect(mapState, mapDispatch)(Upload)
+export default uploadContainer
 
-function firebaseUpload(image) {
+
+const  firebaseUpload = (image)=>  {
 	const downloadURL = firebase.storage().ref(`images`).child(image.name).put(image)
 		.then((response) => {
 			return response.downloadURL

@@ -29,15 +29,25 @@ a:hover {text-decoration: underline;}
 
 /* Dashboard */
 .title {font-weight:normal; font-size: 0.8em;}
-.table_row td {padding: 5px 10px; background-color:#eee}
+.table_row td {padding: 5px 10px;}
+.td_eventName {background-color:#eee;}
+.td_eventGo {background-color:orangered;color:white;}
 #imageToUpload {display:none;}
 .btn {width: 110px; padding: 10px; background-color: #000;display:block; margin: 0 0 8px 0; color: #fff; cursor: pointer;text-decoration: none;text-align: center;border:none;outline: none}
 .btn:hover {background-color: #555; text-decoration: none}
-#btn_addParticipantEvent {width: 160px;}
+#btn_addParticipantEvent {width: 160px;margin-left:0px !important;}
 .modal_btns {display: flex;}
 .dashboard-EventList-Container {display:flex;}
+#event_add_contact_to_event .btn {
+margin-left: 10px;}
+.section_header {margin: 50px 0 10px 0;display:flex}
 
 /* Modals */
+.dashboard-Modal {position: relative;}
+.btn_close {border: none;
+  background: transparent !important; position:absolute; right:6px;top:6px;}
+.btn_close:before {content: "X"; display: relative; top:0; right:0;font-size: 20px; color: gray; outline:none;}
+.btn_area {display:flex}
 
 /* Events */
 #event_add_contact_to_event {display:flex;}
@@ -61,8 +71,8 @@ a:hover {text-decoration: underline;}
 /*================================= Mobile ====================================*/
 @media only screen and (max-width:600px) {
   .mobile_toggle {display:block;display:flex;}
-  .mobile_toggle_active {flex-grow:1;background-color:orangered;text-align: center;padding:20px}
-  .mobile_toggle_disabled {flex-grow:1;background-color:gray;text-align: center;padding:20px}
+  .mobile_toggle_active {flex-grow:1;background-color:gray;text-align: center;padding:20px;}
+  .mobile_toggle_disabled {flex-grow:1;background-color:orangered; text-align:center;padding:20px}
 
 
 }

@@ -1,5 +1,5 @@
+//Firebase Config
 const firebase = require('firebase')
-
 
 const config = {
     apiKey: "AIzaSyCgYLyDM38JZEvWOn19tmmrcXM9FtbUwY0",
@@ -18,4 +18,16 @@ process.env.GOOGLE_CALLBACK = '/auth/google/callback'
 const firebaseInitialize = firebase.initializeApp(config)
 
 
-module.exports = { config, firebaseInitialize };
+//Twillio Config
+
+let TwilioConfig = {
+  accountSid: 'ACd7416b567633dffcd6ed3e68cd094f6c',
+  authToken: '40a13fe3f179fa9cf78e27895bb9bb73'
+}
+
+let TWILLIONUMBER = '+12016131005'
+
+//Bitly Config
+let BITLYCONFIG = '7735debd667cbbf1d31c9f9691251369e5592531'
+
+module.exports = { config, firebaseInitialize, TwilioConfig, TWILLIONUMBER, BITLYCONFIG };

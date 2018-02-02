@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { fetchSingleEvent } from '../store/singleEvent'
 import { fetchPartipants } from '../store/participants'
 import { DashboardModal, ContactList, AddContactsToEventForm } from './index'
+import {broadcastTextMessage} from '../store/twilio'
 
 
 
@@ -56,6 +57,7 @@ class SingleEvent extends Component {
                 }
               </tbody>
             </table>
+            <button id="send_text" onClick={() => {broadcastTextMessage({eventId: this.props.match.params.eventId})}}>Submit</button>
           </div>
         </div>
       </div>
@@ -75,8 +77,7 @@ const mapDispatch = (dispatch) => {
     loadEvent(eventId) {
       dispatch(fetchSingleEvent(eventId))
       dispatch(fetchPartipants(eventId))
-
-    }
+    },
   }
 }
 

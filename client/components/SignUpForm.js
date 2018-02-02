@@ -32,32 +32,29 @@ class SignUpForm extends Component {
     return (
       <div className='signup-Form-Container'>
         <form onSubmit={this.handleSubmit}>
+          <h2 id="sign_up_header">Sign Up Page</h2>
           <div className='signup-firstName--Button-Div'>
             <label>
-              First Name:
-                <input type='text' value={this.state.firstName} name='firstName' onChange={this.handleChange} />
+                <input type='text' placeholder="First Name" value={this.state.firstName} name='firstName' onChange={this.handleChange} />
             </label>
           </div>
           <div className='signup-lastNamr-submit-Button-Div'>
             <label>
-              Last Name:
-                <input type='text' value={this.state.lastName} name='lastName' onChange={this.handleChange} />
+                <input type='text' placeholder="Last Name" value={this.state.lastName} name='lastName' onChange={this.handleChange} />
             </label>
           </div>
           <div className='signup-email-submit-Button-Div'>
             <label>
-              Email:
-                <input type='text' value={this.state.email} name='email' onChange={this.handleChange} />
+                <input type='text' placeholder="Email" value={this.state.email} name='email' onChange={this.handleChange} />
             </label>
           </div>
           <div className='signup-password-submit-Button-Div'>
             <label>
-              Password:
-                <input type='text' value={this.state.password} name='password' onChange={this.handleChange} />
+                <input type='text' placeholder="Password" value={this.state.password} name='password' onChange={this.handleChange} />
             </label>
           </div>
           <div className='signup-submit-Button-Div'>
-            <input type='submit' value='submit' />
+            <input type='submit' value='Submit' />
           </div>
         </form>
       </div>
@@ -85,12 +82,3 @@ const mapDispatch = (dispatch) => {
 const signUpFormContainer = connect(mapState, mapDispatch)(SignUpForm)
 
 export default signUpFormContainer
-
-
-
-
-
-
-
-
-

@@ -27,9 +27,11 @@ export function fetchContent(eventId) {
 }
 
 export const postContent = (contentObj) => {
-	return dispacth => {
+	return dispatch => {
 		axios.post('/api/content/image', { contentObj })
-			.then(response => dispatch(getImages(response.data.images)))
+			.then(response => {
+				dispatch(getNewContent(response.data))
+			})
 			.catch(console.error)
 	}
 }

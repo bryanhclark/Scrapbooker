@@ -9,7 +9,7 @@ a:hover {text-decoration: underline;}
 
   /* Globals */
 .wrapper {margin: 0 auto; width: 80%;}
-  
+
 /* Nav */
 #logo {font-family: 'Rammetto One', cursive; font-size: 2em;line-height: 1.2em;padding: 0 0 0 10px;}
 #logo_link:hover {text-decoration: none; color: #ddd;}
@@ -81,4 +81,3 @@ margin-left: 10px;}
 
 
 }
- 

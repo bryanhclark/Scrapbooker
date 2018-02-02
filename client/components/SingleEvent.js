@@ -20,13 +20,11 @@ class SingleEvent extends Component {
   }
 
   toggleModal = (name) => {
-    console.log('in toggle modal')
     if (name === 'addContacts') this.setState({ isAddContactModelOpen: !this.state.isAddContactModelOpen })
   }
 
 
   render() {
-    console.log('in single event', this.props.participants)
     return (
       <div className='single-Event-Container' >
 
@@ -38,7 +36,7 @@ class SingleEvent extends Component {
             <a onClick={() => this.toggleModal('addContacts')} className="btn" id="btn_addParticipantEvent">Add Contact to Event</a>
 
             <DashboardModal show={this.state.isAddContactModelOpen} onClose={() => this.toggleModal('addContacts')}>
-              <AddContactsToEventForm />
+              <AddContactsToEventForm participants={this.props.participants} />
             </DashboardModal>
             <li className='single-Event-View-Mosaic-Button'><a href={`/events/${this.props.singleEvent.id}/mosaic`}>View Mosaic</a></li>
             <li className='single-Event-View-Uplad-Button'><a href={`/events/${this.props.singleEvent.id}/upload`}>Upload Content</a></li>

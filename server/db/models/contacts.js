@@ -4,12 +4,12 @@ const db = require('../db')
 
 
 const Contact = db.define('contacts', {
-    name: {
-        type: Sequelize.STRING,
-    },
-    phone: {
-        type: Sequelize.STRING
-    }
+	name: {
+		type: Sequelize.STRING,
+	},
+	phone: {
+		type: Sequelize.STRING
+	}
 })
 
 

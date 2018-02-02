@@ -9,12 +9,10 @@ socket.on('connect', () => {
 })
 
 function uploadImageSocket(image) {
-  console.log("in socket")
   socket.emit("image_upload", image)
 }
 
 socket.on("update_store", imageObj => {
-  console.log('in update store')
   return socketStoreUpdate(imageObj)
 })
 

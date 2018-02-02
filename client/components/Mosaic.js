@@ -15,7 +15,6 @@ class Mosaic extends Component {
   }
 
   render() {
-    console.log(this.props.content);
     return (
       <div className='mosaicContainer'>
         <h3>This is the mosaic component</h3>

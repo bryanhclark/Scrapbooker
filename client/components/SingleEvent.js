@@ -63,7 +63,7 @@ class SingleEvent extends Component {
           <div>
             <h2 className="section_header">Invitations:</h2>
             <p>Send invitations to your participants</p>
-            <button className="btn" id="send_text" onClick={() => { broadcastTextMessage({ eventId: this.props.match.params.eventId }) }}>Send invites!</button>
+            <button className="btn" id="send_text" onClick={() => { broadcastTextMessage(this.props.singleEvent) }}>Send invites!</button>
           </div>
         </div>
       </div>

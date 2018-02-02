@@ -17,7 +17,7 @@ class Navbar extends Component {
             <nav>
                 <div className='navBarContainer'>
                     <div className='navBarHeader'>
-                        <NavLink to='/'><h1 id="logo">Scrappr</h1></NavLink>
+                        <NavLink id="logo_link" to='/'><h1 id="logo">Scrappr</h1></NavLink>
                     </div>
                     {this.props.user.id ? <NavLoggedIn user={this.props.user} logoutUser={this.props.logoutUser} /> : <NavLogin />}
                 </div>

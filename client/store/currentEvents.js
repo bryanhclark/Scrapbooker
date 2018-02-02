@@ -24,6 +24,7 @@ export const fetchCurrentEvents = organizerId => {
 	return dispatch => {
 		axios.get(`/api/events`, { params: { organizerId } })
 			.then(res => dispatch(getCurrentEvents(res.data)))
+			.catch(console.error)
 	}
 }
 

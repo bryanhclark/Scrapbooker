@@ -16,10 +16,15 @@ router.post('/', (req, res, next) => {
     eventId: req.body.eventId,
     contactId: req.body.contactId
   })
-    .then(participant => res.json(participant))
+    .then(participant => {
+      return Participants.findOne({
+        where: participant.contactId,
+        include: [Contact]
+      })
+    })
+    .then(contact => res.json(contact))
     .catch(next)
 })
-
 
 
 module.exports = router

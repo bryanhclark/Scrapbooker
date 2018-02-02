@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { fetchSingleEvent } from '../store/singleEvent'
 import { fetchPartipants } from '../store/participants'
 import { DashboardModal, ContactList, AddContactsToEventForm } from './index'
+import { NavLink } from 'react-router-dom'
+import { broadcastTextMessage } from '../store/twilio'
 
 
 
@@ -20,7 +22,6 @@ class SingleEvent extends Component {
   }
 
   toggleModal = (name) => {
-    console.log('in toggle modal')
     if (name === 'addContacts') this.setState({ isAddContactModelOpen: !this.state.isAddContactModelOpen })
   }
 
@@ -28,30 +29,41 @@ class SingleEvent extends Component {
   render() {
     return (
       <div className='single-Event-Container' >
-        <div className='single-Event-Header'>
-          <h3>{this.props.singleEvent.name}</h3>
-        </div>
-        <ul className='single-Event-Button-List'>
-          <div className='single-Event-Button-Container'>
-            <li className='single-Event-Button'><a onClick={() => this.toggleModal('addContacts')}>Add Contact to Event</a></li>
+
+        <div className="wrapper">
+          <div className='single-Event-Header'>
+            <h2>Event: <span className="title">{this.props.singleEvent.name}</span></h2>
+          </div>
+          <div id="event_add_contact_to_event">
+            <a onClick={() => this.toggleModal('addContacts')} className="btn" id="btn_addParticipantEvent">Add Participant</a>
+
             <DashboardModal show={this.state.isAddContactModelOpen} onClose={() => this.toggleModal('addContacts')}>
-              <AddContactsToEventForm />
+              <AddContactsToEventForm participants={this.props.participants} />
             </DashboardModal>
+            <NavLink to={`/events/${this.props.singleEvent.id}/mosaic`} className="btn">View Mosaic</NavLink>
+            <NavLink to={`/events/${this.props.singleEvent.id}/upload`} className="btn">Upload Content</NavLink>
           </div>
-        </ul>
-        <div className='single-Event-Contacts-List-Container'>
-          <div className='single-Event-Contacts-List-Header'>
-            <h3>Participants in {this.props.singleEvent.name}:</h3>
-          </div>
-          <ul>
-            <div className='single-Event-Participants-List-Container'>
-              {
-                this.props.participants.map(participant => (
-                  <li key={participant.contact.id}>{participant.contact.name}</li>
-                ))
-              }
+          <div id='participants_section'>
+            <h2 className="section_header">Participants:</h2>
+            <div id="participants_items">
+              <table>
+                <tbody>
+                  {
+                    this.props.participants.map(participant => (
+                      <tr key={participant.contact.id}>
+                        <td>{participant.contact.name}</td>
+                      </tr>
+                    ))
+                  }
+                </tbody>
+              </table>
             </div>
-          </ul>
+          </div>
+          <div>
+            <h2 className="section_header">Invitations:</h2>
+            <p>Send invitations to your participants</p>
+            <button className="btn" id="send_text" onClick={() => { broadcastTextMessage({ eventId: this.props.match.params.eventId }) }}>Send invites!</button>
+          </div>
         </div>
       </div>
     )
@@ -70,8 +82,7 @@ const mapDispatch = (dispatch) => {
     loadEvent(eventId) {
       dispatch(fetchSingleEvent(eventId))
       dispatch(fetchPartipants(eventId))
-
-    }
+    },
   }
 }
 

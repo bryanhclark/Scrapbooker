@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 
-export function broadcastTextMessage (textObj) {
- return axios.post('/api/twilio', textObj)
-    .then(res => console.log(res.data))
+export function broadcastTextMessage (eventId) {
+  console.log('in broadvast twilio', eventId)
+ return axios.post('/api/twilio/', eventId)
+    .then(res => console.log("Message sent", res.data))
 }

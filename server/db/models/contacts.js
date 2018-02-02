@@ -1,51 +1,45 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const crypto = require('crypto')
 
 
 
 const Contact = db.define('contacts', {
-    name: {
-        type: Sequelize.STRING,
-    },
-    phone: {
-        type: Sequelize.STRING
-    },
-    salt: {
-      type: Sequelize.STRING
-    },
-    secret: {
-      type: Sequelize.STRING,
-      unique: true
-    }
+	name: {
+		type: Sequelize.STRING,
+	},
+	phone: {
+		type: Sequelize.STRING
+	}
 })
 
 // instance methods
-Contact.prototype.correctSecret = (possibleSecret) => {
-  return Contact.encryptSecret(possibleSecret, this.salt) === this.secret
-}
+// Contact.prototype.correctSecret = (possibleSecret) => {
+//   return Contact.encryptSecret(possibleSecret, this.salt) === this.secret
+// }
 
-//Class Methods
+// //Class Methods
 
-Contact.generateSalt = () => {
-  return crypto.randomBytes(16).toString('base64')
-}
+// Contact.generateSalt = () => {
+//   return crypto.randomBytes(16).toString('base64')
+// }
 
-Contact.encryptSecret = (name, salt) => {
-  return crypto
-      .createHash('RSA-SHA256')
-      .update(name)
-      .update(salt)
-      .digest('hex')
-}
+// Contact.encryptSecret = (name, salt) => {
+//   return crypto
+//       .createHash('RSA-SHA256')
+//       .update(name)
+//       .update(salt)
+//       .digest('hex')
+// }
 
-//hooks
+// //hooks
 
-const setSaltandSecret = contact => {
-  Contact.salt = Contact.generateSalt()
-  Contact.secret = Contact.encryptSecret(contact.name, contact.salt)
-}
+// const setSaltandSecret = contact => {
+//   Contact.salt = Contact.generateSalt()
+//   Contact.secret = Contact.encryptSecret(contact.name, contact.salt)
+// }
 
 
-Contact.beforeCreate(setSaltandSecret)
+// Contact.beforeCreate(setSaltandSecret)
 
 module.exports = Contact

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from './index'
 
 // //ACTION TYPEs
 
@@ -12,39 +13,29 @@ const getContent = (content) => {
 }
 
 const getNewContent = (newContent) => {
-  console.log("got to getNewContent")
-  return {type: NEW_CONTENT, newContent }
+	let action = { type: NEW_CONTENT, newContent }
+	store.dispatch(action)
 }
 
 // //THUNKS
 export function fetchContent(eventId) {
-	return function thunk(dispatch) {
+	return dispatch => {
 		return axios.get(`/api/content/${eventId}`)
-			.then(res => res.data)
-			.then(content => {
-				const action = getContent(content)
-				return dispatch(action)
-			})
+			.then(res => dispatch(getContent(res.data)))
+			.catch(console.error)
 	}
 }
 
 export const postContent = (contentObj) => {
-	console.log("contentObj before Axios", contentObj)
-	return function thunk(dispatch) {
+	return dispacth => {
 		axios.post('/api/content/image', { contentObj })
-			.then(response => {
-				console.log('response data is', response.data)
-				// dispatch(getImages(response.data.images))
-			})
+			.then(response => dispatch(getImages(response.data.images)))
+			.catch(console.error)
 	}
 }
 
 export const socketStoreUpdate = (imageObj) => {
-    console.log("outside thunk")
-    return function thunk(dispatch) {
-      console.log("inside thunk")
-      return dispatch(getNewContent(imageObj))
-    }
+	getNewContent(imageObj)
 }
 
 // //REDUCER
@@ -52,10 +43,9 @@ export const socketStoreUpdate = (imageObj) => {
 export default (state = [], action) => {
 	switch (action.type) {
 		case GET_CONTENT:
-      return action.content
-    case NEW_CONTENT:
-      console.log("got to store", action.newContent)
-      return [...state, action.newContent]
+			return action.content
+		case NEW_CONTENT:
+			return [...state, action.newContent]
 		default:
 			return state
 	}

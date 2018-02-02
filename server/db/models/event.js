@@ -8,43 +8,43 @@ const crypto = require('crypto')
 //also uncomment salt and secrets
 
 const Event = db.define('events', {
-    secret: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: true
-    },
-    name: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: true
-    },
-    street: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-    city: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-    state: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-    zip: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-    startTime: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-    endTime: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-    salt: {
-        type: Sequelize.STRING
-    }
+	secret: {
+		type: Sequelize.STRING,
+		unique: true,
+		allowNull: true
+	},
+	name: {
+		type: Sequelize.STRING,
+		unique: true,
+		allowNull: true
+	},
+	street: {
+		type: Sequelize.STRING,
+		allowNull: true
+	},
+	city: {
+		type: Sequelize.STRING,
+		allowNull: true
+	},
+	state: {
+		type: Sequelize.STRING,
+		allowNull: true
+	},
+	zip: {
+		type: Sequelize.STRING,
+		allowNull: true
+	},
+	startTime: {
+		type: Sequelize.STRING,
+		allowNull: true
+	},
+	endTime: {
+		type: Sequelize.STRING,
+		allowNull: true
+	},
+	salt: {
+		type: Sequelize.STRING
+	}
 })
 
 

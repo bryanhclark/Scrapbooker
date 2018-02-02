@@ -7,74 +7,76 @@ import { me } from '../store/user'
 
 
 class Dashboard extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            isEventCreationModalOpen: false,
-            isContactCreationModalOpen: false
-        }
-        this.toggleModal = this.toggleModal.bind(this)
-    }
+	constructor(props) {
+		super(props)
+		this.state = {
+			isEventCreationModalOpen: false,
+			isContactCreationModalOpen: false
+		}
+		this.toggleModal = this.toggleModal.bind(this)
+	}
 
-    componentDidMount() {
-        this.props.loadCurrentInfo(this.props.user.id)
-    }
+	componentDidMount() {
+		this.props.loadCurrentInfo(this.props.user.id)
+	}
 
-    toggleModal = (name) => {
-        if (name === 'contacts') this.setState({ isContactCreationModalOpen: !this.state.isContactCreationModalOpen })
-        else if (name === 'events') this.setState({ isEventCreationModalOpen: !this.state.isEventCreationModalOpen })
-    }
+	toggleModal = (name) => {
+		if (name === 'contacts') this.setState({ isContactCreationModalOpen: !this.state.isContactCreationModalOpen })
+		else if (name === 'events') this.setState({ isEventCreationModalOpen: !this.state.isEventCreationModalOpen })
+	}
 
-    render() {
-        return (
-            <div className='main-Dashboard-Container'>
-                <h3>Welcome, {this.props.user.fullName}</h3>
-                <ul className='dashboard-Button-List'>
-                    <div className='dashboard-Button-Main-Container'>
-                        <div className='event-Creation-Modal-Container'>
-                            <li className='dashboard-Button'><a onClick={() => this.toggleModal('events')}>Create Event</a></li>
-                            <DashboardModal show={this.state.isEventCreationModalOpen} onClose={() => this.toggleModal('events')}>
-                                <CreateEventForm user={this.props.user} />
-                            </DashboardModal>
-                        </div>
-                        <div className='contact-Creation-Modal-Container'>
-                            <li className='dashboard-Button'><a onClick={() => this.toggleModal('contacts')}>Create Contact</a></li>
-                            <DashboardModal show={this.state.isContactCreationModalOpen} onClose={() => this.toggleModal('contacts')}>
-                                <CreateContactForm user={this.props.user} />
-                            </DashboardModal>
-                        </div>
-                    </div>
-                </ul>
-                <div className='dashboard-EventList-Container'>
-                    <EventList events={this.props.currentEvents} />
-                </div>
-                <div className='dashboard-ContactList-Container'>
-                    <ContactList contacts={this.props.contacts} />
-                </div>
-            </div>
-        )
-    }
+	render() {
+		return (
+			<div className='main-Dashboard-Container'>
+				<div className="wrapper">
+					<h3>Welcome, {this.props.user.fullName}</h3>
+					<div className="modal_btns">
+						<div className='dashboard-Button-Main-Container'>
+							<div className='event-Creation-Modal-Container'>
+								<a onClick={() => this.toggleModal('events')} className="btn">Create Event</a>
+								<DashboardModal show={this.state.isEventCreationModalOpen} onClose={() => this.toggleModal('events')}>
+									<CreateEventForm user={this.props.user} />
+								</DashboardModal>
+							</div>
+							<div className='contact-Creation-Modal-Container'>
+								<a onClick={() => this.toggleModal('contacts')} className="btn">Create Contact</a>
+								<DashboardModal show={this.state.isContactCreationModalOpen} onClose={() => this.toggleModal('contacts')}>
+									<CreateContactForm user={this.props.user} />
+								</DashboardModal>
+							</div>
+						</div>
+					</div>
+					<div className='dashboard-EventList-Container'>
+						<EventList events={this.props.currentEvents} />
+					</div>
+					<div className='dashboard-ContactList-Container'>
+						<ContactList contacts={this.props.contacts} />
+					</div>
+				</div>
+			</div>
+		)
+	}
 }
 
 const mapState = (state) => {
-    return {
-        user: state.user,
-        currentEvents: state.currentEvents,
-        contacts: state.contacts
+	return {
+		user: state.user,
+		currentEvents: state.currentEvents,
+		contacts: state.contacts
 
-    }
+	}
 }
 
 const mapDispatch = (dispatch) => {
-    return {
-        loadCurrentInfo() {
-            return dispatch(me())
-                .then(result => {
-                    dispatch(fetchCurrentEvents(result.user.id))
-                    dispatch(getCurrentContacts(result.user.id))
-                })
-        }
-    }
+	return {
+		loadCurrentInfo() {
+			return dispatch(me())
+				.then(result => {
+					dispatch(fetchCurrentEvents(result.user.id))
+					dispatch(getCurrentContacts(result.user.id))
+				})
+		}
+	}
 }
 
 const dashboardContainer = connect(mapState, mapDispatch)(Dashboard)

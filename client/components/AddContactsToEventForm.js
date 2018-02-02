@@ -13,6 +13,12 @@ class AddContactsToEventForm extends Component {
     this.removeContactFromEvent = this.removeContactFromEvent.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+  componentDidMount() {
+    let contactsToAdd = this.props.participants.map(participant => {
+      return participant.contact
+    })
+    this.setState({ contactsToAdd })
+  }
 
   addContactToEvent(newContact) {
     let contains = false
@@ -24,9 +30,7 @@ class AddContactsToEventForm extends Component {
   }
 
   removeContactFromEvent(removeContact) {
-    const filteredContactList = this.state.contactsToAdd.filter(contact => {
-      if (contact.id !== removeContact.id) return contact
-    })
+    const filteredContactList = this.state.contactsToAdd.filter(contact => { if (contact.id !== removeContact.id) return contact })
     this.setState({ contactsToAdd: filteredContactList })
   }
 
@@ -71,7 +75,8 @@ class AddContactsToEventForm extends Component {
 const mapState = (state) => {
   return {
     singleEvent: state.singleEvent,
-    contacts: state.contacts
+    contacts: state.contacts,
+    participants: state.participants
   }
 }
 

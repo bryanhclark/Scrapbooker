@@ -18,23 +18,24 @@ class Upload extends Component {
 	}
 
 	render() {
-		console.log(this.props.singleEvent)
 		return (
 			<div className='uploadContainer'>
 				<div className="mobile_toggle">
-						<div className="mobile_toggle_disabled">Upload</div>
-						<NavLink to={`/events/${this.props.singleEvent.id}/mosaic`}className="mobile_toggle_active">Mosaic</NavLink>
+					<div className="mobile_toggle_disabled">Upload</div>
+					<NavLink to={`/events/${this.props.singleEvent.id}/mosaic`} className="mobile_toggle_active">Mosaic</NavLink>
 				</div>
 				<div className="wrapper">
 					<h3>Upload Photo</h3>
 					<label className="btn" for="imageToUpload">Choose photo</label>
 					<input type='file' accept='image/*;capture=camera' id='imageToUpload' onChange={
-						(e) => {this.fileInput = e.target.files[0];
+						(e) => {
+							this.fileInput = e.target.files[0];
 							console.log("this.fileInput", this.fileInput)
-						 this.setState({img: e.target.files[0]})}} />
+							this.setState({ img: e.target.files[0] })
+						}} />
 					<p>{this.state.img.name}</p>
 					<button className="btn" onClick={() => this.props.handleImgUpload(this.fileInput, this.props.match.params.eventId)}>Upload Image</button>
-					
+
 				</div>
 			</div>
 		)
@@ -43,27 +44,22 @@ class Upload extends Component {
 
 const mapState = (state) => {
 	return {
-		pictures: state.pictures || ''
+		singleEvent: state.singleEvent
 	}
 }
 
 
 const mapDispatch = (dispatch) => {
 	return {
-<<<<<<< HEAD
 		handleImgUpload(image, eventId) {
-=======
-		handleImgUpload(event) {
-			let image = event.target.files[0]
->>>>>>> 91839252d357c1699f975438e9488d52701aba65
 			firebaseUpload(image)
 				.then(response => {
 					return imageEXIFPacker(image, response, (error, imageObj) => {
 						if (error) console.error(error)
 						else {
-              dispatch(postContent(imageObj))
-              uploadImageSocket(imageObj)
-            }
+							dispatch(postContent(imageObj))
+							uploadImageSocket(imageObj)
+						}
 					})
 				})
 
@@ -88,7 +84,7 @@ const uploadContainer = connect(mapState, mapDispatch)(Upload)
 export default uploadContainer
 
 
-const  firebaseUpload = (image)=>  {
+const firebaseUpload = (image) => {
 	const downloadURL = firebase.storage().ref(`images`).child(image.name).put(image)
 		.then((response) => {
 			return response.downloadURL

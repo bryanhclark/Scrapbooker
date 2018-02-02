@@ -38,7 +38,7 @@ a:hover {text-decoration: underline;}
 .dashboard-EventList-Container {display:flex;}
 
 /* Modals */
-#sign_up_header {color: black}
+#sign_up_header {color: black; text-align: center;}
 
 /* Events */
 #event_add_contact_to_event {display:flex;}

@@ -61,18 +61,23 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
 	return {
 		handleImgUpload(image, eventId) {
-			console.log('before firebase image', image)
-			firebaseUpload(image)
-				.then(response => {
-					return imageEXIFPacker(image, response, eventId, (error, imageObj) => {
-						console.log(imageObj)
-						if (error) console.error(error)
-						else {
-							dispatch(postContent(imageObj))
-							uploadImageSocket(imageObj)
-						}
-					})
+			resizeImage({
+				file: image,
+				maxSize: 900
+			})
+			.then(resizedImg => {
+				resizedImg.name = eventId + "--" + image.name
+				return firebaseUpload(resizedImg)
+			})
+			.then(firebaseURL => {
+				imageEXIFPacker(image, firebaseURL, eventId, (error, imageObj) => {
+					if (error) console.error(error)
+					else {
+						dispatch(postContent(imageObj))
+						uploadImageSocket(imageObj)
+					}
 				})
+			})
 		},
 		loadSingleEvent(eventId) {
 			dispatch(fetchSingleEvent(eventId))
@@ -81,7 +86,7 @@ const mapDispatch = (dispatch) => {
 }
 
 function imageEXIFPacker(image, url, eventId, cb) {
-	let imgObj = {}
+	const imgObj = {}
 	EXIF.getData(image, function () {
 		imgObj.src = url
 		imgObj.width = Number(EXIF.getTag(this, "PixelXDimension"))
@@ -92,12 +97,7 @@ function imageEXIFPacker(image, url, eventId, cb) {
 		imgObj.eventId = eventId
 		cb(null, imgObj)
 	})
-
 }
-
-const uploadContainer = connect(mapState, mapDispatch)(Upload)
-export default uploadContainer
-
 
 const firebaseUpload = (image) => {
 	let imageName = crypto.randomBytes(16).toString('base64')
@@ -107,3 +107,60 @@ const firebaseUpload = (image) => {
 		})
 	return downloadURL
 }
+
+const resizeImage = function (settings) {
+	const file = settings.file
+	const maxSize = settings.maxSize
+	const reader = new FileReader()
+	const image = new Image()
+	const canvas = document.createElement('canvas')
+
+	const dataURItoBlob = function (dataURI) {
+		const bytes = dataURI.split(',')[0].indexOf('base64') >= 0 ?
+			atob(dataURI.split(',')[1]) :
+			unescape(dataURI.split(',')[1]);
+		const mime = dataURI.split(',')[0].split(':')[1].split(';')[0];
+		const max = bytes.length
+		const ia = new Uint8Array(max)
+		for (var i = 0; i < max; i++)
+			ia[i] = bytes.charCodeAt(i)
+		return new Blob([ia], { type: mime })
+	};
+
+	const resize = function () {
+		let width = image.width;
+		let height = image.height;
+		if (width > height) {
+			if (width > maxSize) {
+				height *= maxSize / width;
+				width = maxSize;
+			}
+		} else {
+			if (height > maxSize) {
+				width *= maxSize / height;
+				height = maxSize;
+			}
+		}
+		canvas.width = width;
+		canvas.height = height;
+		canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+		var dataUrl = canvas.toDataURL('image/jpeg');
+		return dataURItoBlob(dataUrl);
+	};
+
+	return new Promise(function (ok, no) {
+		if (!file.type.match(/image.*/)) {
+			no(new Error("Not an image"));
+			return;
+		}
+		reader.onload = function (readerEvent) {
+			image.onload = function () { return ok(resize()); };
+			image.src = readerEvent.target.result;
+		};
+		reader.readAsDataURL(file);
+	});
+};
+
+
+const uploadContainer = connect(mapState, mapDispatch)(Upload)
+export default uploadContainer

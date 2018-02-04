@@ -88,6 +88,9 @@ const mapDispatch = (dispatch) => {
 function imageEXIFPacker(image, url, eventId, cb) {
 	const imgObj = {}
 	EXIF.getData(image, function () {
+    console.log(EXIF.getTag(this, 'GPSLatitude'
+    ))
+    console.log(EXIF.getAllTags(this))
 		imgObj.src = url
 		imgObj.width = Number(EXIF.getTag(this, "PixelXDimension"))
 		imgObj.height = Number(EXIF.getTag(this, "PixelYDimension"))

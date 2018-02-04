@@ -30,4 +30,8 @@ let TWILLIONUMBER = '+12016131005'
 //Bitly Config
 let BITLYCONFIG = '7735debd667cbbf1d31c9f9691251369e5592531'
 
-module.exports = { config, firebaseInitialize, TwilioConfig, TWILLIONUMBER, BITLYCONFIG };
+//Mapbox
+
+let mapToken = 'pk.eyJ1IjoiandhZGVkZWxheSIsImEiOiJjamQ5MWF1cGUyeTVyMndxcm5wN3QwZnNvIn0.qlq-jXUBoZSEciphjnPDSw';
+
+module.exports = { config, firebaseInitialize, TwilioConfig, TWILLIONUMBER, BITLYCONFIG, mapToken };

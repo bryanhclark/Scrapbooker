@@ -10,7 +10,7 @@ module.exports = router;
 const messageSender = new Twilio(TwilioConfig.accountSid, TwilioConfig.authToken);
 
 //For local testing paste IP here
-const IP = `172.16.21.47`;
+const IP = `192.168.1.15`;
 
 router.post('/', (req, res, next) => {
   const id = Number(req.body.id)
@@ -35,4 +35,5 @@ router.post('/', (req, res, next) => {
         })
       })
     })
+  })
 })

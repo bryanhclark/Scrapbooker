@@ -1,6 +1,6 @@
 const router = require('express').Router()
-const {TwilioConfig, TWILLIONUMBER, BITLYCONFIG} = require('../../secrets')
-const {Participants} = require('../db/models')
+const { TwilioConfig, TWILLIONUMBER, BITLYCONFIG } = require('../../secrets')
+const { Participants } = require('../db/models')
 const Twilio = require('twilio');
 const BitlyClient = require('bitly')
 const bitly = BitlyClient(BITLYCONFIG)
@@ -10,11 +10,12 @@ module.exports = router;
 const messageSender = new Twilio(TwilioConfig.accountSid, TwilioConfig.authToken);
 
 //For local testing paste IP here
-const IP = `172.16.21.83`;
+const IP = `172.16.21.47`;
 
 router.post('/', (req, res, next) => {
   const id = Number(req.body.id)
   Participants.findAll({
+
     where: {eventId: id},
     include: [{all: true}]
   })
@@ -34,5 +35,4 @@ router.post('/', (req, res, next) => {
         })
       })
     })
-  })
 })

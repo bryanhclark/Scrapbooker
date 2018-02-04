@@ -20,7 +20,9 @@ router.post('/', (req, res, next) => {
     phone: req.body.phone,
     organizerId: req.body.organizerId
   })
-    .then(contact => res.json(contact))
+    .then(contact => {
+      res.json(contact)
+    })
     .catch(next)
 })
 

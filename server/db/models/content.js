@@ -26,7 +26,15 @@ const Content = db.define('content', {
 	orientation: {
 		type: Sequelize.INTEGER,
 		allowNull: true
-	}
+  },
+  lat: {
+    type: Sequelize.JSON,
+    allowNull: true
+  },
+  long: {
+    type: Sequelize.JSON,
+    allowNull: true
+  }
 })
 
 module.exports = Content;

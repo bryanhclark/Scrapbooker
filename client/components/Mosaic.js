@@ -5,14 +5,20 @@ import { fetchContent } from '../store/content'
 import { render } from 'react-dom';
 import { fetchSingleEvent } from '../store/singleEvent'
 import Gallery from 'react-grid-gallery';
+import NavModal from './NavModal'
+import SingleContent from './SingleContent'
 
 class Mosaic extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      formattedPictureArray: []
+      formattedPictureArray: [],
+      isImageModalOpen: false,
+      currentImage: {}
     }
     this.reformatImagesForGallery = this.reformatImagesForGallery.bind(this)
+    this.onImageClick = this.onImageClick.bind(this)
+    this.toggleModal = this.toggleModal.bind(this)
   }
 
   componentDidMount() {
@@ -24,7 +30,6 @@ class Mosaic extends Component {
 
   reformatImagesForGallery(imageArray) {
     const pictureObjArray = imageArray.map(image => {
-      console.log('image', image)
       let imgObj = {
         src: image['src'],
         thumbnail: image['src'],
@@ -37,9 +42,16 @@ class Mosaic extends Component {
     })
     return pictureObjArray
   }
+  onImageClick(e) {
+    this.setState({ currentImage: this.props.content[e] })
+    this.toggleModal()
+  }
+
+  toggleModal = () => {
+    this.setState({ isImageModalOpen: !this.state.isImageModalOpen })
+  }
 
   render() {
-    console.log('formattedPictureArray', this.state.formattedPictureArray)
     return (
       <div className='mosaicContainer'>
         <div className="mobile_toggle">
@@ -48,10 +60,14 @@ class Mosaic extends Component {
         </div>
         <div className="grid" data-packery='{ "itemSelector": ".grid-item", "gutter": 0 }'>
           <Gallery images={this.reformatImagesForGallery(this.props.content)}
-            isSelected={false}
+            enableImageSelection={true}
             margin={0}
-            enableLightbox={false}
+            onClickThumbnail={(e) => this.onImageClick(e)}
           />
+          <NavModal show={this.state.isImageModalOpen}
+            onClose={this.toggleModal}>
+            <SingleContent image={this.state.currentImage} />
+          </NavModal>
         </div>
       </div>
     )
@@ -68,7 +84,6 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadContent(eventId) {
-      console.log("eventId is", eventId)
       dispatch(fetchContent(eventId));
     },
     loadSingleEvent(eventId) {

@@ -58,10 +58,9 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
 	return {
 		handleImgUpload(image, eventId) {
-			console.log("image at start", image)
 			resizeImage({
 				file: image,
-				maxSize: 1200
+				maxSize: 900
 			})
 			.then(resizedImg => {
 				resizedImg.name = eventId + "--" + image.name
@@ -69,9 +68,10 @@ const mapDispatch = (dispatch) => {
 			})
 			.then(firebaseURL => {
 				imageEXIFPacker(image, firebaseURL, eventId, (error, imageObj) => {
-					if (error) console.log(error)
+					if (error) console.error(error)
 					else {
-						console.log("imageObj", imageObj)
+						dispatch(postContent(imageObj))
+						uploadImageSocket(imageObj)
 					}
 				})
 			})

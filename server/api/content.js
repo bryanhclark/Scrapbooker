@@ -24,7 +24,6 @@ router.get('/:eventId', (req, res, next) => {
 
 router.post('/image', (req, res, next) => {
 	req.body = req.body.contentObj
-	console.log('req.body', req.body)
 	Content.create({
 		type: 'image',
 		src: req.body.src,
@@ -32,7 +31,8 @@ router.post('/image', (req, res, next) => {
 		height: req.body.height,
 		orientation: req.body.orientation,
 		timeCreated: req.body.timeCreated,
-		eventId: req.body.eventId
+		eventId: req.body.eventId,
+		contactId: req.body.contactId
 	})
 		.then(content => res.json(content))
 		.catch(next);

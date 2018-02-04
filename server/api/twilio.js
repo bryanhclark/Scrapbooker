@@ -16,23 +16,22 @@ router.post('/', (req, res, next) => {
   const id = Number(req.body.id)
   Participants.findAll({
 
-    where: {eventId: id},
-    include: [{all: true}]
+    where: { eventId: id },
+    include: [{ all: true }]
   })
-  .then(participants => {
-    participants.map(participant => {
-      return bitly.shorten(`http://${IP}:8080/events/${req.body.id}`)
-      .then(URL => {
-        console.log(URL)
-        return messageSender.messages.create({
-          body: `You have been invited to ${req.body.name} \n Location: ${req.body.street}, ${req.body.city}, ${req.body.state} \n This event starts at ${req.body.startTime} \n Join the event: ${URL.data.url}`,
-          to: `+1${participant.contact.phone}`,
-          from: TWILLIONUMBER
-        })
-        .then((messageSent) => {
-          console.log('Message send successful ' + messageSent.sid)
-          res.json(messageSent.body)
-        })
+    .then(participants => {
+      participants.map(participant => {
+        return bitly.shorten(`http://${IP}:8080/events/${req.body.id}/upload/${participant.contact.contactHash}`)
+          .then(URL => {
+            return messageSender.messages.create({
+              body: `You have been invited to ${req.body.name} \n Location: ${req.body.street}, ${req.body.city}, ${req.body.state} \n This event starts at ${req.body.startTime} \n Join the event: ${URL.data.url}`,
+              to: `+1${participant.contact.phone}`,
+              from: TWILLIONUMBER
+            })
+              .then((messageSent) => {
+                res.json(messageSent.body)
+              })
+          })
       })
     })
 })

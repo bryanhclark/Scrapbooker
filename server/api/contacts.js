@@ -3,10 +3,9 @@ const { Contact } = require('../db/models')
 
 
 router.get('/', (req, res, next) => {
+  console.log('req.query', req.query)
   Contact.findAll({
-    where: {
-      organizerId: req.query.organizerId
-    }
+    where: req.query
   })
     .then(contacts => {
       res.json(contacts)

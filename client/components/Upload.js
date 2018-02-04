@@ -7,6 +7,7 @@ import { uploadImageSocket } from '../socket'
 import EXIF from 'exif-js'
 import { postContent } from '../store/content'
 import { fetchSingleEvent } from '../store/singleEvent'
+import { fetchCurrentContact } from '../store/singleContact'
 import 'babel-polyfill'
 import crypto from 'crypto'
 
@@ -21,6 +22,7 @@ class Upload extends Component {
 
 	componentDidMount() {
 		this.props.loadSingleEvent(this.props.match.params.eventId)
+		if (this.props.match.params.contactHash) this.props.setContact(this.props.match.params.contactHash)
 	}
 
 
@@ -39,12 +41,10 @@ class Upload extends Component {
 						(e) => {
 							e.preventDefault()
 							this.fileInput = e.target.files[0];
-							console.log(this.fileInput)
 							this.setState({ img: e.target.files[0] })
 						}} />
 					<p>{this.state.img.name}</p>
-					<button className="btn" onClick={() => this.props.handleImgUpload(this.fileInput, this.props.match.params.eventId)}>Upload Image</button>
-
+					<button className="btn" onClick={() => this.props.handleImgUpload(this.fileInput, this.props.match.params.eventId, this.props.singleContact.id)}>Upload Image</button>
 				</div>
 			</div>
 		)
@@ -53,39 +53,43 @@ class Upload extends Component {
 
 const mapState = (state) => {
 	return {
-		singleEvent: state.singleEvent
+		singleEvent: state.singleEvent,
+		singleContact: state.singleContact
 	}
 }
 
 
 const mapDispatch = (dispatch) => {
 	return {
-		handleImgUpload(image, eventId) {
+		handleImgUpload(image, eventId, contactId) {
 			resizeImage({
 				file: image,
 				maxSize: 900
 			})
-			.then(resizedImg => {
-				resizedImg.name = eventId + "--" + image.name
-				return firebaseUpload(resizedImg)
-			})
-			.then(firebaseURL => {
-				imageEXIFPacker(image, firebaseURL, eventId, (error, imageObj) => {
-					if (error) console.error(error)
-					else {
-						dispatch(postContent(imageObj))
-						uploadImageSocket(imageObj)
-					}
+				.then(resizedImg => {
+					resizedImg.name = eventId + "--" + image.name
+					return firebaseUpload(resizedImg)
 				})
-			})
+				.then(firebaseURL => {
+					imageEXIFPacker(image, firebaseURL, eventId, contactId, (error, imageObj) => {
+						if (error) console.error(error)
+						else {
+							dispatch(postContent(imageObj))
+							uploadImageSocket(imageObj)
+						}
+					})
+				})
 		},
 		loadSingleEvent(eventId) {
 			dispatch(fetchSingleEvent(eventId))
+		},
+		setContact(contactHash) {
+			dispatch(fetchCurrentContact(contactHash))
 		}
 	}
 }
 
-function imageEXIFPacker(image, url, eventId, cb) {
+function imageEXIFPacker(image, url, eventId, contactId, cb) {
 	const imgObj = {}
 	EXIF.getData(image, function () {
 		imgObj.src = url
@@ -95,6 +99,7 @@ function imageEXIFPacker(image, url, eventId, cb) {
 		imgObj.long = EXIF.getTag(this, "GPSLongitude")
 		imgObj.timeCreated = image.lastModified.toString()
 		imgObj.eventId = eventId
+		imgObj.contactId = contactId
 		cb(null, imgObj)
 	})
 }

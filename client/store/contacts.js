@@ -22,6 +22,7 @@ export const getCurrentContacts = (organizerId) => {
   return dispatch => {
     axios.get('/api/contacts', { params: { organizerId } })
       .then(res => dispatch(getContacts(res.data)))
+      .catch(console.error)
   }
 }
 

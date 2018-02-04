@@ -1,5 +1,6 @@
 html, body { margin: 0; box-sizing: border-box; }
 body { font-family: 'Roboto',sans-serif; margin: 0; font-size: 14px }
+img {image-orientation: from-image}
 a {text-decoration: none;}
 label {display: block;}
 form div { margin: 1em; display: inline-block; }

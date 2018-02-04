@@ -1,0 +1,22 @@
+import React, { Component } from 'react'
+import CommentList from './CommentList'
+
+
+
+
+const SingleContent = (props) => {
+  return (
+    <div className='single-Content-Container'>
+      <div className='single-Content-Header'>
+        <h3>Single Content View</h3>
+      </div>
+      <div className='single-Content-Body'>
+        <img src={props.image.src} alt={props.image.id} height='80%' width='60%' />
+      </div>
+      <CommentList image={props.image} />
+    </div>
+  )
+}
+
+
+export default SingleContent

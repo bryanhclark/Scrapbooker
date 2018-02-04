@@ -8,6 +8,7 @@ import EXIF from 'exif-js'
 import { postContent } from '../store/content'
 import { fetchSingleEvent } from '../store/singleEvent'
 import 'babel-polyfill'
+import crypto from 'crypto'
 
 
 class Upload extends Component {
@@ -22,6 +23,8 @@ class Upload extends Component {
 		this.props.loadSingleEvent(this.props.match.params.eventId)
 	}
 
+
+
 	render() {
 		return (
 			<div className='uploadContainer'>
@@ -32,11 +35,11 @@ class Upload extends Component {
 				<div className="wrapper">
 					<h3>Upload Photo</h3>
 					<label className="btn" for="imageToUpload">Choose photo</label>
-					<input type='file' accept='image/*;capture=camera' id='imageToUpload' onChange={
+					<input type='file' accept='image/*;capture=camera' name='newImage' id='imageToUpload' onChange={
 						(e) => {
 							e.preventDefault()
 							this.fileInput = e.target.files[0];
-							console.log("this.fileInput", this.fileInput)
+							console.log(this.fileInput)
 							this.setState({ img: e.target.files[0] })
 						}} />
 					<p>{this.state.img.name}</p>
@@ -58,10 +61,11 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
 	return {
 		handleImgUpload(image, eventId) {
+			console.log('before firebase image', image)
 			firebaseUpload(image)
 				.then(response => {
-					console.log(response)
 					return imageEXIFPacker(image, response, eventId, (error, imageObj) => {
+						console.log(imageObj)
 						if (error) console.error(error)
 						else {
 							dispatch(postContent(imageObj))
@@ -83,6 +87,7 @@ function imageEXIFPacker(image, url, eventId, cb) {
 		imgObj.width = Number(EXIF.getTag(this, "PixelXDimension"))
 		imgObj.height = Number(EXIF.getTag(this, "PixelYDimension"))
 		imgObj.orientation = Number(EXIF.getTag(this, "Orientation"))
+		imgObj.long = EXIF.getTag(this, "GPSLongitude")
 		imgObj.timeCreated = image.lastModified.toString()
 		imgObj.eventId = eventId
 		cb(null, imgObj)
@@ -95,7 +100,8 @@ export default uploadContainer
 
 
 const firebaseUpload = (image) => {
-	const downloadURL = firebase.storage().ref(`images`).child(image.name).put(image)
+	let imageName = crypto.randomBytes(16).toString('base64')
+	const downloadURL = firebase.storage().ref(`images`).child(imageName).put(image)
 		.then((response) => {
 			return response.downloadURL
 		})

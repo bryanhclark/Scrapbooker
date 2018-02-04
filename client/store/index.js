@@ -12,12 +12,14 @@ import contacts from './contacts'
 import singleEvent from './singleEvent'
 import participants from './participants'
 import comments from './comments'
+import singleContact from './singleContact'
 
 const reducer = combineReducers({
   user,
   content,
   currentEvents,
   contacts,
+  singleContact,
   singleEvent,
   participants,
   comments

@@ -10,36 +10,27 @@ const Contact = db.define('contacts', {
 	},
 	phone: {
 		type: Sequelize.STRING
+	},
+	contactHash: {
+		type: Sequelize.STRING
 	}
 })
 
-// instance methods
-// Contact.prototype.correctSecret = (possibleSecret) => {
-//   return Contact.encryptSecret(possibleSecret, this.salt) === this.secret
-// }
+//Class Methods
 
-// //Class Methods
-
-// Contact.generateSalt = () => {
-//   return crypto.randomBytes(16).toString('base64')
-// }
-
-// Contact.encryptSecret = (name, salt) => {
-//   return crypto
-//       .createHash('RSA-SHA256')
-//       .update(name)
-//       .update(salt)
-//       .digest('hex')
-// }
-
-// //hooks
-
-// const setSaltandSecret = contact => {
-//   Contact.salt = Contact.generateSalt()
-//   Contact.secret = Contact.encryptSecret(contact.name, contact.salt)
-// }
+Contact.generateHash = () => {
+	return "_" + Math.random().toString(17).substring(2, 15)
+}
 
 
-// Contact.beforeCreate(setSaltandSecret)
+
+// hooks
+
+const setHash = contact => {
+	contact.contactHash = Contact.generateHash()
+}
+
+
+Contact.beforeCreate(setHash)
 
 module.exports = Contact

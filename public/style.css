@@ -22,6 +22,11 @@ a:hover {text-decoration: underline;}
 .navModal, .dashboard-Modal { background-color: #fff; border-radius: 5px; max-width: 500px; min-height: 300px; margin: 0 auto; padding: 30px; }
 .navModalBackdrop, .dashboard-Modal-Backdrop { position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,0.3); padding: 50px; }
 
+/* Login */
+.login-Form-Container {color: #000;}
+.navModal {position: relative;}
+.signup-Form-Container {color: #000;}
+
 /* Home page */
 #greeting {text-align: center;padding: 60px 0 0 0;font-family: 'Rammetto One', cursive; font-size: 2.4em;width: 60%; margin:0 auto;}
 

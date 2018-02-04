@@ -43,8 +43,8 @@ class LoginForm extends Component {
                 <input type='text' value={this.state.password} name='password' onChange={this.handleChange} />
             </label>
           </div>
-          <div className='login-submit-Button-Div'>
-            <input type='submit' value='submit' />
+          <div className='btn_area'>
+            <input className="btn" type='submit' value='submit' />
           </div>
         </form>
       </div>

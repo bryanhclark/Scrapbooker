@@ -31,6 +31,7 @@ class SignUpForm extends Component {
   render() {
     return (
       <div className='signup-Form-Container'>
+      <h4>Sign Up:</h4>
         <form onSubmit={this.handleSubmit}>
           <h2 id="sign_up_header">Sign Up Page</h2>
           <div className='signup-firstName--Button-Div'>

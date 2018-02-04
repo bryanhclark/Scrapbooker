@@ -12,8 +12,7 @@ class NavModal extends React.Component {
                 <div className="navModal">
                     {this.props.children}
                     <div className="footer">
-                        <button onClick={this.props.onClose}>
-                            Close
+                        <button className="btn_close" onClick={this.props.onClose}>
                         </button>
                     </div>
                 </div>

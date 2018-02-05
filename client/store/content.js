@@ -12,9 +12,13 @@ const getContent = (content) => {
 	return { type: GET_CONTENT, content }
 }
 
-const getNewContent = (newContent) => {
+const getNewSocketContent = (newContent) => {
 	let action = { type: NEW_CONTENT, newContent }
 	store.dispatch(action)
+}
+
+const getNewContent = (newContent) => {
+	return { type: NEW_CONTENT, newContent }
 }
 
 // //THUNKS
@@ -30,14 +34,14 @@ export const postContent = (contentObj) => {
 	return dispatch => {
 		axios.post('/api/content/image', { contentObj })
 			.then(response => {
-				console.log("Saved successfully to the DB")
+				dispatch(getNewContent(response.data))
 			})
 			.catch(console.error)
 	}
 }
 
 export const socketStoreUpdate = (imageObj) => {
-	getNewContent(imageObj)
+	getNewSocketContent(imageObj)
 }
 
 // //REDUCER

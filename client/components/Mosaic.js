@@ -33,8 +33,8 @@ class Mosaic extends Component {
       let imgObj = {
         src: image['src'],
         thumbnail: image['src'],
-        thumbnailHeight: 174,
-        thumbnailWidth: 320,
+        thumbnailHeight: image.height,
+        thumbnailWidth: image.width,
         isSelected: false,
         orientation: image['orientation']
       }

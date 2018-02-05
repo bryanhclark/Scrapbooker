@@ -8,7 +8,6 @@ import EXIF from 'exif-js'
 import { postContent } from '../store/content'
 import { fetchSingleEvent } from '../store/singleEvent'
 import { fetchCurrentContact } from '../store/singleContact'
-import 'babel-polyfill'
 import crypto from 'crypto'
 
 class Upload extends Component {
@@ -87,8 +86,6 @@ const mapDispatch = (dispatch) => {
 function imageEXIFPacker(image, url, eventSecret, contactId, cb) {
 	const imgObj = {}
 	EXIF.getData(image, function () {
-    imgObj.lat = [EXIF.getTag(this, 'GPSLatitude').toString(), EXIF.getTag(this, 'GPSLatitudeRef')]
-    imgObj.long = [EXIF.getTag(this, 'GPSLongitude').toString(), EXIF.getTag(this, 'GPSLongitudeRef')]
 		imgObj.src = url
 		imgObj.width = Number(EXIF.getTag(this, "PixelXDimension"))
 		imgObj.height = Number(EXIF.getTag(this, "PixelYDimension"))

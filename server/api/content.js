@@ -25,8 +25,6 @@ router.post('/image', (req, res, next) => {
 	Content.create({
 		type: 'image',
 		src: req.body.src,
-		lat: req.body.lat,
-		long: req.body.long,
 		width: req.body.width,
 		height: req.body.height,
 		orientation: req.body.orientation,

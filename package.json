@@ -28,6 +28,7 @@
     "body-parser": "^1.16.1",
     "compression": "^1.7.1",
     "connect-session-sequelize": "^4.1.0",
+    "dms2dec": "^1.1.0",
     "exif": "^0.6.0",
     "exif-js": "^2.3.0",
     "exifreader": "^2.2.0",

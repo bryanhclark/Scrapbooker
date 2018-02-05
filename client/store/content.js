@@ -30,7 +30,7 @@ export const postContent = (contentObj) => {
 	return dispatch => {
 		axios.post('/api/content/image', { contentObj })
 			.then(response => {
-				dispatch(getNewContent(response.data))
+				console.log("Saved successfully to the DB")
 			})
 			.catch(console.error)
 	}

@@ -3,7 +3,6 @@ const { Contact } = require('../db/models')
 
 
 router.get('/', (req, res, next) => {
-  console.log('req.query', req.query)
   Contact.findAll({
     where: req.query
   })

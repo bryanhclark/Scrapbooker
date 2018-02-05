@@ -1,10 +1,9 @@
 const router = require('express').Router()
-const { Participants, Contact } = require('../db/models')
-
+const { Participants, Contact, Event } = require('../db/models')
+//figure out how to 
 router.get('/', (req, res, next) => {
   Participants.findAll({
-    where: req.query,
-    include: [Contact]
+    include: [{ model: Event, where: { secret: req.query.secret } }, Contact]
   })
     .then(participants => res.json(participants))
     .catch(next)

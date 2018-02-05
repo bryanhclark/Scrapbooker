@@ -22,8 +22,8 @@ class Mosaic extends Component {
   }
 
   componentDidMount() {
-    this.props.loadContent(this.props.match.params.eventId)
-    this.props.loadSingleEvent(this.props.match.params.eventId)
+    this.props.loadContent(this.props.match.params.eventSecret)
+    this.props.loadSingleEvent(this.props.match.params.eventSecret)
   }
 
 
@@ -55,7 +55,7 @@ class Mosaic extends Component {
     return (
       <div className='mosaicContainer'>
         <div className="mobile_toggle">
-          <NavLink to={`/events/${this.props.singleEvent.id}/upload`} className="mobile_toggle_active">Upload</NavLink>
+          <NavLink to={`/events/${this.props.singleEvent.secret}/upload`} className="mobile_toggle_active">Upload</NavLink>
           <div className="mobile_toggle_disabled">Mosaic</div>
         </div>
         <div className="grid" data-packery='{ "itemSelector": ".grid-item", "gutter": 0 }'>
@@ -83,11 +83,11 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    loadContent(eventId) {
-      dispatch(fetchContent(eventId));
+    loadContent(eventSecret) {
+      dispatch(fetchContent(eventSecret));
     },
-    loadSingleEvent(eventId) {
-      dispatch(fetchSingleEvent(eventId))
+    loadSingleEvent(eventSecret) {
+      dispatch(fetchSingleEvent(eventSecret))
     }
   }
 }

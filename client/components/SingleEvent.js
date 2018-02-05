@@ -18,7 +18,7 @@ class SingleEvent extends Component {
   }
 
   componentDidMount() {
-    this.props.loadEvent(this.props.match.params.eventId)
+    this.props.loadEvent(this.props.match.params.eventSecret)
   }
 
   toggleModal = (name) => {
@@ -40,8 +40,8 @@ class SingleEvent extends Component {
             <DashboardModal show={this.state.isAddContactModelOpen} onClose={() => this.toggleModal('addContacts')}>
               <AddContactsToEventForm participants={this.props.participants} />
             </DashboardModal>
-            <NavLink to={`/events/${this.props.singleEvent.id}/mosaic`} className="btn">View Mosaic</NavLink>
-            <NavLink to={`/events/${this.props.singleEvent.id}/upload`} className="btn">Upload Content</NavLink>
+            <NavLink to={`/events/${this.props.singleEvent.secret}/mosaic`} className="btn">View Mosaic</NavLink>
+            <NavLink to={`/events/${this.props.singleEvent.secret}/upload`} className="btn">Upload Content</NavLink>
           </div>
           <div id='participants_section'>
             <h2 className="section_header">Participants:</h2>
@@ -53,7 +53,7 @@ class SingleEvent extends Component {
                       <tr key={participant.contact.id}>
                         <td>{participant.contact.name}</td>
                         <td>{participant.contact.phone}</td>
-                        </tr>
+                      </tr>
                     ))
                   }
                 </tbody>
@@ -80,10 +80,11 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    loadEvent(eventId) {
-      dispatch(fetchSingleEvent(eventId))
-      dispatch(fetchPartipants(eventId))
+    loadEvent(eventSecret) {
+      dispatch(fetchSingleEvent(eventSecret))
+      dispatch(fetchPartipants(eventSecret))
     },
+
   }
 }
 

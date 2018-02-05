@@ -13,8 +13,8 @@ const EventList = (props) => {
           <tbody>
             {props.events.map(event => (
               <tr className='table_row' key={event.id}>
-                <td className="td_eventName"><NavLink to={`/events/${event.id}`}>{event.name}</NavLink></td>
-                <td className="td_eventGo"><NavLink to={`/events/${event.id}`}>Go!</NavLink></td>
+                <td className="td_eventName"><NavLink to={`/events/${event.secret}`}>{event.name}</NavLink></td>
+                <td className="td_eventGo"><NavLink to={`/events/${event.secret}`}>Go!</NavLink></td>
               </tr>
             ))
             }

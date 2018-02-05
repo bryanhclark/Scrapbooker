@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import CommentList from './CommentList'
-import {mapToken} from '../../secrets'
+import { mapToken } from '../../secrets'
 import ReactMapboxGl, { Layer, Feature, Marker } from "react-mapbox-gl";
-import {dmsConversion} from '../../utils/geoLatLong'
+import { dmsConversion } from '../../utils/geoLatLong'
 
 
-const Map = ReactMapboxGl({accessToken: mapToken});
+const Map = ReactMapboxGl({ accessToken: mapToken });
 
 const SingleContent = (props) => {
   let coords = dmsConversion(props.image.long, props.image.lat)
@@ -24,20 +24,20 @@ const SingleContent = (props) => {
             center={coords}
             style="mapbox://styles/mapbox/streets-v9"
             containerStyle={{
-            //These can be changed in accordance to the size of the container div
-            height: "40vh",
-            width: "40vw"
-          }}>
-          <Marker
-            coordinates={coords}
-            anchor="bottom"
-            containerStyle={{
-              width: '12px',
-              height: '12px'
-            }}
+              //These can be changed in accordance to the size of the container div
+              height: "40vh",
+              width: "40vw"
+            }}>
+            <Marker
+              coordinates={coords}
+              anchor="bottom"
+              containerStyle={{
+                width: '12px',
+                height: '12px'
+              }}
             >
-            <img src={"http://www.clker.com/cliparts/I/l/L/S/W/9/map-marker-hi.png"}/>
-          </Marker>
+              <img src={"http://www.clker.com/cliparts/I/l/L/S/W/9/map-marker-hi.png"} />
+            </Marker>
           </Map>
         </div>
       </div>

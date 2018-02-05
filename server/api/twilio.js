@@ -10,17 +10,18 @@ module.exports = router;
 const messageSender = new Twilio(TwilioConfig.accountSid, TwilioConfig.authToken);
 
 //For local testing paste IP here
-const IP = `192.168.1.15`;
+const IP = `172.16.21.47`;
 
 router.post('/', (req, res, next) => {
-  const id = Number(req.body.id)
+  console.log('in twilio post route', req.body)
   Participants.findAll({
-    where: { eventId: id },
+
+    where: { eventId: req.body.id },
     include: [{ all: true }]
   })
     .then(participants => {
       participants.map(participant => {
-        return bitly.shorten(`http://${IP}:8080/events/${req.body.id}/upload/${participant.contact.contactHash}`)
+        return bitly.shorten(`http://${IP}:8080/events/${req.body.secret}/upload/${participant.contact.contactHash}`)
           .then(URL => {
             return messageSender.messages.create({
               body: `You have been invited to ${req.body.name} \n Location: ${req.body.street}, ${req.body.city}, ${req.body.state} \n This event starts at ${req.body.startTime} \n Join the event: ${URL.data.url}`,
@@ -33,4 +34,5 @@ router.post('/', (req, res, next) => {
           })
       })
     })
-  })
+})
+

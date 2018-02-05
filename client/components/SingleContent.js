@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import CommentList from './CommentList'
 import {mapToken} from '../../secrets'
 import ReactMapboxGl, { Layer, Feature, Marker } from "react-mapbox-gl";
-import {dmsConversion} from '../../public/helperFunctions'
+import {dmsConversion} from '../../utils/geoLatLong'
 
 
 const Map = ReactMapboxGl({accessToken: mapToken});

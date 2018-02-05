@@ -5,6 +5,7 @@ const crypto = require('crypto')
 const Contact = db.define('contacts', {
 	name: {
 		type: Sequelize.STRING,
+		allowNull: false,
 	},
 	phone: {
 		type: Sequelize.STRING

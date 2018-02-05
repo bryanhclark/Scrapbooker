@@ -27,6 +27,7 @@ class SingleEvent extends Component {
 
 
   render() {
+    console.log(this.props.singleEvent)
     return (
       <div className='single-Event-Container' >
 

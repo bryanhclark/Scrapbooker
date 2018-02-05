@@ -24,10 +24,10 @@ const Main = (props) => {
       <Navbar />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/dashboard/:userId" component={Dashboard} />
-        <Route path="/events/:eventId/upload/:contactHash?" component={Upload} />
-        <Route path="/events/:eventId/mosaic/:contactHash?" component={Mosaic} />
-        <Route path="/events/:eventId/" component={SingleEvent} />
+        <Route path="/dashboard/:userHash" component={Dashboard} />
+        <Route path="/events/:eventSecret/upload/:contactHash?" component={Upload} />
+        <Route path="/events/:eventSecret/mosaic/:contactHash?" component={Mosaic} />
+        <Route path="/events/:eventSecret/" component={SingleEvent} />
       </Switch>
     </div>
   )

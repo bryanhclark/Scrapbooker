@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Content } = require('../db/models')
+const { Content, Event } = require('../db/models')
 
 
 router.get('/', (req, res, next) => {
@@ -10,14 +10,12 @@ router.get('/', (req, res, next) => {
 		.catch(next)
 })
 
-router.get('/:eventId', (req, res, next) => {
+router.get('/:eventSecret', (req, res, next) => {
 	Content.findAll({
-		where: {
-			eventId: Number(req.params.eventId)
-		}
+		include: [{ model: Event, where: { secret: req.params.eventSecret } }]
 	})
 		.then(content => {
-			res.json(content)
+			console.log(content)
 		})
 		.catch(next)
 })
@@ -26,9 +24,9 @@ router.post('/image', (req, res, next) => {
 	req.body = req.body.contentObj
 	Content.create({
 		type: 'image',
-    src: req.body.src,
-    lat: req.body.lat,
-    long: req.body.long,
+		src: req.body.src,
+		lat: req.body.lat,
+		long: req.body.long,
 		width: req.body.width,
 		height: req.body.height,
 		orientation: req.body.orientation,

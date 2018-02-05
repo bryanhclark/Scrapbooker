@@ -13,8 +13,11 @@ router.get('/', (req, res, next) => {
     .then(events => res.json(events))
 })
 
-router.get('/:eventId', (req, res, next) => {
-  Events.findById(req.params.eventId)
+router.get('/:eventSecret', (req, res, next) => {
+  Events.findOne({
+    where:
+      { secret: req.params.eventSecret }
+  })
     .then(event => res.json(event))
     .catch(next)
 })

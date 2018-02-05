@@ -18,9 +18,9 @@ export const addParticipants = (participant) => {
 
 //THUNK
 
-export const fetchPartipants = (eventId) => {
+export const fetchPartipants = (secret) => {
   return (dispatch) => {
-    axios.get('/api/participants', { params: { eventId } })
+    axios.get('/api/participants', { params: { secret } })
       .then(res => dispatch(getPartipants(res.data)))
   }
 }

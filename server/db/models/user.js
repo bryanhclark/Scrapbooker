@@ -47,8 +47,8 @@ User.prototype.correctPassword = function (candidatePwd) {
 /**
  * classMethods
  */
-User.generateSalt = function () {
-  return crypto.randomBytes(16).toString('base64')
+User.generateSalt = () => {
+  return Math.random().toString(28).substring(2, 23)
 }
 
 User.encryptPassword = function (plainText, salt) {

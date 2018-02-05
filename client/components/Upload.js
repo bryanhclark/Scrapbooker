@@ -11,7 +11,6 @@ import { fetchCurrentContact } from '../store/singleContact'
 import 'babel-polyfill'
 import crypto from 'crypto'
 
-
 class Upload extends Component {
 	constructor(props) {
 		super(props)
@@ -21,18 +20,16 @@ class Upload extends Component {
 	}
 
 	componentDidMount() {
-		this.props.loadSingleEvent(this.props.match.params.eventId)
+		this.props.loadSingleEvent(this.props.match.params.eventSecret)
 		if (this.props.match.params.contactHash) this.props.setContact(this.props.match.params.contactHash)
 	}
-
-
 
 	render() {
 		return (
 			<div className='uploadContainer'>
 				<div className="mobile_toggle">
 					<div className="mobile_toggle_disabled">Upload</div>
-					<NavLink to={`/events/${this.props.singleEvent.id}/mosaic`} className="mobile_toggle_active">Mosaic</NavLink>
+					<NavLink to={`/events/${this.props.singleEvent.secret}/mosaic`} className="mobile_toggle_active">Mosaic</NavLink>
 				</div>
 				<div className="wrapper">
 					<h3>Upload Photo</h3>
@@ -44,7 +41,7 @@ class Upload extends Component {
 							this.setState({ img: e.target.files[0] })
 						}} />
 					<p>{this.state.img.name}</p>
-					<button className="btn" onClick={() => this.props.handleImgUpload(this.fileInput, this.props.match.params.eventId, this.props.singleContact.id)}>Upload Image</button>
+					<button className="btn" onClick={() => this.props.handleImgUpload(this.fileInput, this.props.match.params.eventSecret, this.props.singleContact.id)}>Upload Image</button>
 				</div>
 			</div>
 		)
@@ -58,20 +55,18 @@ const mapState = (state) => {
 	}
 }
 
-
 const mapDispatch = (dispatch) => {
 	return {
-		handleImgUpload(image, eventId, contactId) {
+		handleImgUpload(image, eventSecret, contactId) {
 			resizeImage({
 				file: image,
 				maxSize: 900
 			})
 				.then(resizedImg => {
-					resizedImg.name = eventId + "--" + image.name
 					return firebaseUpload(resizedImg)
 				})
 				.then(firebaseURL => {
-					imageEXIFPacker(image, firebaseURL, eventId, contactId, (error, imageObj) => {
+					imageEXIFPacker(image, firebaseURL, eventSecret, contactId, (error, imageObj) => {
 						if (error) console.error(error)
 						else {
 							dispatch(postContent(imageObj))
@@ -80,8 +75,8 @@ const mapDispatch = (dispatch) => {
 					})
 				})
 		},
-		loadSingleEvent(eventId) {
-			dispatch(fetchSingleEvent(eventId))
+		loadSingleEvent(eventSecret) {
+			dispatch(fetchSingleEvent(eventSecret))
 		},
 		setContact(contactHash) {
 			dispatch(fetchCurrentContact(contactHash))
@@ -89,7 +84,7 @@ const mapDispatch = (dispatch) => {
 	}
 }
 
-function imageEXIFPacker(image, url, eventId, contactId, cb) {
+function imageEXIFPacker(image, url, eventSecret, contactId, cb) {
 	const imgObj = {}
 	EXIF.getData(image, function () {
     imgObj.lat = [EXIF.getTag(this, 'GPSLatitude').toString(), EXIF.getTag(this, 'GPSLatitudeRef')]
@@ -99,7 +94,7 @@ function imageEXIFPacker(image, url, eventId, contactId, cb) {
 		imgObj.height = Number(EXIF.getTag(this, "PixelYDimension"))
 		imgObj.orientation = Number(EXIF.getTag(this, "Orientation"))
 		imgObj.timeCreated = image.lastModified.toString()
-		imgObj.eventId = eventId
+		imgObj.eventSecret = eventSecret
 		imgObj.contactId = contactId
 		cb(null, imgObj)
 	})

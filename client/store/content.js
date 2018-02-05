@@ -18,16 +18,15 @@ const getNewContent = (newContent) => {
 }
 
 // //THUNKS
-export function fetchContent(eventId) {
+export function fetchContent(eventSecret) {
 	return dispatch => {
-		return axios.get(`/api/content/${eventId}`)
+		return axios.get(`/api/content/${eventSecret}`)
 			.then(res => dispatch(getContent(res.data)))
 			.catch(console.error)
 	}
 }
 
 export const postContent = (contentObj) => {
-	console.log(contentObj)
 	return dispatch => {
 		axios.post('/api/content/image', { contentObj })
 			.then(response => {

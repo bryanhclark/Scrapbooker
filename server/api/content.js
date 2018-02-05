@@ -32,7 +32,10 @@ router.post('/image', (req, res, next) => {
 		eventId: req.body.eventId,
 		contactId: req.body.contactId
 	})
-		.then(content => res.json(content))
+    .then(content => {
+      console.log(content)
+      res.json(content)})
+
 		.catch(next);
 })
 

@@ -64,9 +64,11 @@ class SingleEvent extends Component {
             </div>
           </div>
           <div>
-            <h2 className="section_header">Invitations:</h2>
-            <p>Send invitations to your participants</p>
-            <button className="btn" id="send_text" onClick={() => { broadcastTextMessage(this.props.singleEvent) }}>Send invites!</button>
+            <h2 className="section_header">Invite Participants</h2>
+            <form id="custom-message-form">
+              <input id="message" type="text" placeholder="Enter custom message..." />
+              <button className="btn" id="send_text" onClick={this.props.sendInvite}>Send invites!</button>
+            </form>
           </div>
         </div>
       </div>
@@ -82,12 +84,24 @@ const mapState = (state) => {
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, ownProps) => {
   return {
     loadEvent(eventSecret) {
       dispatch(fetchSingleEvent(eventSecret))
       dispatch(fetchPartipants(eventSecret))
     },
+
+    sendInvite(event) {
+      event.preventDefault();
+      const form = document.getElementById('custom-message-form')
+      const messageObj = {
+        message: document.getElementById('message').value,
+        eventSecret: ownProps.match.params.eventSecret
+      }
+      broadcastTextMessage(messageObj)
+      form.reset();
+    },
+    
     setParticipant(contactHash) {
       dispatch(fetchCurrentParticipant(contactHash))
     }

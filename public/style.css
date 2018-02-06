@@ -65,6 +65,7 @@ margin-left: 10px;}
 /* Mosaic */
 .quote_start { font-size: 24px; line-height: 24px; }
 .quote_end { font-size: 24px; line-height: 24px; }
+.gallery_item {width: 100%; height:auto;}
 
 
 /*================================= Tablet ====================================*/

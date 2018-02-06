@@ -15,8 +15,7 @@ router.get('/:eventSecret', (req, res, next) => {
 		include: [{ model: Event, where: { secret: req.params.eventSecret } }]
 	})
 		.then(content => {
-			console.log(content)
-		})
+			res.json(content)})
 		.catch(next)
 })
 
@@ -33,7 +32,6 @@ router.post('/image', (req, res, next) => {
 		contactId: req.body.contactId
 	})
     .then(content => {
-      console.log(content)
       res.json(content)})
 
 		.catch(next);

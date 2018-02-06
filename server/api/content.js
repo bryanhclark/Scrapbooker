@@ -15,13 +15,14 @@ router.get('/:eventSecret', (req, res, next) => {
 		include: [{ model: Event, where: { secret: req.params.eventSecret } }]
 	})
 		.then(content => {
-			console.log(content)
+			res.json(content)
 		})
 		.catch(next)
 })
 
 router.post('/image', (req, res, next) => {
 	req.body = req.body.contentObj
+	console.log(req.body)
 	Content.create({
 		type: 'image',
 		src: req.body.src,
@@ -30,11 +31,11 @@ router.post('/image', (req, res, next) => {
 		orientation: req.body.orientation,
 		timeCreated: req.body.timeCreated,
 		eventId: req.body.eventId,
-		contactId: req.body.contactId
+		userId: req.body.userId
 	})
-    .then(content => {
-      console.log(content)
-      res.json(content)})
+		.then(content => {
+			// res.json(content)
+		})
 
 		.catch(next);
 })

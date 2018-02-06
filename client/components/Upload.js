@@ -6,7 +6,7 @@ import { config } from '../../secrets'
 import { uploadImageSocket } from '../socket'
 import { postContent } from '../store/content'
 import { fetchSingleEvent } from '../store/singleEvent'
-import { fetchCurrentContact } from '../store/singleContact'
+import { fetchCurrentParticipant } from '../store/singleParticipant'
 import crypto from 'crypto'
 import { imageEXIFPacker, resizeImage } from '../../utils/imgUtils'
 
@@ -20,7 +20,12 @@ class Upload extends Component {
 
 	componentDidMount() {
 		this.props.loadSingleEvent(this.props.match.params.eventSecret)
-		if (this.props.match.params.contactHash) this.props.setContact(this.props.match.params.contactHash)
+		if (this.props.match.params.userHash) {
+			this.props.setParticipant(this.props.match.params.userHash)
+		}
+		else {
+			this.props.setParticipant(this.props.user.userHash)
+		}
 	}
 
 	render() {
@@ -28,7 +33,7 @@ class Upload extends Component {
 			<div className='uploadContainer'>
 				<div className="mobile_toggle">
 					<div className="mobile_toggle_disabled">Upload</div>
-					<NavLink to={`/events/${this.props.singleEvent.secret}/mosaic`} className="mobile_toggle_active">Mosaic</NavLink>
+					<NavLink to={`/events/${this.props.singleEvent.secret}/mosaic/${this.props.singleParticipant.userHash}`} className="mobile_toggle_active">Mosaic</NavLink>
 				</div>
 				<div className="wrapper">
 					<h3>Upload Photo</h3>
@@ -40,7 +45,7 @@ class Upload extends Component {
 							this.setState({ img: e.target.files[0] })
 						}} />
 					<p>{this.state.img.name}</p>
-					<button className="btn" onClick={() => this.props.handleImgUpload(this.fileInput, this.props.match.params.eventSecret, this.props.singleContact.id)}>Upload Image</button>
+					<button className="btn" onClick={() => this.props.handleImgUpload(this.fileInput, this.props.singleEvent.id, this.props.singleParticipant.id)}>Upload Image</button>
 				</div>
 			</div>
 		)
@@ -58,14 +63,15 @@ const firebaseUpload = (image) => {
 
 const mapState = (state) => {
 	return {
+		user: state.user,
 		singleEvent: state.singleEvent,
-		singleContact: state.singleContact
+		singleParticipant: state.singleParticipant
 	}
 }
 
 const mapDispatch = (dispatch) => {
 	return {
-		handleImgUpload(image, eventSecret, contactId) {
+		handleImgUpload(image, eventId, userId) {
 			resizeImage({
 				file: image,
 				maxSize: 900
@@ -74,10 +80,11 @@ const mapDispatch = (dispatch) => {
 					return firebaseUpload(resizedImg)
 				})
 				.then(firebaseURL => {
-					imageEXIFPacker(image, firebaseURL, eventSecret, contactId, (error, imageObj) => {
+					imageEXIFPacker(image, firebaseURL, eventId, userId, (error, imageObj) => {
 						if (error) console.error(error)
 						else {
 							dispatch(postContent(imageObj))
+							//use a .then between these two
 							uploadImageSocket(imageObj)
 						}
 					})
@@ -86,8 +93,8 @@ const mapDispatch = (dispatch) => {
 		loadSingleEvent(eventSecret) {
 			dispatch(fetchSingleEvent(eventSecret))
 		},
-		setContact(contactHash) {
-			dispatch(fetchCurrentContact(contactHash))
+		setParticipant(contactHash) {
+			dispatch(fetchCurrentParticipant(contactHash))
 		}
 	}
 }

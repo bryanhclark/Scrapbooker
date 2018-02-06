@@ -3,9 +3,6 @@ const { User } = require('../db/models')
 module.exports = router
 
 
-
-
-
 router.get('/', (req, res, next) => {
   User.findAll({
     // explicitly select only the id and email fields - even though
@@ -16,6 +13,8 @@ router.get('/', (req, res, next) => {
     .then(users => res.json(users))
     .catch(next)
 })
+
+
 
 
 

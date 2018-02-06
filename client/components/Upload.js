@@ -38,7 +38,7 @@ class Upload extends Component {
 				</div>
 				<div className="wrapper">
 					<h3>Upload Photo</h3>
-					<label className="btn" for="imageToUpload">Choose photo</label>
+					<label className="btn" htmlFor="imageToUpload">Choose photo</label>
 					<input type='file' accept='image/*;capture=camera' name='newImage' id='imageToUpload' onChange={
 						(e) => {
 							e.preventDefault()
@@ -74,7 +74,6 @@ const mapDispatch =  (dispatch) => {
 	return {
 		async handleImgUpload(image, eventId, userId) {
 			let imageOrientation = await fetchExifData(image)
-			console.log('imgaeOrientation', imageOrientation)
 			resizeImage({
 				file: image,
 				maxSize: 900

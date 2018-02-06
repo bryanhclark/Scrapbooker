@@ -7,6 +7,7 @@ import { fetchSingleEvent } from '../store/singleEvent'
 import StackGrid from "react-stack-grid";
 import NavModal from './NavModal'
 import SingleContent from './SingleContent'
+import currentEvents from '../store/currentEvents';
 
 class Mosaic extends Component {
   constructor(props) {
@@ -41,7 +42,10 @@ class Mosaic extends Component {
     return pictureObjArray
   }
   onImageClick(e) {
-    this.setState({ currentImage: this.props.content[e] })
+    let currentImage = this.props.content.filter(content => {
+      if (content.src === e.target.src) return content
+    })
+    this.setState({ currentImage: currentImage[0] })
     this.toggleModal()
   }
 
@@ -57,9 +61,11 @@ class Mosaic extends Component {
           <div className="mobile_toggle_disabled">Mosaic</div>
         </div>
         <div>
-          <StackGrid columnWidth={'20%'}>
+          <StackGrid
+            columnWidth={'20%'}
+          >
             {this.reformatImagesForGallery(this.props.content).map(image => (
-              <div key={image.src}><img src={image.src} className="gallery_item" /></div>
+              <div key={image.src}  > <img src={image.src} className="gallery_item" photoid={image.id} onClick={(e) => this.onImageClick(e)} /></div>
             ))}
           </StackGrid>
           <NavModal show={this.state.isImageModalOpen}

@@ -29,8 +29,10 @@ export const getCurrentContacts = (organizerId) => {
 export const createContact = (contactObj) => {
   return dispatch => {
     axios.post('/api/contacts', {
-      name: contactObj.name,
+      firstName: contactObj.firstName,
+      lastName: contactObj.lastName,
       phone: contactObj.phone,
+      email: contactObj.email,
       organizerId: contactObj.organizerId
     })
       .then(res => dispatch(addContact(res.data)))

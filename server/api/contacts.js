@@ -14,8 +14,10 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   User.create({
-    firstName: req.body.name,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     phone: req.body.phone,
+    email: req.body.email,
     organizerId: req.body.organizerId
   })
     .then(contact => res.json(contact))

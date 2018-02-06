@@ -13,14 +13,13 @@ const messageSender = new Twilio(TwilioConfig.accountSid, TwilioConfig.authToken
 const IP = `172.16.21.47`;
 
 router.post('/', (req, res, next) => {
-  console.log('in twilio post route', req.body)
   usersEvents.findAll({
     where: { eventId: req.body.id },
     include: [{ all: true }]
   })
     .then(participants => {
       participants.map(participant => {
-        return bitly.shorten(`http://${IP}:8080/events/${req.body.secret}/upload/${participant.user.userHash}`)
+        return bitly.shorten(`http://${IP}:8080/events/${participant.event.secret}/upload/${participant.user.userHash}`)
           .then(URL => {
             return messageSender.messages.create({
               body: `You have been invited to ${req.body.name} \n Location: ${req.body.street}, ${req.body.city}, ${req.body.state} \n This event starts at ${req.body.startTime} \n Join the event: ${URL.data.url}`,

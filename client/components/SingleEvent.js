@@ -51,7 +51,7 @@ class SingleEvent extends Component {
                 <tbody>
                   {
                     this.props.participants.map(participant => (
-                      <tr key={participant.user.id}>
+                      <tr key={participant.user.id}><input type='checkbox' onChange={(e) => console.log(e.target)} />
                         <td>{participant.user.fullName}</td>
                         <td>{participant.user.phone}</td>
                       </tr>

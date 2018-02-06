@@ -30,8 +30,7 @@ class Dashboard extends Component {
 		return (
 			<div className='main-Dashboard-Container'>
 				<div className="wrapper">
-					<h3>Welcome, {(this.props.user.fullName !== 'null null') ?
-						this.props.user.fullName : "" }</h3>
+					<h3>Welcome, {this.props.user.fullName}</h3>
 					<div className="modal_btns">
 						<div className='dashboard-Button-Main-Container'>
 							<div className='event-Creation-Modal-Container'>

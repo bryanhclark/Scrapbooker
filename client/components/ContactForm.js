@@ -10,7 +10,8 @@ class ContactForm extends Component {
 		super(props)
 		this.state = {
 			name: '',
-			phone: '',
+      phone: '',
+      email: '',
 			organizerId: this.props.user.id
 		}
 		this.handleChange = this.handleChange.bind(this)
@@ -44,7 +45,11 @@ class ContactForm extends Component {
 					</div>
 					<div className='form_row'>
 						<label>Phone Number:</label>
-						<input type='text' value={this.state.phone} name='phone' onChange={this.handleChange} />	
+						<input type='text' value={this.state.phone} name='phone' onChange={this.handleChange} />
+					</div>
+					<div className='form_row'>
+						<label>Email:</label>
+						<input type='text' value={this.state.email} name='email' onChange={this.handleChange} />
 					</div>
 					<div className='btn_area'>
 						<input className="btn" type='submit' value='submit' />

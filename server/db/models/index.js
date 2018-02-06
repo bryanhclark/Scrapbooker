@@ -1,8 +1,8 @@
 const User = require('./user')
 const Event = require('./event')
 const Content = require('./content')
-const Contact = require('./contacts')
-const Participants = require('./participants')
+const organizerContacts = require('./organizerContacts')
+const usersEvents = require('./usersEvents')
 const Comment = require('./comments')
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -10,21 +10,21 @@ const Comment = require('./comments')
  *
  *    BlogPost.belongsTo(User)
  */
-
-Event.belongsTo(User, { as: 'organizer' })
-Contact.belongsTo(User, { as: 'organizer' })
-Contact.belongsToMany(Event, { through: Participants })
-Event.belongsToMany(Contact, { through: Participants })
-Participants.belongsTo(Event)
-Participants.belongsTo(Contact)
-Event.hasMany(Participants)
-Contact.hasMany(Participants)
-Content.belongsTo(Contact)
+Comment.belongsTo(User);
+Comment.belongsTo(Content);
+User.hasMany(Comment)
+Content.belongsTo(User)
 Content.belongsTo(Event)
-Comment.belongsTo(Contact)
-Comment.belongsTo(Content)
-Contact.hasMany(Comment)
-Content.hasMany(Comment)
+User.hasMany(Content)
+User.hasMany(User, { as: 'Contact', foreignKey: 'organizerId', useJunctionTable: false })
+Event.belongsTo(User, { as: 'organizer' })
+User.belongsToMany(Event, { as: 'participant', through: usersEvents })
+usersEvents.belongsTo(User)
+usersEvents.belongsTo(Event)
+Event.belongsToMany(User, { as: 'event', through: usersEvents })
+
+
+
 
 
 /**
@@ -37,8 +37,8 @@ module.exports = {
   User,
   Event,
   Content,
-  Contact,
-  Participants,
+  organizerContacts,
+  usersEvents,
   Comment
 }
 

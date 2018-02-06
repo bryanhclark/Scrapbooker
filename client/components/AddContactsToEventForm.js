@@ -8,6 +8,7 @@ class AddContactsToEventForm extends Component {
     super(props)
     this.state = {
       contactsToAdd: []
+
     }
     this.addContactToEvent = this.addContactToEvent.bind(this)
     this.removeContactFromEvent = this.removeContactFromEvent.bind(this)
@@ -15,7 +16,7 @@ class AddContactsToEventForm extends Component {
   }
   componentDidMount() {
     let contactsToAdd = this.props.participants.map(participant => {
-      return participant.contact
+      return participant.user
     })
     this.setState({ contactsToAdd })
   }
@@ -39,8 +40,6 @@ class AddContactsToEventForm extends Component {
     this.props.addContactsToEvent(this.state.contactsToAdd, this.props.singleEvent.id)
   }
 
-
-
   render() {
     return (
       <div className='add-Contacts-To-Event-Form-Container' >
@@ -49,7 +48,9 @@ class AddContactsToEventForm extends Component {
           {
             this.props.contacts.map(contact => (
               <div className='single-Contact-Container-Add-Contacts-To-Event' key={contact.id}>
-                <button onClick={() => this.addContactToEvent(contact)}>+</button>{contact.name}<button onClick={() => this.removeContactFromEvent(contact)}>-</button>
+
+                <button onClick={() => this.addContactToEvent(contact)}>+</button>{contact.fullName}<button onClick={() => this.removeContactFromEvent(contact)}>-</button>
+
               </div>
             ))
           }
@@ -60,10 +61,17 @@ class AddContactsToEventForm extends Component {
         <ul className='contacts-To-Be-Added-List'>
           <div className='current-Contact-List-To-Add-Container'>
             <div className='current-Contact-List-To-Add-Header'>
-              <p>contacts to be added to: {this.props.singleEvent.name}</p>
+              <p>Contacts to be added to: {this.props.singleEvent.name}</p>
               {
                 this.state.contactsToAdd.map(contact => (
-                  <li key={contact.id}>{contact.name}</li>
+
+                  
+
+                  <div key={contact.id}>
+                    <li>{contact.fullName}</li>
+                    <button id='remove-contact' onClick={() => this.removeContactFromEvent(contact)}>-</button>
+                  </div>
+
                 ))
               }
             </div>
@@ -82,16 +90,14 @@ const mapState = (state) => {
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, ownProps) => {
   return {
     addContactsToEvent(contactsArray, eventId) {
       dispatch(addParticipantsToEvent(contactsArray, eventId))
+      ownProps.show('addContacts')
     }
   }
 }
-
-
-
 
 const AddContactsToEventFormContainer = connect(mapState, mapDispatch)(AddContactsToEventForm)
 

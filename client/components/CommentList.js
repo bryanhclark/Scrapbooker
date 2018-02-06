@@ -30,12 +30,13 @@ class CommentList extends Component {
     this.props.postComment({
       contentId: this.props.image.id,
       body: this.state.comment,
-      contactId: this.props.singleContact.id
+      userId: this.props.singleParticipant.id
     })
     this.setState({ comment: '' })
   }
 
   render() {
+    console.log('this.props.comments', this.props.comments)
     return (
       <div className='comment-List-Container'>
         <div className='comment-List-Header'>
@@ -45,7 +46,7 @@ class CommentList extends Component {
             {
               this.props.comments.map(comment => (
                 <li className='comment-List-Item' key={comment.id}>
-                  <strong>{comment.contact.name}</strong><br />
+                  <strong>{comment.user.fullName}</strong><br />
                   {comment.body}
                 </li>
               ))
@@ -64,7 +65,7 @@ class CommentList extends Component {
 const mapState = (state) => {
   return {
     comments: state.comments,
-    singleContact: state.singleContact
+    singleParticipant: state.singleParticipant
   }
 }
 

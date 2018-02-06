@@ -7,7 +7,8 @@ const Comment = db.define('comment', {
     allowNull: false
   }
 })
-
+//commenter id & commenter type (table
+//make participants be able to contact
 
 
 module.exports = Comment

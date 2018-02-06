@@ -53,7 +53,7 @@ class Mosaic extends Component {
     return (
       <div className='mosaicContainer'>
         <div className="mobile_toggle">
-          <NavLink to={`/events/${this.props.singleEvent.secret}/upload`} className="mobile_toggle_active">Upload</NavLink>
+          <NavLink to={`/events/${this.props.singleEvent.secret}/upload/${this.props.singleParticipant.userHash}`} className="mobile_toggle_active">Upload</NavLink>
           <div className="mobile_toggle_disabled">Mosaic</div>
         </div>
         <div>
@@ -75,7 +75,8 @@ class Mosaic extends Component {
 const mapState = (state) => {
   return {
     content: state.content,
-    singleEvent: state.singleEvent
+    singleEvent: state.singleEvent,
+    singleParticipant: state.singleParticipant
   }
 }
 

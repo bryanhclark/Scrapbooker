@@ -31,6 +31,7 @@ export function fetchContent(eventSecret) {
 }
 
 export const postContent = (contentObj) => {
+	console.log(contentObj);
 	return dispatch => {
 		axios.post('/api/content/image', { contentObj })
 			.then(response => {

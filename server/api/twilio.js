@@ -13,7 +13,6 @@ const messageSender = new Twilio(TwilioConfig.accountSid, TwilioConfig.authToken
 const IP = `172.16.21.47`;
 
 router.post('/', (req, res, next) => {
-  console.log('in twilio post route', req.body)
   Participants.findAll({
 
     where: { eventId: req.body.id },
@@ -21,6 +20,8 @@ router.post('/', (req, res, next) => {
   })
     .then(participants => {
       participants.map(participant => {
+        if(participant.wasInvited !== true )
+
         return bitly.shorten(`http://${IP}:8080/events/${req.body.secret}/upload/${participant.contact.contactHash}`)
           .then(URL => {
             return messageSender.messages.create({

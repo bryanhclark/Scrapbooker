@@ -7,6 +7,7 @@ router.use('/content', require('./content'))
 router.use('/contacts', require('./contacts'))
 router.use('/participants', require('./participants'))
 router.use('/twilio', require('./twilio'))
+router.use('/comments', require('./comments'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')

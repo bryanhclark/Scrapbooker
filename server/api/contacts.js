@@ -4,9 +4,7 @@ const { Contact } = require('../db/models')
 
 router.get('/', (req, res, next) => {
   Contact.findAll({
-    where: {
-      organizerId: req.query.organizerId
-    }
+    where: req.query
   })
     .then(contacts => {
       res.json(contacts)
@@ -20,7 +18,9 @@ router.post('/', (req, res, next) => {
     phone: req.body.phone,
     organizerId: req.body.organizerId
   })
-    .then(contact => res.json(contact))
+    .then(contact => {
+      res.json(contact)
+    })
     .catch(next)
 })
 

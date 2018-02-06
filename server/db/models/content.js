@@ -26,7 +26,7 @@ const Content = db.define('content', {
 	orientation: {
 		type: Sequelize.INTEGER,
 		allowNull: true
-	}
+  }
 })
 
 module.exports = Content;

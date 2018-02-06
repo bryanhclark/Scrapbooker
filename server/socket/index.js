@@ -4,6 +4,7 @@ module.exports = (io) => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
 
     socket.on('image_upload', (imgObj) => {
+      console.log("Socket image hit server")
       socket.broadcast.emit('update_store', imgObj);
     })
 

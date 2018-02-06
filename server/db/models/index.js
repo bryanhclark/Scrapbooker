@@ -3,6 +3,7 @@ const Event = require('./event')
 const Content = require('./content')
 const Contact = require('./contacts')
 const Participants = require('./participants')
+const Comment = require('./comments')
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
@@ -18,8 +19,13 @@ Participants.belongsTo(Event)
 Participants.belongsTo(Contact)
 Event.hasMany(Participants)
 Contact.hasMany(Participants)
-Content.belongsTo(User)
+Content.belongsTo(Contact)
 Content.belongsTo(Event)
+Comment.belongsTo(Contact)
+Comment.belongsTo(Content)
+Contact.hasMany(Comment)
+Content.hasMany(Comment)
+
 
 
 /**
@@ -33,7 +39,8 @@ module.exports = {
   Event,
   Content,
   Contact,
-  Participants
+  Participants,
+  Comment
 }
 
 //172.16.21.47172

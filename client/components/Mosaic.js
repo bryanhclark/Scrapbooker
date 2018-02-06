@@ -4,32 +4,35 @@ import { NavLink } from 'react-router-dom'
 import { fetchContent } from '../store/content'
 import { render } from 'react-dom';
 import { fetchSingleEvent } from '../store/singleEvent'
-import Gallery from 'react-grid-gallery';
+import StackGrid from "react-stack-grid";
+import NavModal from './NavModal'
+import SingleContent from './SingleContent'
 
 class Mosaic extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      formattedPictureArray: []
+      formattedPictureArray: [],
+      isImageModalOpen: false,
+      currentImage: {}
     }
     this.reformatImagesForGallery = this.reformatImagesForGallery.bind(this)
+    this.onImageClick = this.onImageClick.bind(this)
+    this.toggleModal = this.toggleModal.bind(this)
   }
 
   componentDidMount() {
-    this.props.loadContent(this.props.match.params.eventId)
-    this.props.loadSingleEvent(this.props.match.params.eventId)
+    this.props.loadContent(this.props.match.params.eventSecret)
+    this.props.loadSingleEvent(this.props.match.params.eventSecret)
   }
-
-
 
   reformatImagesForGallery(imageArray) {
     const pictureObjArray = imageArray.map(image => {
-      console.log('image', image)
       let imgObj = {
         src: image['src'],
         thumbnail: image['src'],
-        thumbnailHeight: 174,
-        thumbnailWidth: 320,
+        thumbnailHeight: image.height,
+        thumbnailWidth: image.width,
         isSelected: false,
         orientation: image['orientation']
       }
@@ -37,21 +40,32 @@ class Mosaic extends Component {
     })
     return pictureObjArray
   }
+  onImageClick(e) {
+    this.setState({ currentImage: this.props.content[e] })
+    this.toggleModal()
+  }
+
+  toggleModal = () => {
+    this.setState({ isImageModalOpen: !this.state.isImageModalOpen })
+  }
 
   render() {
-    console.log('formattedPictureArray', this.state.formattedPictureArray)
     return (
       <div className='mosaicContainer'>
         <div className="mobile_toggle">
-          <NavLink to={`/events/${this.props.singleEvent.id}/upload`} className="mobile_toggle_active">Upload</NavLink>
+          <NavLink to={`/events/${this.props.singleEvent.secret}/upload`} className="mobile_toggle_active">Upload</NavLink>
           <div className="mobile_toggle_disabled">Mosaic</div>
         </div>
-        <div className="grid" data-packery='{ "itemSelector": ".grid-item", "gutter": 0 }'>
-          <Gallery images={this.reformatImagesForGallery(this.props.content)}
-            isSelected={false}
-            margin={0}
-            enableLightbox={false}
-          />
+        <div>
+          <StackGrid columnWidth={'20%'}>
+            {this.reformatImagesForGallery(this.props.content).map(image => (
+              <div key={image.src}><img src={image.src} className="gallery_item" /></div>
+            ))}
+          </StackGrid>
+          <NavModal show={this.state.isImageModalOpen}
+            onClose={this.toggleModal}>
+            <SingleContent image={this.state.currentImage} />
+          </NavModal>
         </div>
       </div>
     )
@@ -67,12 +81,11 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    loadContent(eventId) {
-      console.log("eventId is", eventId)
-      dispatch(fetchContent(eventId));
+    loadContent(eventSecret) {
+      dispatch(fetchContent(eventSecret));
     },
-    loadSingleEvent(eventId) {
-      dispatch(fetchSingleEvent(eventId))
+    loadSingleEvent(eventSecret) {
+      dispatch(fetchSingleEvent(eventSecret))
     }
   }
 }

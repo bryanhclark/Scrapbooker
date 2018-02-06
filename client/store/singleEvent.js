@@ -9,9 +9,9 @@ export const getSingleEvent = (event) => {
 }
 
 //ACTION THUNK
-export const fetchSingleEvent = (eventId) => {
+export const fetchSingleEvent = (eventSecret) => {
   return dispatch => {
-    axios.get(`/api/events/${eventId}`)
+    axios.get(`/api/events/${eventSecret}`)
       .then(res => dispatch(getSingleEvent(res.data)))
       .catch(console.error)
   }

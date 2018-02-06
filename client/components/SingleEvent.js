@@ -51,7 +51,7 @@ class SingleEvent extends Component {
                 <tbody>
                   {
                     this.props.participants.map(participant => (
-                      <tr className="table_row" key={participant.user.id}>
+                      <tr  className="table_row" key={participant.user.id}><input type='checkbox' onChange={(e) => console.log(e.target)} />
                         <td>{participant.user.fullName}</td>
                         <td>{participant.user.phone}</td>
                       </tr>
@@ -64,7 +64,7 @@ class SingleEvent extends Component {
           <div>
             <h2 className="section_header">Invite Participants</h2>
               <button className="btn" id="send_text" onClick={() => {broadcastTextMessage({id: this.props.singleEvent.id})}}>Send invites!</button>
-              <button className="btn" id="send_text" onClick={() => { broadcastEmail()}}>Send email!</button>
+              <button className="btn" id="send_text" onClick={() => { broadcastEmail({id: this.props.singleEvent.id})}}>Send email!</button>
           </div>
         </div>
       </div>

@@ -12,7 +12,7 @@ const ContactList = (props) => {
 						{
 							props.contacts.map(contact => (
 								<tr className="table_row" key={contact.id}>
-									<td className="contact_name">{contact.name}</td>
+									<td className="contact_name">{contact.firstName}</td>
 									<td className="contact_phone">{contact.phone}</td>
 								</tr>
 							))

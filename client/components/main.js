@@ -25,8 +25,8 @@ const Main = (props) => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/dashboard/:userHash" component={Dashboard} />
-        <Route path="/events/:eventSecret/upload/:contactHash?" component={Upload} />
-        <Route path="/events/:eventSecret/mosaic/:contactHash?" component={Mosaic} />
+        <Route path="/events/:eventSecret/upload/:userHash?" component={Upload} />
+        <Route path="/events/:eventSecret/mosaic/:userHash?" component={Mosaic} />
         <Route path="/events/:eventSecret/" component={SingleEvent} />
       </Switch>
     </div>

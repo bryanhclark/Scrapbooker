@@ -24,7 +24,14 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
+  },
+  phone: {
+    type: Sequelize.STRING
+  },
+  userHash: {
+    type: Sequelize.STRING
   }
+
 }, {
     getterMethods: {
       fullName() {
@@ -51,6 +58,11 @@ User.generateSalt = () => {
   return Math.random().toString(28).substring(2, 23)
 }
 
+User.generateHash = () => {
+  console.log('in generate hash')
+  return "_" + Math.random().toString(17).substring(2, 15)
+}
+
 User.encryptPassword = function (plainText, salt) {
   return crypto
     .createHash('RSA-SHA256')
@@ -62,12 +74,15 @@ User.encryptPassword = function (plainText, salt) {
 /**
  * hooks
  */
-const setSaltAndPassword = user => {
+const setSaltHashAndPassword = user => {
+  user.userHash = User.generateHash()
   if (user.changed('password')) {
     user.salt = User.generateSalt()
+
     user.password = User.encryptPassword(user.password, user.salt)
   }
 }
 
-User.beforeCreate(setSaltAndPassword)
-User.beforeUpdate(setSaltAndPassword)
+User.beforeCreate(setSaltHashAndPassword)
+User.beforeUpdate(setSaltHashAndPassword)
+

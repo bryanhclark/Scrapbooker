@@ -1,6 +1,6 @@
 import EXIF from 'exif-js'
 
-export function imageEXIFPacker(image, url, eventSecret, contactId, cb) {
+export function imageEXIFPacker(image, url, eventId, userId, cb) {
 	const imgObj = {}
 	EXIF.getData(image, function () {
 		imgObj.src = url
@@ -8,8 +8,8 @@ export function imageEXIFPacker(image, url, eventSecret, contactId, cb) {
 		imgObj.height = Number(EXIF.getTag(this, "PixelYDimension"))
 		imgObj.orientation = Number(EXIF.getTag(this, "Orientation"))
 		imgObj.timeCreated = image.lastModified.toString()
-		imgObj.eventSecret = eventSecret
-		imgObj.contactId = contactId
+		imgObj.eventId = eventId
+		imgObj.userId = userId
 		cb(null, imgObj)
 	})
 }

@@ -5,6 +5,7 @@ import { fetchPartipants } from '../store/participants'
 import { DashboardModal, ContactList, AddContactsToEventForm } from './index'
 import { NavLink } from 'react-router-dom'
 import { broadcastTextMessage } from '../store/twilio'
+import { fetchCurrentParticipant } from '../store/singleParticipant'
 
 
 
@@ -19,6 +20,7 @@ class SingleEvent extends Component {
 
   componentDidMount() {
     this.props.loadEvent(this.props.match.params.eventSecret)
+    this.props.setParticipant(this.props.user.userHash)
   }
 
   toggleModal = (name) => {
@@ -27,7 +29,7 @@ class SingleEvent extends Component {
 
 
   render() {
-    console.log(this.props.singleEvent)
+    console.log('this.props.participants', this.props.participants)
     return (
       <div className='single-Event-Container' >
 
@@ -39,7 +41,7 @@ class SingleEvent extends Component {
             <a onClick={() => this.toggleModal('addContacts')} className="btn" id="btn_addParticipantEvent">Add Participant</a>
 
             <DashboardModal show={this.state.isAddContactModelOpen} onClose={() => this.toggleModal('addContacts')}>
-              <AddContactsToEventForm participants={this.props.participants} />
+              <AddContactsToEventForm participants={this.props.participants} show={this.toggleModal}/>
             </DashboardModal>
             <NavLink to={`/events/${this.props.singleEvent.secret}/mosaic`} className="btn">View Mosaic</NavLink>
             <NavLink to={`/events/${this.props.singleEvent.secret}/upload`} className="btn">Upload Content</NavLink>
@@ -51,9 +53,9 @@ class SingleEvent extends Component {
                 <tbody>
                   {
                     this.props.participants.map(participant => (
-                      <tr key={participant.contact.id}>
-                        <td>{participant.contact.name}</td>
-                        <td>{participant.contact.phone}</td>
+                      <tr key={participant.user.id}>
+                        <td>{participant.user.fullName}</td>
+                        <td>{participant.user.phone}</td>
                       </tr>
                     ))
                   }
@@ -76,6 +78,7 @@ class SingleEvent extends Component {
 
 const mapState = (state) => {
   return {
+    user: state.user,
     singleEvent: state.singleEvent,
     participants: state.participants
   }
@@ -87,6 +90,7 @@ const mapDispatch = (dispatch, ownProps) => {
       dispatch(fetchSingleEvent(eventSecret))
       dispatch(fetchPartipants(eventSecret))
     },
+
     sendInvite(event) {
       event.preventDefault();
       const form = document.getElementById('custom-message-form')
@@ -96,6 +100,10 @@ const mapDispatch = (dispatch, ownProps) => {
       }
       broadcastTextMessage(messageObj)
       form.reset();
+    },
+    
+    setParticipant(contactHash) {
+      dispatch(fetchCurrentParticipant(contactHash))
     }
 
   }

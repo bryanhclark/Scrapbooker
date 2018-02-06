@@ -1,27 +1,35 @@
 const router = require('express').Router()
-const { Participants, Contact, Event } = require('../db/models')
+const { usersEvents, User, Event } = require('../db/models')
 //figure out how to 
 router.get('/', (req, res, next) => {
-  Participants.findAll({
-    include: [{ model: Event, where: { secret: req.query.secret } }, Contact]
+  usersEvents.findAll({
+    include: [{ model: Event, where: { secret: req.query.secret } }, User]
   })
     .then(participants => res.json(participants))
     .catch(next)
 })
 
+router.get('/:userHash', (req, res, next) => {
+  User.findOne({
+    where: { userHash: req.params.userHash }
+  })
+    .then(user => res.json(user))
+    .catch(next)
+})
+
 
 router.post('/', (req, res, next) => {
-  Participants.create({
+  usersEvents.create({
     eventId: req.body.eventId,
-    contactId: req.body.contactId
+    userId: req.body.participantId
   })
     .then(participant => {
-      return Participants.findOne({
-        where: participant.contactId,
-        include: [Contact]
+      return usersEvents.findOne({
+        where: participant.userId,
+        include: [{ model: User }]
       })
     })
-    .then(contact => res.json(contact))
+    .then(foundParticipant => res.json(foundParticipant))
     .catch(next)
 })
 

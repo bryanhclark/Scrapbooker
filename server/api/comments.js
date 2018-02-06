@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Comment, Contact } = require('../db/models')
+const { Comment, User } = require('../db/models')
 
 
 router.get('/', (req, res, next) => {
@@ -7,7 +7,7 @@ router.get('/', (req, res, next) => {
     where: {
       contentId: req.query.contentId
     },
-    include: [{ model: Contact}]
+    include: [{ model: User }]
   })
     .then(comments => {
       res.json(comments)
@@ -19,12 +19,16 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   Comment.create({
     body: req.body.body,
-    contactId: req.body.contactId,
+    userId: req.body.userId,
     contentId: req.body.contentId
   })
     .then(comment => {
-      res.json(comment)
+      return Comment.findAll({
+        where: { id: comment.id },
+        include: [{ all: true }]
+      })
     })
+    .then(foundComment => res.json(foundComment[0]))
     .catch(next)
 })
 

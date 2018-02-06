@@ -5,9 +5,8 @@ import { fetchPartipants } from '../store/participants'
 import { DashboardModal, ContactList, AddContactsToEventForm } from './index'
 import { NavLink } from 'react-router-dom'
 import { broadcastTextMessage } from '../store/twilio'
+import { broadcastEmail } from '../store/email'
 import { fetchCurrentParticipant } from '../store/singleParticipant'
-
-
 
 class SingleEvent extends Component {
   constructor(props) {
@@ -68,6 +67,7 @@ class SingleEvent extends Component {
             <form id="custom-message-form">
               <input id="message" type="text" placeholder="Enter custom message..." />
               <button className="btn" id="send_text" onClick={this.props.sendInvite}>Send invites!</button>
+              <button className="btn" id="send_text" onClick={() => { broadcastEmail()}}>Send email!</button>
             </form>
           </div>
         </div>

@@ -31,7 +31,7 @@ a:hover {text-decoration: underline;}
 
 /* Modals */
 .modals {width: 280px;}
-.navModal, .dashboard-Modal { background-color: #fff; border-radius: 5px; max-width: 280px; margin: 0 auto; padding: 10px 20px; }
+.navModal, .dashboard-Modal { background-color: #fff; border-radius: 5px; max-width: 280px; margin: 0 auto; padding: 15px 25px; }
 .modal_header {font-size: 1.1em}
 .dashboard-Modal {position: relative;}
 .btn_close {border: none;

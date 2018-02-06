@@ -6,11 +6,9 @@ const AddCommentForm = (props) => {
   return (
     <div className='add-Comment-Form-Container'>
       <form onSubmit={props.handleSubmit}>
-        <div className='add-Comment-Comment-Input'>
-          <label>
-            Comment:
-                <input type='text' value={props.comment} name='comment' onChange={props.handleChange} />
-          </label>
+        <div className='form_row'>
+          <label>Comment:</label>
+          <input type='text' value={props.comment} name='comment' onChange={props.handleChange} />
         </div>
         <div className='btn_area'>
           <button className='btn' type='subimt' name='submit'>Submit</button>

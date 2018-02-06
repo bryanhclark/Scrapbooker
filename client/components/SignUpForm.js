@@ -31,28 +31,23 @@ class SignUpForm extends Component {
   render() {
     return (
       <div className='signup-Form-Container'>
-      <h4>Sign Up:</h4>
+        <h4 className='modal_header'>Sign Up:</h4>
         <form onSubmit={this.handleSubmit}>
-          <h2 id="sign_up_header">Sign Up Page</h2>
-          <div className='signup-firstName--Button-Div'>
-            <label>
-              <input type='text' placeholder="First Name" value={this.state.firstName} name='firstName' onChange={this.handleChange} />
-            </label>
+          <div className='form_row'>
+            <label>First Name</label>
+            <input type='text' value={this.state.firstName} name='firstName' onChange={this.handleChange} />
           </div>
-          <div className='signup-lastNamr-submit-Button-Div'>
-            <label>
-              <input type='text' placeholder="Last Name" value={this.state.lastName} name='lastName' onChange={this.handleChange} />
-            </label>
+          <div className='form_row'>
+            <label>Last Name</label>
+            <input type='text' value={this.state.lastName} name='lastName' onChange={this.handleChange} />
           </div>
-          <div className='signup-email-submit-Button-Div'>
-            <label>
-              <input type='text' placeholder="Email" value={this.state.email} name='email' onChange={this.handleChange} />
-            </label>
+          <div className='form_row'>
+            <label>Email</label>
+            <input type='text' placeholder="" value={this.state.email} name='email' onChange={this.handleChange} />
           </div>
-          <div className='signup-password-submit-Button-Div'>
-            <label>
-              <input type='text' placeholder="Password" value={this.state.password} name='password' onChange={this.handleChange} />
-            </label>
+          <div className='form_row'>
+            <label>Password</label>
+            <input type='text' value={this.state.password} name='password' onChange={this.handleChange} />
           </div>
           <div className='btn_area'>
             <input className="btn" type='submit' value='submit' />

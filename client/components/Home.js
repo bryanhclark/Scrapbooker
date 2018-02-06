@@ -15,7 +15,7 @@ class Home extends Component {
 		return (
 			<div className='homeContainer'>
 				<div className="wrapper">
-					<h1 id="greeting">Welcome to Scrappr ... <br />a collaborative, real-time scrapbooking app for events.</h1>
+					<h1 id="greeting"><span id="headline">Welcome to Scrappr ... </span>a collaborative, real-time scrapbooking manager ... for events, happenings, and life.</h1>
 				</div>
 			</div>
 		)

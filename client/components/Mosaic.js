@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { fetchContent } from '../store/content'
 import { render } from 'react-dom';
 import { fetchSingleEvent } from '../store/singleEvent'
-import Gallery from 'react-grid-gallery';
+import StackGrid from "react-stack-grid";
 import NavModal from './NavModal'
 import SingleContent from './SingleContent'
 
@@ -25,8 +25,6 @@ class Mosaic extends Component {
     this.props.loadContent(this.props.match.params.eventSecret)
     this.props.loadSingleEvent(this.props.match.params.eventSecret)
   }
-
-
 
   reformatImagesForGallery(imageArray) {
     const pictureObjArray = imageArray.map(image => {
@@ -58,12 +56,12 @@ class Mosaic extends Component {
           <NavLink to={`/events/${this.props.singleEvent.secret}/upload`} className="mobile_toggle_active">Upload</NavLink>
           <div className="mobile_toggle_disabled">Mosaic</div>
         </div>
-        <div className="grid" data-packery='{ "itemSelector": ".grid-item", "gutter": 0 }'>
-          <Gallery images={this.reformatImagesForGallery(this.props.content)}
-            enableImageSelection={true}
-            margin={0}
-            onClickThumbnail={(e) => this.onImageClick(e)}
-          />
+        <div>
+          <StackGrid columnWidth={'20%'}>
+            {this.reformatImagesForGallery(this.props.content).map(image => (
+              <div key={image.src}><img src={image.src} className="gallery_item" /></div>
+            ))}
+          </StackGrid>
           <NavModal show={this.state.isImageModalOpen}
             onClose={this.toggleModal}>
             <SingleContent image={this.state.currentImage} />

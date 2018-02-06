@@ -41,7 +41,7 @@ class SingleEvent extends Component {
             <a onClick={() => this.toggleModal('addContacts')} className="btn" id="btn_addParticipantEvent">Add Participant</a>
 
             <DashboardModal show={this.state.isAddContactModelOpen} onClose={() => this.toggleModal('addContacts')}>
-              <AddContactsToEventForm participants={this.props.participants} />
+              <AddContactsToEventForm participants={this.props.participants} show={this.toggleModal}/>
             </DashboardModal>
             <NavLink to={`/events/${this.props.singleEvent.secret}/mosaic`} className="btn">View Mosaic</NavLink>
             <NavLink to={`/events/${this.props.singleEvent.secret}/upload`} className="btn">Upload Content</NavLink>

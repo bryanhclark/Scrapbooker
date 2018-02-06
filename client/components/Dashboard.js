@@ -35,13 +35,13 @@ class Dashboard extends Component {
 							<div className='event-Creation-Modal-Container'>
 								<a onClick={() => this.toggleModal('events')} className="btn">Create Event</a>
 								<DashboardModal show={this.state.isEventCreationModalOpen} onClose={() => this.toggleModal('events')}>
-									<CreateEventForm user={this.props.user} />
+									<CreateEventForm user={this.props.user} show={this.toggleModal} />
 								</DashboardModal>
 							</div>
 							<div className='contact-Creation-Modal-Container'>
 								<a onClick={() => this.toggleModal('contacts')} className="btn">Create Contact</a>
 								<DashboardModal show={this.state.isContactCreationModalOpen} onClose={() => this.toggleModal('contacts')}>
-									<CreateContactForm user={this.props.user} />
+									<CreateContactForm user={this.props.user} show={this.toggleModal} />
 								</DashboardModal>
 							</div>
 						</div>

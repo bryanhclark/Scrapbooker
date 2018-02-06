@@ -91,10 +91,11 @@ const mapState = (state) => {
 	}
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, ownProps) => {
 	return {
 		handleSubmitDispatch(eventObj) {
-			dispatch(createEvent(eventObj))
+      dispatch(createEvent(eventObj))
+      ownProps.show('events')
 		}
 	}
 }

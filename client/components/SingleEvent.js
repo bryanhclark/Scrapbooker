@@ -5,8 +5,7 @@ import { fetchPartipants } from '../store/participants'
 import { DashboardModal, ContactList, AddContactsToEventForm } from './index'
 import { NavLink } from 'react-router-dom'
 import { broadcastTextMessage } from '../store/twilio'
-
-
+import { broadcastEmail } from '../store/email'
 
 class SingleEvent extends Component {
   constructor(props) {
@@ -64,7 +63,8 @@ class SingleEvent extends Component {
           <div>
             <h2 className="section_header">Invitations:</h2>
             <p>Send invitations to your participants</p>
-            <button className="btn" id="send_text" onClick={() => { broadcastTextMessage(this.props.singleEvent) }}>Send invites!</button>
+            <button className="btn" id="send_text" onClick={() => { broadcastTextMessage(this.props.singleEvent)}}>Send invites!</button>
+            <button className="btn" id="send_text" onClick={() => { broadcastEmail()}}>Send email!</button>
           </div>
         </div>
       </div>

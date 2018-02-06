@@ -64,10 +64,11 @@ const mapState = (state) => {
 	}
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, ownProps) => {
 	return {
 		handleSubmitDispatch(contactObj) {
-			dispatch(createContact(contactObj))
+      dispatch(createContact(contactObj))
+      ownProps.show('contacts')
 		}
 	}
 }

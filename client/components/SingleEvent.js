@@ -31,7 +31,6 @@ class SingleEvent extends Component {
     console.log('this.props.participants', this.props.participants)
     return (
       <div className='single-Event-Container' >
-
         <div className="wrapper">
           <div className='single-Event-Header'>
             <h2>Event: <span className="title">{this.props.singleEvent.name}</span></h2>
@@ -40,7 +39,7 @@ class SingleEvent extends Component {
             <a onClick={() => this.toggleModal('addContacts')} className="btn" id="btn_addParticipantEvent">Add Participant</a>
 
             <DashboardModal show={this.state.isAddContactModelOpen} onClose={() => this.toggleModal('addContacts')}>
-              <AddContactsToEventForm participants={this.props.participants} show={this.toggleModal}/>
+              <AddContactsToEventForm participants={this.props.participants} show={this.toggleModal} />
             </DashboardModal>
             <NavLink to={`/events/${this.props.singleEvent.secret}/mosaic`} className="btn">View Mosaic</NavLink>
             <NavLink to={`/events/${this.props.singleEvent.secret}/upload`} className="btn">Upload Content</NavLink>
@@ -64,11 +63,8 @@ class SingleEvent extends Component {
           </div>
           <div>
             <h2 className="section_header">Invite Participants</h2>
-            <form id="custom-message-form">
-              <input id="message" type="text" placeholder="Enter custom message..." />
-              <button className="btn" id="send_text" onClick={this.props.sendInvite}>Send invites!</button>
+              <button className="btn" id="send_text" onClick={() => {broadcastTextMessage({id: this.props.singleEvent.id})}}>Send invites!</button>
               <button className="btn" id="send_text" onClick={() => { broadcastEmail()}}>Send email!</button>
-            </form>
           </div>
         </div>
       </div>
@@ -91,17 +87,6 @@ const mapDispatch = (dispatch, ownProps) => {
       dispatch(fetchPartipants(eventSecret))
     },
 
-    sendInvite(event) {
-      event.preventDefault();
-      const form = document.getElementById('custom-message-form')
-      const messageObj = {
-        message: document.getElementById('message').value,
-        eventSecret: ownProps.match.params.eventSecret
-      }
-      broadcastTextMessage(messageObj)
-      form.reset();
-    },
-    
     setParticipant(contactHash) {
       dispatch(fetchCurrentParticipant(contactHash))
     }

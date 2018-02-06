@@ -11,6 +11,7 @@ a:hover {text-decoration: underline;}
   /* Globals */
 .wrapper {margin: 0 auto; width: 80%;}
 
+
 /* Nav */
 #logo {font-family: 'Rammetto One', cursive; font-size: 2em;line-height: 1.2em;padding: 0 0 0 10px;}
 #logo_link:hover {text-decoration: none; color: #ddd;}
@@ -68,12 +69,16 @@ margin-left: 10px;}
 .quote_end { font-size: 24px; line-height: 24px; }
 .gallery_item {width: 100%; height:auto;}
 
+/* Modal */
+.navModal {z-index: 99}
+.navModalBackdrop{z-index: 99}
+
 
 /*================================= Tablet ====================================*/
 @media only screen and (max-width:980px) {.type_text}
 .quote_start {line-height: 22px;}
 .quote_end { font-size: 22px; line-height: 22px; }
-{}
+
 
 
 /*================================= Mobile ====================================*/

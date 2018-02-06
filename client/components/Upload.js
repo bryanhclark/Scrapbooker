@@ -8,7 +8,8 @@ import { postContent } from '../store/content'
 import { fetchSingleEvent } from '../store/singleEvent'
 import { fetchCurrentParticipant } from '../store/singleParticipant'
 import crypto from 'crypto'
-import { imageEXIFPacker, resizeImage } from '../../utils/imgUtils'
+import { imageEXIFPacker, resizeImage, fetchExifData } from '../../utils/imgUtils'
+
 
 class Upload extends Component {
 	constructor(props) {
@@ -69,13 +70,15 @@ const mapState = (state) => {
 	}
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch =  (dispatch) => {
 	return {
-		handleImgUpload(image, eventId, userId) {
+		async handleImgUpload(image, eventId, userId) {
+			let imageOrientation = await fetchExifData(image)
+			console.log('imgaeOrientation', imageOrientation)
 			resizeImage({
 				file: image,
 				maxSize: 900
-			})
+			}, imageOrientation)
 				.then(resizedImg => {
 					return firebaseUpload(resizedImg)
 				})

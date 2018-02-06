@@ -36,7 +36,6 @@ class CommentList extends Component {
   }
 
   render() {
-    console.log('this.props.comments', this.props.comments)
     return (
       <div className='comment-List-Container'>
         <div className='comment-List-Header'>

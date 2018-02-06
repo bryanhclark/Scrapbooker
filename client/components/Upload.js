@@ -86,8 +86,7 @@ const mapDispatch =  (dispatch) => {
 						if (error) console.error(error)
 						else {
 							dispatch(postContent(imageObj))
-							//use a .then between these two
-							uploadImageSocket(imageObj)
+								.then(()=>uploadImageSocket(imageObj))
 						}
 					})
 				})

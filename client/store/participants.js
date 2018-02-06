@@ -28,7 +28,7 @@ export const fetchPartipants = (secret) => {
 export const addParticipantsToEvent = (participantsArray, eventId) => {
   return (dispatch) => {
     Promise.all(participantsArray.map(participant => {
-      axios.post('/api/participants', { contactId: participant.id, eventId })
+      axios.post('/api/participants', { participantId: participant.id, eventId })
         .then(res => dispatch(addParticipants(res.data)))
     }))
   }

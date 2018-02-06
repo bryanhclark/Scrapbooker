@@ -16,7 +16,7 @@ class AddContactsToEventForm extends Component {
   }
   componentDidMount() {
     let contactsToAdd = this.props.participants.map(participant => {
-      return participant.contact
+      return participant.user
     })
     this.setState({ contactsToAdd })
   }
@@ -48,7 +48,9 @@ class AddContactsToEventForm extends Component {
           {
             this.props.contacts.map(contact => (
               <div className='single-Contact-Container-Add-Contacts-To-Event' key={contact.id}>
-                <button onClick={() => this.addContactToEvent(contact)}>+</button>{contact.name}
+
+                <button onClick={() => this.addContactToEvent(contact)}>+</button>{contact.fullName}<button onClick={() => this.removeContactFromEvent(contact)}>-</button>
+
               </div>
             ))
           }
@@ -62,10 +64,14 @@ class AddContactsToEventForm extends Component {
               <p>Contacts to be added to: {this.props.singleEvent.name}</p>
               {
                 this.state.contactsToAdd.map(contact => (
+
+                  
+
                   <div key={contact.id}>
-                    <li>{contact.name}</li>
+                    <li>{contact.fullName}</li>
                     <button id='remove-contact' onClick={() => this.removeContactFromEvent(contact)}>-</button>
                   </div>
+
                 ))
               }
             </div>

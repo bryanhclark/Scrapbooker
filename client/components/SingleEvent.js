@@ -5,8 +5,8 @@ import { fetchPartipants } from '../store/participants'
 import { DashboardModal, ContactList, AddContactsToEventForm } from './index'
 import { NavLink } from 'react-router-dom'
 import { broadcastTextMessage } from '../store/twilio'
-
-
+import { broadcastEmail } from '../store/email'
+import { fetchCurrentParticipant } from '../store/singleParticipant'
 
 class SingleEvent extends Component {
   constructor(props) {
@@ -19,6 +19,7 @@ class SingleEvent extends Component {
 
   componentDidMount() {
     this.props.loadEvent(this.props.match.params.eventSecret)
+    this.props.setParticipant(this.props.user.userHash)
   }
 
   toggleModal = (name) => {
@@ -27,7 +28,7 @@ class SingleEvent extends Component {
 
 
   render() {
-    console.log(this.props.singleEvent)
+    console.log('this.props.participants', this.props.participants)
     return (
       <div className='single-Event-Container' >
 
@@ -51,9 +52,9 @@ class SingleEvent extends Component {
                 <tbody>
                   {
                     this.props.participants.map(participant => (
-                      <tr key={participant.contact.id}>
-                        <td>{participant.contact.name}</td>
-                        <td>{participant.contact.phone}</td>
+                      <tr key={participant.user.id}>
+                        <td>{participant.user.fullName}</td>
+                        <td>{participant.user.phone}</td>
                       </tr>
                     ))
                   }
@@ -62,9 +63,12 @@ class SingleEvent extends Component {
             </div>
           </div>
           <div>
-            <h2 className="section_header">Invitations:</h2>
-            <p>Send invitations to your participants</p>
-            <button className="btn" id="send_text" onClick={() => { broadcastTextMessage(this.props.singleEvent) }}>Send invites!</button>
+            <h2 className="section_header">Invite Participants</h2>
+            <form id="custom-message-form">
+              <input id="message" type="text" placeholder="Enter custom message..." />
+              <button className="btn" id="send_text" onClick={this.props.sendInvite}>Send invites!</button>
+              <button className="btn" id="send_text" onClick={() => { broadcastEmail()}}>Send email!</button>
+            </form>
           </div>
         </div>
       </div>
@@ -74,17 +78,33 @@ class SingleEvent extends Component {
 
 const mapState = (state) => {
   return {
+    user: state.user,
     singleEvent: state.singleEvent,
     participants: state.participants
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, ownProps) => {
   return {
     loadEvent(eventSecret) {
       dispatch(fetchSingleEvent(eventSecret))
       dispatch(fetchPartipants(eventSecret))
     },
+
+    sendInvite(event) {
+      event.preventDefault();
+      const form = document.getElementById('custom-message-form')
+      const messageObj = {
+        message: document.getElementById('message').value,
+        eventSecret: ownProps.match.params.eventSecret
+      }
+      broadcastTextMessage(messageObj)
+      form.reset();
+    },
+    
+    setParticipant(contactHash) {
+      dispatch(fetchCurrentParticipant(contactHash))
+    }
 
   }
 }

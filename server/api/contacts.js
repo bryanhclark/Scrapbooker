@@ -1,9 +1,9 @@
 const router = require('express').Router()
-const { Contact } = require('../db/models')
+const { Contact, User, organizerContacts } = require('../db/models')
 
 
 router.get('/', (req, res, next) => {
-  Contact.findAll({
+  User.findAll({
     where: req.query
   })
     .then(contacts => {
@@ -13,14 +13,12 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-  Contact.create({
-    name: req.body.name,
+  User.create({
+    firstName: req.body.name,
     phone: req.body.phone,
     organizerId: req.body.organizerId
   })
-    .then(contact => {
-      res.json(contact)
-    })
+    .then(contact => res.json(contact))
     .catch(next)
 })
 

@@ -30,7 +30,6 @@ class Upload extends Component {
 	}
 
 	render() {
-		console.log(this.props.match.params.userHash)
 		return (
 			<div className='uploadContainer'>
 				<div className="mobile_toggle">

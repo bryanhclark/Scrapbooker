@@ -18,7 +18,7 @@ router.post('/', (req, res, next) => {
   let organizer = req.body.organizer
   let event = req.body.event
   participants.map(participant => {
-    return bitly.shorten(`http://${IP}:8080/events/${event.secret}/upload/${participant.user.userHash}`)
+    return bitly.shorten(`${projURL}/events/${event.secret}/upload/${participant.user.userHash}`)
       .then(URL => {
         return messageSender.messages.create({
           body: `${organizer.fullName} has invited you to contribute to the <${event.name}> scrapbook. Add content here: ${URL.data.url}`,

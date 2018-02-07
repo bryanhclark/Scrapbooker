@@ -7,8 +7,8 @@ class AddContactsToEventForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      contactsToAdd: []
-
+      contactsToAdd: [],
+      possibleContacts: []
     }
     this.addContactToEvent = this.addContactToEvent.bind(this)
     this.removeContactFromEvent = this.removeContactFromEvent.bind(this)
@@ -44,9 +44,6 @@ class AddContactsToEventForm extends Component {
     } else {
       return contactArray
     }
-
-    return filteredContacts
-
   }
 
   addContactToEvent(newContact) {

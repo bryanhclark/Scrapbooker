@@ -5,6 +5,7 @@ import { fetchContent } from '../store/content'
 import { render } from 'react-dom';
 import { fetchSingleEvent } from '../store/singleEvent'
 import StackGrid from "react-stack-grid";
+import sizeMe from 'react-sizeme'
 import NavModal from './NavModal'
 import SingleContent from './SingleContent'
 import currentEvents from '../store/currentEvents';
@@ -54,6 +55,7 @@ class Mosaic extends Component {
   }
 
   render() {
+    const { width } = this.props.size;
     return (
       <div className='mosaicContainer'>
         <div className="mobile_toggle">
@@ -62,7 +64,8 @@ class Mosaic extends Component {
         </div>
         <div>
           <StackGrid
-            columnWidth={'20%'}
+            columnWidth={width <= 768 ? '100%' : '20%'}
+            
           >
             {this.reformatImagesForGallery(this.props.content).map(image => (
               <div key={image.src}  > <img src={image.src} className="gallery_item" photoid={image.id} onClick={(e) => this.onImageClick(e)} /></div>
@@ -77,6 +80,9 @@ class Mosaic extends Component {
     )
   }
 }
+
+const sizeMeConfig = {monitorWidth: true}
+const sizeMeHOC = sizeMe(sizeMeConfig)
 
 const mapState = (state) => {
   return {
@@ -97,6 +103,5 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-
-const MosaicContainter = connect(mapState, mapDispatch)(Mosaic)
+const MosaicContainter = connect(mapState, mapDispatch)(sizeMeHOC(Mosaic))
 export default MosaicContainter;

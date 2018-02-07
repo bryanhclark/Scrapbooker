@@ -44,6 +44,7 @@ class Upload extends Component {
 							e.preventDefault()
 							this.fileInput = e.target.files[0];
 							this.setState({ img: e.target.files[0] })
+							console.log(this.fileInput)
 						}} />
 					<p>{this.state.img.name}</p>
 					<button className="btn" onClick={() => this.props.handleImgUpload(this.fileInput, this.props.singleEvent.id, this.props.singleParticipant.id)}>Upload Image</button>
@@ -70,7 +71,7 @@ const mapState = (state) => {
 	}
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch =  (dispatch) => {
 	return {
 		async handleImgUpload(image, eventId, userId) {
 			let imageOrientation = await fetchExifData(image)
@@ -86,7 +87,7 @@ const mapDispatch = (dispatch) => {
 						if (error) console.error(error)
 						else {
 							dispatch(postContent(imageObj))
-							uploadImageSocket(imageObj)
+								.then(()=>uploadImageSocket(imageObj))
 						}
 					})
 				})

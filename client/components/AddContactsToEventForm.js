@@ -14,6 +14,7 @@ class AddContactsToEventForm extends Component {
     this.removeContactFromEvent = this.removeContactFromEvent.bind(this)
     this.removePossibleContact = this.removePossibleContact.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.filterPossibleContactList = this.filterPossibleContactList.bind(this)
   }
   componentDidMount() {
     let contactsToAdd = this.props.participants.map(participant => {
@@ -37,7 +38,6 @@ class AddContactsToEventForm extends Component {
         }
       }
     }
-    console.log(filteredContacts)
     return filteredContacts
   }
 

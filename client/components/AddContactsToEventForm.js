@@ -7,8 +7,8 @@ class AddContactsToEventForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      contactsToAdd: []
-
+      contactsToAdd: [],
+      possibleContacts: []
     }
     this.addContactToEvent = this.addContactToEvent.bind(this)
     this.removeContactFromEvent = this.removeContactFromEvent.bind(this)
@@ -18,7 +18,7 @@ class AddContactsToEventForm extends Component {
     let contactsToAdd = this.props.participants.map(participant => {
       return participant.user
     })
-    this.setState({ contactsToAdd })
+    this.setState({ contactsToAdd, possibleContacts: this.props.contacts })
   }
 
   addContactToEvent(newContact) {
@@ -43,22 +43,37 @@ class AddContactsToEventForm extends Component {
   render() {
     return (
       <div className='add-Contacts-To-Event-Form-Container' >
-        <h4 className='modal_header'>Add Participants To {this.props.singleEvent.name}</h4>
 
-        <div id='current_participants'>
-          <p className='header_subsection'>Current Participants</p>
-          <table className="table_row">
-            <tbody>
-            {this.state.contactsToAdd.map(contact => (
-              <tr key={contact.id}>
-                <td>{contact.fullName}</td>
-                <td><button id='remove-contact' onClick={() => this.removeContactFromEvent(contact)}>-</button></td>
-              </tr>
+        <h4>Add Contacts To Event: {this.props.singleEvent.name}</h4>
+        <div className='contacts-List-Add-Contacts-To-Event'>
+          {
+            this.state.possibleContacts.map(contact => (
+              <div className='single-Contact-Container-Add-Contacts-To-Event' key={contact.id}>
+
+                <button onClick={() => this.addContactToEvent(contact)}>+</button>{contact.fullName}<button onClick={() => this.removeContactFromEvent(contact)}>-</button>
+
+              </div>
+
             ))
             }
             </tbody>
           </table>
         </div>
+
+        <ul className='contacts-To-Be-Added-List'>
+          <div className='current-Contact-List-To-Add-Container'>
+            <div className='current-Contact-List-To-Add-Header'>
+              <p>Contacts to be added to: {this.props.singleEvent.name}</p>
+              {
+                this.state.contactsToAdd.map(contact => (
+
+
+
+                  <div key={contact.id}>
+                    <li>{contact.fullName}</li>
+                    <button id='remove-contact' onClick={() => this.removeContactFromEvent(contact)}>-</button>
+                  </div>
+
 
         <div id='add_participants'>
           <p className='header_subsection'>Available Contacts</p>

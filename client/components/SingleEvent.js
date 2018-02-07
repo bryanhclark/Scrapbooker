@@ -33,6 +33,7 @@ class SingleEvent extends Component {
       let participantToAdd = this.props.participants.filter(participant => {
         if (participant.user.userHash === userHash) return participant
       })
+      console.log('participant to add', participantToAdd[0])
       let addParticipantsArray = [...this.state.participantsToMessage, participantToAdd[0]]
       this.setState({ participantsToMessage: addParticipantsArray })
     }
@@ -69,7 +70,7 @@ class SingleEvent extends Component {
                   {
                     this.props.participants.map(participant => (
                       <tr className="table_row" key={participant.user.id}>
-                        <td><input type='checkbox' onChange={(e) => console.log(e.target)} /></td>
+                        <td><input type='checkbox' onChange={(e) => this.addOrRemoveParticipantFromMessageList(e, participant.user.userHash)} /></td>
                         <td>{participant.user.fullName}</td>
                         <td>{participant.user.phone}</td>
                       </tr>

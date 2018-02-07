@@ -64,8 +64,7 @@ class Mosaic extends Component {
         </div>
         <div>
           <StackGrid
-            columnWidth={width <= 768 ? '100%' : '20%'}
-            
+            columnWidth={width <= 768 ? '50%' : '20%'}
           >
             {this.reformatImagesForGallery(this.props.content).map(image => (
               <div key={image.src}  > <img src={image.src} className="gallery_item" photoid={image.id} onClick={(e) => this.onImageClick(e)} /></div>

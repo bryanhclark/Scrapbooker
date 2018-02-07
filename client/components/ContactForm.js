@@ -9,8 +9,10 @@ class ContactForm extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			name: '',
-			phone: '',
+      firstName: '',
+      lastName: '',
+      phone: '',
+      email: '',
 			organizerId: this.props.user.id
 		}
 		this.handleChange = this.handleChange.bind(this)
@@ -36,21 +38,26 @@ class ContactForm extends Component {
 	render() {
 		return (
 			<div className='create-Contact-Form-Container'>
+			  <h4 className='modal_header'>Create Event</h4>
 				<form onSubmit={this.handleSubmit}>
-					<div className='create-Contact-Name-Button-Div'>
-						<label>
-							Name:
-						<input type='text' value={this.state.name} name='name' onChange={this.handleChange} />
-						</label>
+					<div className='form_row'>
+						<label>First Name:</label>
+						<input type='text' value={this.state.firstName} name='firstName' onChange={this.handleChange} />
 					</div>
-					<div className='create-Contact-phoneNumber-Button-Div'>
-						<label>
-							Phone Number:
+					<div className='form_row'>
+						<label>Last Name:</label>
+						<input type='text' value={this.state.lastName} name='lastName' onChange={this.handleChange} />
+					</div>
+					<div className='form_row'>
+						<label>Phone Number:</label>
 						<input type='text' value={this.state.phone} name='phone' onChange={this.handleChange} />
-						</label>
 					</div>
-					<div className='create-Contact-submit-Button-Div'>
-						<input type='submit' value='submit' />
+					<div className='form_row'>
+						<label>Email:</label>
+						<input type='text' value={this.state.email} name='email' onChange={this.handleChange} />
+					</div>
+					<div className='btn_area'>
+						<input className="btn" type='submit' value='submit' />
 					</div>
 				</form>
 			</div>
@@ -64,10 +71,11 @@ const mapState = (state) => {
 	}
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, ownProps) => {
 	return {
 		handleSubmitDispatch(contactObj) {
-			dispatch(createContact(contactObj))
+      dispatch(createContact(contactObj))
+      ownProps.show('contacts')
 		}
 	}
 }

@@ -24,11 +24,19 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
+  },
+  phone: {
+    type: Sequelize.STRING
+  },
+  userHash: {
+    type: Sequelize.STRING
   }
+
 }, {
     getterMethods: {
       fullName() {
-        return this.firstName + ' ' + this.lastName
+        if(this.lastName) return this.firstName + ' ' + this.lastName
+        else return this.firstName
       }
     }
   })
@@ -47,8 +55,13 @@ User.prototype.correctPassword = function (candidatePwd) {
 /**
  * classMethods
  */
-User.generateSalt = function () {
-  return crypto.randomBytes(16).toString('base64')
+User.generateSalt = () => {
+  return Math.random().toString(28).substring(2, 23)
+}
+
+User.generateHash = () => {
+  console.log('in generate hash')
+  return "_" + Math.random().toString(17).substring(2, 15)
 }
 
 User.encryptPassword = function (plainText, salt) {
@@ -62,12 +75,15 @@ User.encryptPassword = function (plainText, salt) {
 /**
  * hooks
  */
-const setSaltAndPassword = user => {
+const setSaltHashAndPassword = user => {
+  user.userHash = User.generateHash()
   if (user.changed('password')) {
     user.salt = User.generateSalt()
+
     user.password = User.encryptPassword(user.password, user.salt)
   }
 }
 
-User.beforeCreate(setSaltAndPassword)
-User.beforeUpdate(setSaltAndPassword)
+User.beforeCreate(setSaltHashAndPassword)
+User.beforeUpdate(setSaltHashAndPassword)
+

@@ -12,30 +12,37 @@ const getContent = (content) => {
 	return { type: GET_CONTENT, content }
 }
 
-const getNewContent = (newContent) => {
+const getNewSocketContent = (newContent) => {
 	let action = { type: NEW_CONTENT, newContent }
 	store.dispatch(action)
 }
 
+const getNewContent = (newContent) => {
+	return { type: NEW_CONTENT, newContent }
+}
+
 // //THUNKS
-export function fetchContent(eventId) {
+export function fetchContent(eventSecret) {
 	return dispatch => {
-		return axios.get(`/api/content/${eventId}`)
+		return axios.get(`/api/content/${eventSecret}`)
 			.then(res => dispatch(getContent(res.data)))
 			.catch(console.error)
 	}
 }
 
 export const postContent = (contentObj) => {
-	return dispacth => {
+	console.log(contentObj);
+	return dispatch => {
 		axios.post('/api/content/image', { contentObj })
-			.then(response => dispatch(getImages(response.data.images)))
+			.then(response => {
+				dispatch(getNewContent(response.data))
+			})
 			.catch(console.error)
 	}
 }
 
 export const socketStoreUpdate = (imageObj) => {
-	getNewContent(imageObj)
+	getNewSocketContent(imageObj)
 }
 
 // //REDUCER

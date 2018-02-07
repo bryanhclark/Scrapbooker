@@ -30,4 +30,8 @@ let TWILLIONUMBER = '+12016131005'
 //Bitly Config
 let BITLYCONFIG = '7735debd667cbbf1d31c9f9691251369e5592531'
 
-module.exports = { config, firebaseInitialize, TwilioConfig, TWILLIONUMBER, BITLYCONFIG };
+//Email
+let appUsername = 'scrapprapp@gmail.com'
+let appPassword = 'scrappr@FSANY'
+
+module.exports = { config, firebaseInitialize, TwilioConfig, TWILLIONUMBER, BITLYCONFIG, appPassword, appUsername };

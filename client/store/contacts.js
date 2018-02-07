@@ -22,14 +22,17 @@ export const getCurrentContacts = (organizerId) => {
   return dispatch => {
     axios.get('/api/contacts', { params: { organizerId } })
       .then(res => dispatch(getContacts(res.data)))
+      .catch(console.error)
   }
 }
 
 export const createContact = (contactObj) => {
   return dispatch => {
     axios.post('/api/contacts', {
-      name: contactObj.name,
+      firstName: contactObj.firstName,
+      lastName: contactObj.lastName,
       phone: contactObj.phone,
+      email: contactObj.email,
       organizerId: contactObj.organizerId
     })
       .then(res => dispatch(addContact(res.data)))

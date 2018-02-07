@@ -1,25 +1,30 @@
 const User = require('./user')
 const Event = require('./event')
 const Content = require('./content')
-const Contact = require('./contacts')
-const Participants = require('./participants')
+const organizerContacts = require('./organizerContacts')
+const usersEvents = require('./usersEvents')
+const Comment = require('./comments')
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
  *
  *    BlogPost.belongsTo(User)
  */
-
-Event.belongsTo(User, { as: 'organizer' })
-Contact.belongsTo(User, { as: 'organizer' })
-Contact.belongsToMany(Event, { through: Participants })
-Event.belongsToMany(Contact, { through: Participants })
-Participants.belongsTo(Event)
-Participants.belongsTo(Contact)
-Event.hasMany(Participants)
-Contact.hasMany(Participants)
+Comment.belongsTo(User);
+Comment.belongsTo(Content);
+User.hasMany(Comment)
 Content.belongsTo(User)
 Content.belongsTo(Event)
+User.hasMany(Content)
+User.hasMany(User, { as: 'Contact', foreignKey: 'organizerId', useJunctionTable: false })
+Event.belongsTo(User, { as: 'organizer' })
+User.belongsToMany(Event, { as: 'participant', through: usersEvents })
+usersEvents.belongsTo(User)
+usersEvents.belongsTo(Event)
+Event.belongsToMany(User, { as: 'event', through: usersEvents })
+
+
+
 
 
 /**
@@ -32,8 +37,9 @@ module.exports = {
   User,
   Event,
   Content,
-  Contact,
-  Participants
+  organizerContacts,
+  usersEvents,
+  Comment
 }
 
 //172.16.21.47172

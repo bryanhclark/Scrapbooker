@@ -18,9 +18,9 @@ export const addParticipants = (participant) => {
 
 //THUNK
 
-export const fetchPartipants = (eventId) => {
+export const fetchPartipants = (secret) => {
   return (dispatch) => {
-    axios.get('/api/participants', { params: { eventId } })
+    axios.get('/api/participants', { params: { secret } })
       .then(res => dispatch(getPartipants(res.data)))
   }
 }
@@ -28,7 +28,7 @@ export const fetchPartipants = (eventId) => {
 export const addParticipantsToEvent = (participantsArray, eventId) => {
   return (dispatch) => {
     Promise.all(participantsArray.map(participant => {
-      axios.post('/api/participants', { contactId: participant.id, eventId })
+      axios.post('/api/participants', { participantId: participant.id, eventId })
         .then(res => dispatch(addParticipants(res.data)))
     }))
   }

@@ -9,11 +9,10 @@ class NavModal extends React.Component {
         }
         return (
             <div className="navModalBackdrop">
-                <div className="navModal">
+                <div className="navModal modals">
                     {this.props.children}
                     <div className="footer">
-                        <button onClick={this.props.onClose}>
-                            Close
+                        <button className="btn_close" onClick={this.props.onClose}>
                         </button>
                     </div>
                 </div>

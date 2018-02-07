@@ -1,7 +1,7 @@
 const passport = require('passport')
 const router = require('express').Router()
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
-const {User} = require('../db/models')
+const { User } = require('../db/models')
 module.exports = router
 
 /**
@@ -32,13 +32,14 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
 
   const strategy = new GoogleStrategy(googleConfig, (token, refreshToken, profile, done) => {
     const googleId = profile.id
-    const name = profile.displayName
+    const firstName = profile.displayName.split(" ")[0]
+    const lastName = profile.displayName.split(" ")[1]
     const email = profile.emails[0].value
 
-    User.find({where: {googleId}})
+    User.find({ where: { googleId } })
       .then(foundUser => (foundUser
         ? done(null, foundUser)
-        : User.create({name, email, googleId})
+        : User.create({ firstName, lastName, email, googleId })
           .then(createdUser => done(null, createdUser))
       ))
       .catch(done)
@@ -46,11 +47,11 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
 
   passport.use(strategy)
 
-  router.get('/', passport.authenticate('google', {scope: 'email'}))
+  router.get('/', passport.authenticate('google', { scope: 'email' }))
 
   router.get('/callback', passport.authenticate('google', {
-    successRedirect: '/home',
-    failureRedirect: '/login'
+    successRedirect: '/',
+    failureRedirect: '/'
   }))
 
 }

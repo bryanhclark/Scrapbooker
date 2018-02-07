@@ -41,40 +41,22 @@ const Event = db.define('events', {
 	endTime: {
 		type: Sequelize.STRING,
 		allowNull: true
-	},
-	salt: {
-		type: Sequelize.STRING
 	}
 })
 
 
 module.exports = Event;
 
-// instance methods
-Event.prototype.correctSecret = (possibleSecret) => {
-    return Event.encryptSecret(possibleSecret, this.salt) === this.secret
-}
 
 //Class Methods
-
-Event.generateSalt = () => {
-    return crypto.randomBytes(16).toString('base64')
+Event.generateSecret= () => {
+  return Math.random().toString(20).substring(2, 17)
 }
 
-Event.encryptSecret = (name, salt) => {
-    return crypto
-        .createHash('RSA-SHA256')
-        .update(name)
-        .update(salt)
-        .digest('hex')
-}
 
 //hooks
-
-const setSaltandSecret = event => {
-    event.salt = Event.generateSalt()
-    event.secret = Event.encryptSecret(event.name, event.salt)
+const setSecret = (event) => {
+	event.secret = Event.generateSecret()
 }
 
-
-Event.beforeCreate(setSaltandSecret)
+Event.beforeCreate(setSecret)

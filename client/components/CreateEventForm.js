@@ -34,51 +34,38 @@ class CreateEventForm extends Component {
 	render() {
 		return (
 			<div className='create-Event-Form-Container'>
+        <h4 className='modal_header'>Create Event</h4>
 				<form onSubmit={this.handleSubmit}>
-					<div className='create-Event-Name-Button-Div'>
-						<label>
-							Name:
-              <input type='text' value={this.state.name} name='name' onChange={this.handleChange} />
-						</label>
+					<div className='form_row'> 
+						<label>Name:</label>
+						<input type='text' value={this.state.name} name='name' onChange={this.handleChange} />
 					</div>
-					<div className='create-Event-Street-Button-Div'>
-						<label>
-							Street:
-              <input type='text' value={this.state.street} name='street' onChange={this.handleChange} />
-						</label>
+					<div className='form_row'>
+						<label>Street:</label>
+						<input type='text' value={this.state.street} name='street' onChange={this.handleChange} />
 					</div>
-					<div className='create-Event-City-Button-Div'>
-						<label>
-							City:
-              <input type='text' value={this.state.city} name='city' onChange={this.handleChange} />
-						</label>
+					<div className='form_row'>
+						<label>City:</label>
+						<input type='text' value={this.state.city} name='city' onChange={this.handleChange} />
 					</div>
-					<div className='create-Event-State-Button-Div'>
-						<label>
-							State:
-               <input type='text' value={this.state.state} name='state' onChange={this.handleChange} />
-						</label>
+					<div className='form_row'>
+						<label>State:</label>
+						<input type='text' value={this.state.state} name='state' onChange={this.handleChange} />
 					</div>
-					<div className='create-Event-Zip-Button-Div'>
-						<label>
-							Zip:
-               <input type='text' value={this.state.zip} name='zip' onChange={this.handleChange} />
-						</label>
+					<div className='form_row'>
+						<label>Zip:</label>
+						<input type='text' value={this.state.zip} name='zip' onChange={this.handleChange} />
 					</div>
-					<div className='create-Event-startTime-Button-Div'>
-						<label>
-							Start Time:
-              <input type='text' value={this.state.startTime} name='startTime' onChange={this.handleChange} />
-						</label>
+					<div className='form_row'>
+						<label>Start Time:</label>
+						<input type='text' value={this.state.startTime} name='startTime' onChange={this.handleChange} />
 					</div>
-					<div className='create-Event-startTime-Button-Div'>
-						<label>
-							End Time:
-              <input type='text' value={this.state.endTime} name='endTime' onChange={this.handleChange} />
-						</label>
+					<div className='form_row'>
+						<label>End Time:</label>
+						<input type='text' value={this.state.endTime} name='endTime' onChange={this.handleChange} />
 					</div>
-					<div className='create-Event-Submit-Button-Div'>
-						<input type='submit' value='submit' />
+					<div className='btn_area'>
+						<input className="btn" type='submit' value='submit' />
 					</div>
 				</form>
 			</div>
@@ -91,10 +78,11 @@ const mapState = (state) => {
 	}
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, ownProps) => {
 	return {
 		handleSubmitDispatch(eventObj) {
 			dispatch(createEvent(eventObj))
+			ownProps.show('events')
 		}
 	}
 }

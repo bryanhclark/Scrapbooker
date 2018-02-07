@@ -26,7 +26,6 @@ class Dashboard extends Component {
 	}
 
 	render() {
-		console.log(this.props.user.fullName !== 'null null')
 		return (
 			<div className='main-Dashboard-Container'>
 				<div className="wrapper">

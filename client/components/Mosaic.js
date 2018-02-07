@@ -55,6 +55,7 @@ class Mosaic extends Component {
   }
 
   render() {
+    console.log('this.props.singleParticipant', this.props.singleParticipant)
     const { width } = this.props.size;
     return (
       <div className='mosaicContainer'>
@@ -80,7 +81,7 @@ class Mosaic extends Component {
   }
 }
 
-const sizeMeConfig = {monitorWidth: true}
+const sizeMeConfig = { monitorWidth: true }
 const sizeMeHOC = sizeMe(sizeMeConfig)
 
 const mapState = (state) => {

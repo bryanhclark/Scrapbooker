@@ -82,6 +82,8 @@ class SingleEvent extends Component {
           </div>
           <div>
             <h2 className="section_header">Invite Participants</h2>
+
+            <p>Please check the participants above you want to contact and choose the method of communication below:</p>
             <button className="btn" id="send_text" onClick={() => { broadcastTextMessage({ participants: this.state.participantsToMessage, organizer: this.props.user, event: this.props.singleEvent }) }}>Send invites!</button>
             <button className="btn" id="send_text" onClick={() => { broadcastEmail({ id: this.props.singleEvent.id, organizer: this.props.user }) }}>Send email!</button>
           </div>

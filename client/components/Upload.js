@@ -30,7 +30,6 @@ class Upload extends Component {
 	}
 
 	render() {
-		console.log(this.props.match.params.userHash)
 		return (
 			<div className='uploadContainer'>
 				<div className="mobile_toggle">
@@ -71,7 +70,7 @@ const mapState = (state) => {
 	}
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch =  (dispatch) => {
 	return {
 		async handleImgUpload(image, eventId, userId) {
 			let imageOrientation = await fetchExifData(image)
@@ -87,7 +86,7 @@ const mapDispatch = (dispatch) => {
 						if (error) console.error(error)
 						else {
 							dispatch(postContent(imageObj))
-							uploadImageSocket(imageObj)
+								.then(()=>uploadImageSocket(imageObj))
 						}
 					})
 				})

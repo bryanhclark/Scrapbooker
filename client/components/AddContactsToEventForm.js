@@ -26,19 +26,23 @@ class AddContactsToEventForm extends Component {
   }
 
   filterPossibleContactList(contactArray) {
-    console.log('this.props.participants', this.props.participants)
+    console.log('contact array', contactArray)
     let filteredContacts = []
-    //loop throuch contactArray
-    //loop through contactsToAddArray
-    for (let i = 0; i < contactArray.length; i++) {
-      for (let j = 0; j < this.props.participants.length; j++) {
-        if (contactArray[i].id === this.props.participants[j].user.id) break
-        else if (j === this.props.participants.length - 1) {
-          filteredContacts.push(contactArray[i])
+    if (this.props.participants.length) {
+      for (let i = 0; i < contactArray.length; i++) {
+        for (let j = 0; j < this.props.participants.length; j++) {
+          console.log('this.props.participants[j]', this.props.participants[j])
+          if (contactArray[i].id === this.props.participants[j].user.id) break
+          else if (j >= this.props.participants.length - 1) {
+            console.log('here!!!')
+            filteredContacts.push(contactArray[i])
+          }
         }
       }
+      return filteredContacts
+    } else {
+      return contactArray
     }
-    return filteredContacts
   }
 
   addContactToEvent(newContact) {

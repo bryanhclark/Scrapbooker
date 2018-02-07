@@ -1,11 +1,15 @@
 const faker = require('faker');
 const Promise = require('bluebird');
 const db = require('../server/db')
-const { Event, Content, User } = require('../server/db/models');
+const { Comment, Event, Content, User } = require('../server/db/models');
 
-//Type in how many fake people to make
-const numberImgs = 6
-const numberEvts = 3
+function randNumBetween() {
+  return Math.floor(Math.random() * numberImgs) + 1
+}
+// Type in how many fake people to make
+const numberImgs = 16
+const numberEvents = 5
+const numberUsers = 6
 
 function fillMurray() {
   let num1 = Math.floor(Math.random() * 123) + 300
@@ -27,7 +31,32 @@ function randImage() {
   }
 }
 
-//MAKING AN ARRAY OF FAKE PEOPLE OBJECTS
+function randUser() {
+  let user = {
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    phone: faker.phone.phoneNumberFormat().split('-').join(''),
+    email: faker.internet.email()
+  }
+  return user
+}
+
+function randEvent() {
+  let event = {
+    name: faker.lorem.word(),
+    street: faker.address.streetAddress(),
+    city: faker.address.city(),
+    state: faker.address.state(),
+    zip: faker.address.zipCode(),
+    startTime: "5:00PM",
+    endTime: "6:30PM",
+    organizerId: 1
+  }
+  return event
+}
+
+
+//MAKING AN ARRAY OF FAKE OBJECTS
 function makeThisMany (number, callback) {
   const results = [];
   while (number--) {
@@ -42,27 +71,34 @@ function generateImgs () {
   return images;
 }
 
+function generateUsers () {
+  const users = makeThisMany(numberUsers, randUser)
+  return users
+}
+
+function generateEvents () {
+  const events = makeThisMany(numberEvents, randEvent)
+  return events
+}
+
+
 //SAVE CREATED STUFF
 function createImgs () {
   return Promise.map(generateImgs(), image => Content.create(image))
 }
 
-// EVENTS
-const events = [
-  Event.create({name: 'Friends and Family Night', startTime: 1517332794, endTime: 1517347194}),
-  Event.create({name: 'Wedding of Sally', startTime: 1517332794, endTime: 1517347194}),
-  Event.create({name: 'Demo Day', startTime: 1517332794, endTime: 1517347194})
-]
+function createUsers () {
+  return Promise.map(generateUsers(), user => User.create(user))
+}
 
-// USERS
-const users = [
-  User.create({firstName: 'Jeff', lastName: 'Jeffington', email: 'jeff@jeffington.com', password: '123'}),
-  User.create({firstName: 'Sally', lastName: 'Sallington', email: 'sally@sallington.com', password: '123'}),
-  User.create({firstName: 'Mark', lastName: 'Markington', email: 'mark@markington.com', password: '123'})
-]
+function createEvents () {
+  return Promise.map(generateEvents(), event => Event.create(event))
+}
 
+
+//SEED FUNCTION
 function seed () {
-  return Promise.all( [createImgs(), users, events ] )
+  return Promise.all( [createImgs(), createUsers(), createEvents()] )
 }
 
 console.log('Syncing database');

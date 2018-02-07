@@ -7,8 +7,8 @@ class AddContactsToEventForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      contactsToAdd: [],
-      possibleContacts: []
+      contactsToAdd: []
+
     }
     this.addContactToEvent = this.addContactToEvent.bind(this)
     this.removeContactFromEvent = this.removeContactFromEvent.bind(this)
@@ -19,6 +19,7 @@ class AddContactsToEventForm extends Component {
     let contactsToAdd = this.props.participants.map(participant => {
       return participant.user
     })
+
 
     this.setState({ contactsToAdd, possibleContacts: this.filterPossibleContactList(this.props.contacts) })
 
@@ -39,6 +40,7 @@ class AddContactsToEventForm extends Component {
     }
     console.log(filteredContacts)
     return filteredContacts
+
   }
 
   addContactToEvent(newContact) {
@@ -78,6 +80,7 @@ class AddContactsToEventForm extends Component {
           <p className='header_subsection'>Current Participants</p>
           <table className="table_row">
             <tbody>
+
               {this.state.contactsToAdd.map(contact => (
                 <tr key={contact.id}>
                   <td>{contact.fullName}</td>
@@ -85,6 +88,8 @@ class AddContactsToEventForm extends Component {
                 </tr>
               ))
               }
+
+
             </tbody>
           </table>
         </div>

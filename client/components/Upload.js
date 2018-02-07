@@ -44,6 +44,7 @@ class Upload extends Component {
 							e.preventDefault()
 							this.fileInput = e.target.files[0];
 							this.setState({ img: e.target.files[0] })
+							console.log(this.fileInput)
 						}} />
 					<p>{this.state.img.name}</p>
 					<button className="btn" onClick={() => this.props.handleImgUpload(this.fileInput, this.props.singleEvent.id, this.props.singleParticipant.id)}>Upload Image</button>

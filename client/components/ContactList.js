@@ -13,7 +13,8 @@ const ContactList = (props) => {
 							props.contacts.map(contact => (
 								<tr className="table_row" key={contact.id}>
 									<td className="td_contacts td_cell">{contact.firstName}</td>
-									<td className="td_contacts td_cell">{contact.phone}</td>
+									{(contact.phone) ? <td className="td_contacts td_cell">{contact.phone}</td> : ""}
+									{(contact.email) ? <td className="td_contacts td_cell">{contact.email}</td> : ""}
 								</tr>
 							))
 						}

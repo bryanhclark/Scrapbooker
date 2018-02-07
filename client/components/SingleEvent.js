@@ -72,7 +72,8 @@ class SingleEvent extends Component {
                       <tr className="table_row" key={participant.user.id}>
                         <td><input type='checkbox' onChange={(e) => this.addOrRemoveParticipantFromMessageList(e, participant.user.userHash)} /></td>
                         <td>{participant.user.fullName}</td>
-                        <td>{participant.user.phone}</td>
+                        {(participant.user.phone) ? <td>{participant.user.phone}</td> : ""}
+                        {(participant.user.email) ? <td>{participant.user.email}</td> : ""}
                       </tr>
                     ))
                   }
@@ -84,8 +85,8 @@ class SingleEvent extends Component {
             <h2 className="section_header">Invite Participants</h2>
 
             <p>Please check the participants above you want to contact and choose the method of communication below:</p>
-            <button className="btn" id="send_text" onClick={() => { broadcastTextMessage({ participants: this.state.participantsToMessage, organizer: this.props.user, event: this.props.singleEvent }) }}>Send invites!</button>
-            <button className="btn" id="send_text" onClick={() => { broadcastEmail({ id: this.props.singleEvent.id, organizer: this.props.user }) }}>Send email!</button>
+            <button className="btn" id="send_text" onClick={() => { broadcastTextMessage({ participants: this.state.participantsToMessage, organizer: this.props.user, event: this.props.singleEvent }) }}>Send SMS</button>
+            <button className="btn" id="send_text" onClick={() => { broadcastEmail({ id: this.props.singleEvent.id, event: this.props.singleEvent, organizer: this.props.user }) }}>Send Email</button>
           </div>
         </div>
       </div>

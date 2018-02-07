@@ -12,9 +12,11 @@ class SingleEvent extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isAddContactModelOpen: false
+      isAddContactModelOpen: false,
+      participantsToMessage: []
     }
     this.toggleModal = this.toggleModal.bind(this)
+    this.addOrRemoveParticipantFromMessageList = this.addOrRemoveParticipantFromMessageList.bind(this)
   }
 
   componentDidMount() {
@@ -25,10 +27,25 @@ class SingleEvent extends Component {
   toggleModal = (name) => {
     if (name === 'addContacts') this.setState({ isAddContactModelOpen: !this.state.isAddContactModelOpen })
   }
+  addOrRemoveParticipantFromMessageList = (e, userHash) => {
+    let checked = e.target.checked
+    if (checked) {
+      let participantToAdd = this.props.participants.filter(participant => {
+        if (participant.user.userHash === userHash) return participant
+      })
+      let addParticipantsArray = [...this.state.participantsToMessage, participantToAdd[0]]
+      this.setState({ participantsToMessage: addParticipantsArray })
+    }
+    else {
+      let updatedParticipantList = this.state.participantsToMessage.filter(participant => {
+        if (participant.user.userHash !== userHash) return participant
+      })
+      this.setState({ participantsToMessage: updatedParticipantList })
+    }
+  }
 
 
   render() {
-    console.log('this.props.participants', this.props.participants)
     return (
       <div className='single-Event-Container' >
         <div className="wrapper">
@@ -41,8 +58,8 @@ class SingleEvent extends Component {
             <DashboardModal show={this.state.isAddContactModelOpen} onClose={() => this.toggleModal('addContacts')}>
               <AddContactsToEventForm participants={this.props.participants} show={this.toggleModal} />
             </DashboardModal>
-            <NavLink to={`/events/${this.props.singleEvent.secret}/mosaic`} className="btn">View Mosaic</NavLink>
-            <NavLink to={`/events/${this.props.singleEvent.secret}/upload`} className="btn">Upload Content</NavLink>
+            <NavLink to={`/events/${this.props.singleEvent.secret}/mosaic/${this.props.user.userHash}`} className="btn">View Mosaic</NavLink>
+            <NavLink to={`/events/${this.props.singleEvent.secret}/upload/${this.props.user.userHash}`} className="btn">Upload Content</NavLink>
           </div>
           <div id='participants_section'>
             <h2 className="section_header">Participants:</h2>
@@ -51,7 +68,7 @@ class SingleEvent extends Component {
                 <tbody>
                   {
                     this.props.participants.map(participant => (
-                      <tr  className="table_row" key={participant.user.id}>
+                      <tr className="table_row" key={participant.user.id}>
                         <td><input type='checkbox' onChange={(e) => console.log(e.target)} /></td>
                         <td>{participant.user.fullName}</td>
                         <td>{participant.user.phone}</td>
@@ -64,8 +81,8 @@ class SingleEvent extends Component {
           </div>
           <div>
             <h2 className="section_header">Invite Participants</h2>
-              <button className="btn" id="send_text" onClick={() => {broadcastTextMessage({id: this.props.singleEvent.id})}}>Send invites!</button>
-              <button className="btn" id="send_text" onClick={() => { broadcastEmail({id: this.props.singleEvent.id})}}>Send email!</button>
+            <button className="btn" id="send_text" onClick={() => { broadcastTextMessage({ participants: this.state.participantsToMessage, organizer: this.props.user, event: this.props.singleEvent }) }}>Send invites!</button>
+            <button className="btn" id="send_text" onClick={() => { broadcastEmail({ id: this.props.singleEvent.id }) }}>Send email!</button>
           </div>
         </div>
       </div>

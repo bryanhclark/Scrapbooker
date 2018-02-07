@@ -9,7 +9,8 @@ class ContactForm extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			name: '',
+      firstName: '',
+      lastName: '',
       phone: '',
       email: '',
 			organizerId: this.props.user.id
@@ -40,8 +41,12 @@ class ContactForm extends Component {
 			  <h4 className='modal_header'>Create Event</h4>
 				<form onSubmit={this.handleSubmit}>
 					<div className='form_row'>
-						<label>Name:</label>
-						<input type='text' value={this.state.name} name='name' onChange={this.handleChange} />
+						<label>First Name:</label>
+						<input type='text' value={this.state.firstName} name='firstName' onChange={this.handleChange} />
+					</div>
+					<div className='form_row'>
+						<label>Last Name:</label>
+						<input type='text' value={this.state.lastName} name='lastName' onChange={this.handleChange} />
 					</div>
 					<div className='form_row'>
 						<label>Phone Number:</label>

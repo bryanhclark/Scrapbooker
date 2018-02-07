@@ -69,8 +69,10 @@ class SingleEvent extends Component {
                 <ul>
                   {
                     this.props.participants.map(participant => (
+
                       <li key={participant.user.id} > <input type='checkbox' name={participant.user.fullName} value={participant.user.userHash} onChange={(e) => this.addOrRemoveParticipantFromMessageList(e, e.target.value)} />
                         {participant.user.fullName} </li>
+
                     ))
                   }
                 </ul>
@@ -80,8 +82,10 @@ class SingleEvent extends Component {
           </div>
           <div>
             <h2 className="section_header">Invite Participants</h2>
+
             <button className="btn" id="send_text" onClick={() => { broadcastTextMessage({ participants: this.state.participantsToMessage, organizer: this.props.user, event: this.props.singleEvent }) }}>Send invites!</button>
             <button className="btn" id="send_text" onClick={() => { broadcastEmail() }}>Send email!</button>
+
           </div>
         </div>
       </div>

@@ -35,7 +35,8 @@ const User = db.define('user', {
 }, {
     getterMethods: {
       fullName() {
-        return this.firstName + ' ' + this.lastName
+        if(this.lastName) return this.firstName + ' ' + this.lastName
+        else return this.firstName
       }
     }
   })

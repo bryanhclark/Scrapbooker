@@ -43,6 +43,7 @@ class AddContactsToEventForm extends Component {
   render() {
     return (
       <div className='add-Contacts-To-Event-Form-Container' >
+
         <h4>Add Contacts To Event: {this.props.singleEvent.name}</h4>
         <div className='contacts-List-Add-Contacts-To-Event'>
           {
@@ -52,12 +53,13 @@ class AddContactsToEventForm extends Component {
                 <button onClick={() => this.addContactToEvent(contact)}>+</button>{contact.fullName}<button onClick={() => this.removeContactFromEvent(contact)}>-</button>
 
               </div>
+
             ))
-          }
-          <div className="btn_area">
-            <button className="btn" onClick={this.handleSubmit}>Submit</button>
-          </div>
+            }
+            </tbody>
+          </table>
         </div>
+
         <ul className='contacts-To-Be-Added-List'>
           <div className='current-Contact-List-To-Add-Container'>
             <div className='current-Contact-List-To-Add-Header'>
@@ -72,11 +74,22 @@ class AddContactsToEventForm extends Component {
                     <button id='remove-contact' onClick={() => this.removeContactFromEvent(contact)}>-</button>
                   </div>
 
+
+        <div id='add_participants'>
+          <p className='header_subsection'>Available Contacts</p>
+          <table className="table_row">
+            <tbody>
+              {this.props.contacts.map(contact => (
+                <tr key={contact.id} className="table_row">
+                  <td>{contact.fullName}</td>
+                  <td><button onClick={() => this.addContactToEvent(contact)}>+</button></td>
+                </tr>
                 ))
               }
-            </div>
-          </div>
-        </ul>
+            </tbody>
+          </table>
+          <div className="btn_area"><button className="btn" id="add_participant_btn" onClick={this.handleSubmit}>Submit</button></div>
+        </div>
       </div>
     )
   }

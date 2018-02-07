@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 const EventList = (props) => {
   return (
     <div className='event-List-Container'>
-      <h3>Your Events</h3>
+      <h3 className='header_dash'>Your Events</h3>
 
       <div id="events_list">
         <table>

@@ -15,7 +15,6 @@ a:hover {text-decoration: underline;}
 #homeContainer {background-image: url(homepage_collage.jpg); background-size: 100vw; height: 100vh;}
 #greeting {text-align: center;padding: 40px 0 0 0;font-family: 'Montserrat', sans-serif; font-weight: 500;font-size: 1.9em;width: 80%; margin:0 auto;color:#0b2f49;}
 #greeting_logo {font-size: 1.2em;display: inline-block;font-weight: 900;}
-#elipsis {}
 #headline {color: #97163d;display:block;padding: 0 0 20px 0;font-size: 1.6em;}
 #home_btn_area {display:flex; margin: 60px auto 0 auto;justify-content: center;}
 #home_btns {display: flex;}
@@ -90,10 +89,10 @@ margin-left: 10px;}
 
 
 /*================================= Tablet ====================================*/
-@media only screen and (max-width:980px) {.type_text}
+@media only screen and (max-width:980px) {
 .quote_start {line-height: 22px;}
 .quote_end { font-size: 22px; line-height: 22px; }
-
+}
 
 
 /*================================= Mobile ====================================*/
@@ -103,7 +102,5 @@ margin-left: 10px;}
   .mobile_toggle_disabled {flex-grow:1;background-color:#11598e; text-align:center;padding:20px}
   #greeting {font-size: 1.5em;}
   #home_btns {flex-direction: column;}
-  #btn_signup {}
   #btn_login {margin: 14px 0 0 0;}
-  .home_btn {}
 }

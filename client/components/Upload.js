@@ -2,14 +2,12 @@ import React, { Component } from 'react'
 import { withRouter, Link, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import * as firebase from 'firebase'
-import { config } from '../../secrets'
 import { uploadImageSocket } from '../socket'
 import { postContent } from '../store/content'
 import { fetchSingleEvent } from '../store/singleEvent'
 import { fetchCurrentParticipant } from '../store/singleParticipant'
 import crypto from 'crypto'
 import { imageEXIFPacker, resizeImage, fetchExifData } from '../../utils/imgUtils'
-
 
 class Upload extends Component {
 	constructor(props) {
@@ -52,6 +50,17 @@ class Upload extends Component {
 		)
 	}
 }
+
+const config = {
+	apiKey: "AIzaSyCgYLyDM38JZEvWOn19tmmrcXM9FtbUwY0",
+	authDomain: "take3-44012.firebaseapp.com",
+	databaseURL: "https://take3-44012.firebaseio.com",
+	projectId: "take3-44012",
+	storageBucket: "take3-44012.appspot.com",
+	messagingSenderId: "807072044786"
+};
+
+const firebaseInitialize = firebase.initializeApp(config)
 
 const firebaseUpload = (image) => {
 	let imageName = crypto.randomBytes(16).toString('base64')

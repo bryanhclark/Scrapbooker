@@ -15,9 +15,6 @@ process.env.GOOGLE_CLIENT_SECRET = '3mXC9jQmIAqy5PeyN5XPCXw5'
 process.env.GOOGLE_CALLBACK = '/auth/google/callback'
 
 
-const firebaseInitialize = firebase.initializeApp(config)
-
-
 //Twillio Config
 
 let TwilioConfig = {

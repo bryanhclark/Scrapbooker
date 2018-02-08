@@ -6,7 +6,6 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 //Import all store functions
 import user from './user'
 import content from './content'
-import config from '../../secrets'
 import currentEvents from './currentEvents'
 import contacts from './contacts'
 import singleEvent from './singleEvent'

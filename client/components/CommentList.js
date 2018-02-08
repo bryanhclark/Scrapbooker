@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchCurrentComments, addNewCommentThunk } from '../store/comments'
+import { uploadCommentSocket } from '../socket'
 import AddCommentForm from './AddCommentForm'
-
 
 
 class CommentList extends Component {
@@ -29,8 +29,7 @@ class CommentList extends Component {
     e.preventDefault()
     this.props.postComment({
       contentId: this.props.image.id,
-      body: this.state.comment,
-      userId: this.props.singleParticipant.id
+      body: this.state.comment
     })
     this.setState({ comment: '' })
   }
@@ -38,14 +37,16 @@ class CommentList extends Component {
   render() {
     return (
       <div className='comment-List-Container'>
+      {console.log(this.state, `PROPS`, this.props)}
         <div className='comment-List-Header'>
         </div>
         <div className='comment-List-Comment-Container'>
           <ul className='commentList-Unordered-List'>
             {
               this.props.comments.map(comment => (
-                <li className='comment-List-Item' key={comment.id}>
-                  <strong>{comment.user.fullName}</strong><br />
+                <li className='comment-List-Item'key={comment.id}>
+                    {console.log(comment)}
+                  <strong key={comment.id}>{this.props.singleParticipant.fullName}</strong><br />
                   {comment.body}
                 </li>
               ))
@@ -61,10 +62,11 @@ class CommentList extends Component {
 }
 
 
-const mapState = (state) => {
+const mapState = (state, ownProps) => {
+  console.log(state)
   return {
     comments: state.comments,
-    singleParticipant: state.singleParticipant
+    singleParticipant: state.user
   }
 }
 
@@ -75,12 +77,10 @@ const mapDispatch = (dispatch) => {
     },
     postComment(commentObj) {
       dispatch(addNewCommentThunk(commentObj))
+      uploadCommentSocket(commentObj)
     }
   }
 }
-
-
-
 
 const CommentListContainer = connect(mapState, mapDispatch)(CommentList)
 

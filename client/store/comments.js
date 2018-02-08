@@ -1,8 +1,9 @@
 import axios from 'axios'
+import store from './index'
 
 //ACTION TYPE
 const GET_CURRENT_COMMENTS = 'GET_CURRENT_COMMENTS'
-const ADD_NEW_COMMENT = 'ADD_COMMENT'
+const NEW_COMMENT = 'NEW_COMMENT'
 
 //ACTION CREATORS
 const getCurrentComments = (comments) => {
@@ -10,7 +11,12 @@ const getCurrentComments = (comments) => {
 }
 
 const addNewComment = (newComment) => {
-  return { type: ADD_NEW_COMMENT, newComment }
+  return { type: NEW_COMMENT, newComment }
+}
+
+const getNewSocketContent = (newComment) => {
+	let action = { type: NEW_COMMENT, newComment }
+	store.dispatch(action)
 }
 
 
@@ -31,12 +37,16 @@ export const addNewCommentThunk = (commentObj) => {
   }
 }
 
+export const socketStoreCommentUpdate = (commentObj) => {
+	getNewSocketContent(commentObj)
+}
+
 //REDUCER
 export default (state = [], action) => {
   switch (action.type) {
     case GET_CURRENT_COMMENTS:
       return action.comments
-    case ADD_NEW_COMMENT:
+    case NEW_COMMENT:
       return [...state, action.newComment]
     default:
       return state;

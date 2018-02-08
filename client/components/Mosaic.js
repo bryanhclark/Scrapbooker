@@ -73,7 +73,7 @@ class Mosaic extends Component {
           </StackGrid>
           <NavModal show={this.state.isImageModalOpen}
             onClose={this.toggleModal}>
-            <SingleContent image={this.state.currentImage} />
+            <SingleContent singleParticipant={this.state.singleParticpant} image={this.state.currentImage} />
           </NavModal>
         </div>
       </div>
@@ -84,7 +84,7 @@ class Mosaic extends Component {
 const sizeMeConfig = { monitorWidth: true }
 const sizeMeHOC = sizeMe(sizeMeConfig)
 
-const mapState = (state) => {
+const mapState = (state, ownProps) => {
   return {
     content: state.content,
     singleEvent: state.singleEvent,

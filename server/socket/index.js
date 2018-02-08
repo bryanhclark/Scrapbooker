@@ -5,7 +5,12 @@ module.exports = (io) => {
 
     socket.on('image_upload', (imgObj) => {
       console.log("Socket image hit server")
-      socket.broadcast.emit('update_store', imgObj);
+      socket.broadcast.emit('update_img_store', imgObj);
+    })
+
+    socket.on('comment_upload', (commentObj) => {
+      console.log("Socket comment hit server")
+      socket.broadcast.emit('update_comment_store', commentObj);
     })
 
     socket.on('disconnect', () => {

@@ -41,7 +41,7 @@ export const postContent = (contentObj) => {
 	}
 }
 
-export const socketStoreUpdate = (imageObj) => {
+export const socketStoreImageUpdate = (imageObj) => {
 	getNewSocketContent(imageObj)
 }
 

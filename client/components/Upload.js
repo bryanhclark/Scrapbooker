@@ -45,7 +45,10 @@ class Upload extends Component {
 							this.setState({ img: e.target.files[0] })
 						}} />
 					<p>{this.state.img.name}</p>
-					<button className="btn" onClick={() => this.props.handleImgUpload(this.fileInput, this.props.singleEvent.id, this.props.singleParticipant.id)}>Upload Image</button>
+					<button className="btn" onClick={() => {
+            this.props.handleImgUpload(this.fileInput, this.props.singleEvent.id, this.props.singleParticipant.id)
+            this.setState({img: ""})
+          }}>Upload Image</button>
 				</div>
 			</div>
 		)
@@ -85,9 +88,9 @@ const mapDispatch = (dispatch) => {
 						if (error) console.error(error)
 						else {
 							dispatch(postContent(imageObj))
-							uploadImageSocket(imageObj)
+              uploadImageSocket(imageObj)
 						}
-					})
+          })
 				})
 		},
 		loadSingleEvent(eventSecret) {

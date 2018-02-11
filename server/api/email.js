@@ -19,19 +19,21 @@ let transporter = nodemailer.createTransport({
 // Only needed if you don't have a real mail account for testing
 
 router.post('/', (req, res, next) => {
+  const organizer = req.body.organizer
+  const event = req.body.event
   usersEvents.findAll({
     where: { eventId: req.body.id },
     include: [{ all: true }]
   })
   .then(participants => {
     participants.map(participant => {
-      return bitly.shorten(`http://${IP}:8080/events/${participant.event.secret}/upload/${participant.user.userHash}`)
+      return bitly.shorten(`http://www.scrapprapp.com/${participant.event.secret}/upload/${participant.user.userHash}`)
       .then( URL => {
         return transporter.sendMail({
         from: `${appUsername}`, // sender address
         to: `${participant.user.email}`, // list of receivers
-        subject: 'Scrappr Event Invite', // Subject line
-        text: `You have been invited to an event at ${participant.event.street}, ${participant.event.city}, ${participant.event.state}. \n The event begins at ${participant.event.startTime}. \n Come join us! ${URL.data.url}`
+        subject: `Scrappr: ${organizer.fullName} invites you to the <${event.name}> scrapbook`, // Subject line
+        text: `${organizer.fullName} has invited you to contribute to the <${event.name}> scrapbook.\nPlease add your images here:\n\n${URL.data.url}`
       }, (error, info) => {
           if (error) {return console.log(error)}
           return console.log('Message sent: %s', info.messageId);

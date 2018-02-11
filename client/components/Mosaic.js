@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { fetchContent } from '../store/content'
 import { render } from 'react-dom';
-import { fetchSingleEvent } from '../store/singleEvent'
+import { fetchSingleEvent} from '../store/singleEvent'
+import { fetchCurrentParticipant } from '../store/singleParticipant'
 import StackGrid from "react-stack-grid";
 import sizeMe from 'react-sizeme'
 import NavModal from './NavModal'
@@ -26,6 +27,12 @@ class Mosaic extends Component {
   componentDidMount() {
     this.props.loadContent(this.props.match.params.eventSecret)
     this.props.loadSingleEvent(this.props.match.params.eventSecret)
+    if (this.props.match.params.userHash) {
+			this.props.setParticipant(this.props.match.params.userHash)
+		}
+		else {
+			this.props.setParticipant(this.props.user.userHash)
+		}
   }
 
   reformatImagesForGallery(imageArray) {
@@ -73,7 +80,7 @@ class Mosaic extends Component {
           </StackGrid>
           <NavModal show={this.state.isImageModalOpen}
             onClose={this.toggleModal}>
-            <SingleContent image={this.state.currentImage} />
+            <SingleContent singleParticipant={this.state.singleParticpant} image={this.state.currentImage} />
           </NavModal>
         </div>
       </div>
@@ -84,7 +91,7 @@ class Mosaic extends Component {
 const sizeMeConfig = { monitorWidth: true }
 const sizeMeHOC = sizeMe(sizeMeConfig)
 
-const mapState = (state) => {
+const mapState = (state, ownProps) => {
   return {
     content: state.content,
     singleEvent: state.singleEvent,
@@ -99,7 +106,10 @@ const mapDispatch = (dispatch) => {
     },
     loadSingleEvent(eventSecret) {
       dispatch(fetchSingleEvent(eventSecret))
-    }
+    },
+    setParticipant(contactHash) {
+			dispatch(fetchCurrentParticipant(contactHash))
+		}
   }
 }
 

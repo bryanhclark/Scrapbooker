@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import CommentList from './CommentList'
-import { mapToken } from '../../secrets'
 
 const SingleContent = (props) => {
   return (

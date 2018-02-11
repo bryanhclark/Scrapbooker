@@ -10,15 +10,14 @@ module.exports = router;
 const messageSender = new Twilio(TwilioConfig.accountSid, TwilioConfig.authToken);
 
 //For local testing paste IP here
-const IP = `172.16.21.47`;
-const projURL = 'https://scrappr-app.herokuapp.com'
+const projURL = 'http://www.scrapprapp.com'
 
 router.post('/', (req, res, next) => {
   let participants = req.body.participants
   let organizer = req.body.organizer
   let event = req.body.event
   participants.map(participant => {
-    return bitly.shorten(`http://${IP}:8080/events/${event.secret}/upload/${participant.user.userHash}`)
+    return bitly.shorten(`${projURL}/events/${event.secret}/upload/${participant.user.userHash}`)
       .then(URL => {
         return messageSender.messages.create({
           body: `${organizer.fullName} has invited you to contribute to the <${event.name}> scrapbook. Add content here: ${URL.data.url}`,

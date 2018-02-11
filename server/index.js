@@ -11,6 +11,7 @@ const sessionStore = new SequelizeStore({ db })
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
+const favicon = require('serve-favicon')
 module.exports = app
 
 /**
@@ -58,6 +59,9 @@ const createApp = () => {
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
+
+  // favicon
+  app.use(favicon(path.join(__dirname, '..', 'public', 'favicon.ico')))
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {

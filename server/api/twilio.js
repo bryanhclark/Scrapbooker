@@ -10,8 +10,7 @@ module.exports = router;
 const messageSender = new Twilio(TwilioConfig.accountSid, TwilioConfig.authToken);
 
 //For local testing paste IP here
-const IP = `172.16.21.47`;
-const projURL = 'https://scrappr-app.herokuapp.com'
+const projURL = 'http://www.scrapprapp.com'
 
 router.post('/', (req, res, next) => {
   let participants = req.body.participants

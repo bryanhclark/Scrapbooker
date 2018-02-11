@@ -38,4 +38,5 @@ export default store
 //Export all files here
 export * from './user'
 export * from './content'
+export * from './comments'
 

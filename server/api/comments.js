@@ -17,6 +17,7 @@ router.get('/', (req, res, next) => {
 
 
 router.post('/', (req, res, next) => {
+  console.log(req.body)
   Comment.create({
     body: req.body.body,
     userId: req.body.userId,

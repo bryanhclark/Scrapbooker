@@ -27,7 +27,7 @@ router.post('/', (req, res, next) => {
   })
   .then(participants => {
     participants.map(participant => {
-      return bitly.shorten(`http://${IP}:8080/events/${participant.event.secret}/upload/${participant.user.userHash}`)
+      return bitly.shorten(`http://www.scrapprapp.com/${participant.event.secret}/upload/${participant.user.userHash}`)
       .then( URL => {
         return transporter.sendMail({
         from: `${appUsername}`, // sender address

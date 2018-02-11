@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { fetchContent } from '../store/content'
-import { render } from 'react-dom';
+import { render } from 'react-dom'
 import { fetchSingleEvent } from '../store/singleEvent'
-import StackGrid from "react-stack-grid";
+import StackGrid from 'react-stack-grid'
 import sizeMe from 'react-sizeme'
 import NavModal from './NavModal'
 import SingleContent from './SingleContent'

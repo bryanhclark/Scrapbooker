@@ -13,7 +13,7 @@ function uploadImageSocket(image) {
 }
 
 function uploadCommentSocket(comment) {
-  console.log("Sending comment in socket to server")
+  console.log("Sending comment in socket to server", comment)
   socket.emit('comment_upload', comment)
 }
 

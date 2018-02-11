@@ -9,7 +9,8 @@ class CommentList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      comment: ''
+      comment: '',
+      name: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -29,7 +30,8 @@ class CommentList extends Component {
     e.preventDefault()
     this.props.postComment({
       contentId: this.props.image.id,
-      body: this.state.comment
+      body: this.state.comment,
+      name: this.props.singleParticipant.fullName
     })
     this.setState({ comment: '' })
   }
@@ -37,7 +39,6 @@ class CommentList extends Component {
   render() {
     return (
       <div className='comment-List-Container'>
-      {console.log(this.state, `PROPS`, this.props)}
         <div className='comment-List-Header'>
         </div>
         <div className='comment-List-Comment-Container'>
@@ -45,8 +46,7 @@ class CommentList extends Component {
             {
               this.props.comments.map(comment => (
                 <li className='comment-List-Item'key={comment.id}>
-                    {console.log(comment)}
-                  <strong key={comment.id}>{this.props.singleParticipant.fullName}</strong><br />
+                  <strong key={comment.id}>{comment.name}</strong><br />
                   {comment.body}
                 </li>
               ))
@@ -54,7 +54,7 @@ class CommentList extends Component {
           </ul>
         </div>
         <div className='add-Comment-Container'>
-          <AddCommentForm handleChange={this.handleChange} comment={this.state.comment} handleSubmit={this.handleSubmit} />
+          <AddCommentForm handleChange={this.handleChange} comment={this.state.comment} name={this.state.name} handleSubmit={this.handleSubmit} />
         </div>
       </div>
     )
@@ -66,7 +66,7 @@ const mapState = (state, ownProps) => {
   console.log(state)
   return {
     comments: state.comments,
-    singleParticipant: state.user
+    singleParticipant: state.singleParticipant
   }
 }
 
@@ -76,6 +76,7 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchCurrentComments(contentId))
     },
     postComment(commentObj) {
+      console.log("in postComment => ", commentObj)
       dispatch(addNewCommentThunk(commentObj))
       uploadCommentSocket(commentObj)
     }

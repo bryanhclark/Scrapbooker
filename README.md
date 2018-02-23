@@ -1,4 +1,4 @@
-#Scrappr
+# Scrappr
 
 ## A real-time, event-drive, scrapbooking manager for concerts, events, and Life
 
